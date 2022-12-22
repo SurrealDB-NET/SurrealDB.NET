@@ -2,6 +2,10 @@
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{750F7DED-DB83-4BCA-A37A-8074CD4F7132}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurrealDB.NET", "src\SurrealDB.NET\SurrealDB.NET.csproj", "{7DB203A6-F446-4926-84E0-3B421C67E94D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -9,5 +13,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DB203A6-F446-4926-84E0-3B421C67E94D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DB203A6-F446-4926-84E0-3B421C67E94D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DB203A6-F446-4926-84E0-3B421C67E94D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DB203A6-F446-4926-84E0-3B421C67E94D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7DB203A6-F446-4926-84E0-3B421C67E94D} = {750F7DED-DB83-4BCA-A37A-8074CD4F7132}
 	EndGlobalSection
 EndGlobal
