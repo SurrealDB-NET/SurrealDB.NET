@@ -3,6 +3,7 @@ namespace SurrealDB.Client.Rest;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
+using Enums;
 using Responses;
 
 public class SurrealRestClient : ISurrealClient
@@ -29,7 +30,14 @@ public class SurrealRestClient : ISurrealClient
 
         var results = await ParseResponseAsync<ExecuteSqlResponse<TResult>[]>(response, cancellationToken);
 
-        return results.Select(result => result.Result).Single();
+        return results
+            .Select(result => result.Status switch
+            {
+                ExecuteSqlStatusCode.Ok => result.Result,
+                ExecuteSqlStatusCode.Error => throw new Exception(result.Detail),
+                _ => throw new Exception($"Unexpected status code: {result.Status}")
+            })
+            .Single();
     }
 
     /// <summary>
@@ -97,8 +105,8 @@ public class SurrealRestClient : ISurrealClient
             return await DeserializeContentAsync<TResult>(response.Content, cancellationToken);
         }
 
-        var error = await DeserializeContentAsync<ErrorResponse>(response.Content, cancellationToken);
+        var fatalError = await DeserializeContentAsync<FatalErrorResponse>(response.Content, cancellationToken);
 
-        throw new Exception($"({error.Code}) {error.Information}. {error.Description}");
+        throw new Exception($"({fatalError.Code}) {fatalError.Information}. {fatalError.Description}");
     }
 }

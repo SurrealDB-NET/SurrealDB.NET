@@ -1,10 +1,10 @@
-// ReSharper disable UnusedAutoPropertyAccessor.Global
 // ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace SurrealDB.Client.Rest.Responses;
 
 #pragma warning disable CS8618
-public class ErrorResponse
+public class FatalErrorResponse
 {
     public uint Code { get; init; }
 

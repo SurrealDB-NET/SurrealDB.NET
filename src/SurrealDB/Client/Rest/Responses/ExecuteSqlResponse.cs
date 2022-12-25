@@ -6,6 +6,8 @@ namespace SurrealDB.Client.Rest.Responses;
 #pragma warning disable CS8618
 public class ExecuteSqlResponse<TResult> where TResult : class
 {
+    public string Detail { get; init; }
+
     public string Status { get; init; }
 
     public TResult Result { get; init; }
