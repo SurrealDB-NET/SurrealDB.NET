@@ -11,4 +11,9 @@ public class SurrealRpcClient : ISurrealClient
     {
         throw new NotImplementedException();
     }
+
+    public Task<IEnumerable<TRecord>> GetAllRecordsAsync<TRecord>(string tableName, CancellationToken cancellationToken = default) where TRecord : class
+    {
+        throw new NotImplementedException();
+    }
 }

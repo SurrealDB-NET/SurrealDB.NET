@@ -14,6 +14,13 @@ public class SurrealRestClient : ISurrealClient
         _httpClient = ConfigureHttpClient(httpClient, optionsBuilder);
     }
 
+    /// <summary>
+    ///     Execute a SurrealQL query. It is equivalent to the POST /sql endpoint.
+    /// </summary>
+    /// <param name="sql">The SurrealQL query to execute</param>
+    /// <param name="cancellationToken">The cancellation token</param>
+    /// <typeparam name="TResult">The expected type of the result returned by the query</typeparam>
+    /// <returns></returns>
     public async Task<TResult> ExecuteSqlAsync<TResult>(string sql, CancellationToken cancellationToken = default) where TResult : class
     {
         var payload = new StringContent(sql);
@@ -23,6 +30,18 @@ public class SurrealRestClient : ISurrealClient
         var results = await ParseResponseAsync<ExecuteSqlResponse<TResult>[]>(response, cancellationToken);
 
         return results.Select(result => result.Result).Single();
+    }
+
+    /// <summary>
+    /// 	Selects all records in a table from the database. It is equivalent to the GET /key/:table endpoint.
+    /// </summary>
+    /// <param name="tableName">The name of the table to select from</param>
+    /// <param name="cancellationToken">The cancellation token</param>
+    /// <typeparam name="TRecord">The type of the record that will be returned by the query</typeparam>
+    /// <returns>An enumerable containing the records returned by the query</returns>
+    public async Task<IEnumerable<TRecord>> GetAllRecordsAsync<TRecord>(string tableName, CancellationToken cancellationToken = default) where TRecord : class
+    {
+        return await ExecuteSqlAsync<IEnumerable<TRecord>>($"SELECT * FROM type::table('{tableName}');", cancellationToken);
     }
 
     private static ISurrealClientOptions BuildOptions(Action<SurrealClientOptionsBuilder> optionsBuilder)

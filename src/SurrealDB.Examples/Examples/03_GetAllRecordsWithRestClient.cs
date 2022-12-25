@@ -1,8 +1,8 @@
-﻿namespace SurrealDB.Examples;
+namespace SurrealDB.Examples;
 
 using Client.Rest;
 
-public class ExecuteQueryWithRestClientExample : IExample
+public class GetAllRecordsWithRestClient : IExample
 {
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
@@ -18,9 +18,9 @@ public class ExecuteQueryWithRestClientExample : IExample
                 .WithPassword("root");
         });
 
-        var result = await client.ExecuteSqlAsync<IEnumerable<object>>("SELECT * FROM `test`", cancellationToken);
+        var records = await client.GetAllRecordsAsync<object>("test", cancellationToken);
 
-        foreach (var record in result)
+        foreach (var record in records)
         {
             Console.WriteLine(record);
         }
