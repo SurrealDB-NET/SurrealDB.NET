@@ -7,7 +7,7 @@ public class SurrealRpcClient : ISurrealClient
         throw new NotImplementedException();
     }
 
-    public Task<TResult> ExecuteSqlAsync<TResult>(string sql) where TResult : class
+    public Task<TResult> ExecuteSqlAsync<TResult>(string sql, CancellationToken cancellationToken = default) where TResult : class
     {
         throw new NotImplementedException();
     }

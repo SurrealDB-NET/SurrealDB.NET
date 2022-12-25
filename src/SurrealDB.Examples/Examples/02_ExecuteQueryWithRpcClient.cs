@@ -4,7 +4,7 @@ using Client.Rpc;
 
 public class ExecuteQueryWithRpcClientExample : IExample
 {
-    public async Task RunAsync()
+    public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         var client = new SurrealRpcClient(options =>
         {
@@ -16,7 +16,7 @@ public class ExecuteQueryWithRpcClientExample : IExample
                 .WithPassword("");
         });
 
-        var result = await client.ExecuteSqlAsync<IEnumerable<object>>("SELECT * FROM `test`");
+        var result = await client.ExecuteSqlAsync<IEnumerable<object>>("SELECT * FROM `test`", cancellationToken);
 
         Console.WriteLine(result);
     }

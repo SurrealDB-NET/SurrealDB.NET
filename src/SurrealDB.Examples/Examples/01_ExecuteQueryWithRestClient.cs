@@ -4,7 +4,7 @@ using Client.Rest;
 
 public class ExecuteQueryWithRestClientExample : IExample
 {
-    public async Task RunAsync()
+    public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         var httpClient = new HttpClient();
 
@@ -18,7 +18,7 @@ public class ExecuteQueryWithRestClientExample : IExample
                 .WithPassword("root");
         });
 
-        var result = await client.ExecuteSqlAsync<IEnumerable<object>>("SELECT * FROM `test`");
+        var result = await client.ExecuteSqlAsync<IEnumerable<object>>("SELECT * FROM `test`", cancellationToken);
 
         Console.WriteLine(result.First());
     }

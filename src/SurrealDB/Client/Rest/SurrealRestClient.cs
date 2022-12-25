@@ -14,13 +14,13 @@ public class SurrealRestClient : ISurrealClient
         _httpClient = ConfigureHttpClient(httpClient, optionsBuilder);
     }
 
-    public async Task<TResult> ExecuteSqlAsync<TResult>(string sql) where TResult : class
+    public async Task<TResult> ExecuteSqlAsync<TResult>(string sql, CancellationToken cancellationToken = default) where TResult : class
     {
         var payload = new StringContent(sql);
 
-        var response = await _httpClient.PostAsync("sql", payload);
+        var response = await _httpClient.PostAsync("sql", payload, cancellationToken);
 
-        var results = await ParseResponseAsync<ExecuteSqlResponse<TResult>[]>(response);
+        var results = await ParseResponseAsync<ExecuteSqlResponse<TResult>[]>(response, cancellationToken);
 
         return results.Select(result => result.Result).Single();
     }
@@ -59,9 +59,9 @@ public class SurrealRestClient : ISurrealClient
         return new AuthenticationHeaderValue("Basic", base64);
     }
 
-    private static async Task<TResult> DeserializeContentAsync<TResult>(HttpContent content) where TResult : class
+    private static async Task<TResult> DeserializeContentAsync<TResult>(HttpContent content, CancellationToken cancellationToken = default) where TResult : class
     {
-        var data = await content.ReadFromJsonAsync<TResult>();
+        var data = await content.ReadFromJsonAsync<TResult>(cancellationToken: cancellationToken);
 
         if (data is null)
         {
@@ -71,14 +71,14 @@ public class SurrealRestClient : ISurrealClient
         return data;
     }
 
-    private static async Task<TResult> ParseResponseAsync<TResult>(HttpResponseMessage response) where TResult : class
+    private static async Task<TResult> ParseResponseAsync<TResult>(HttpResponseMessage response, CancellationToken cancellationToken = default) where TResult : class
     {
         if (response.IsSuccessStatusCode)
         {
-            return await DeserializeContentAsync<TResult>(response.Content);
+            return await DeserializeContentAsync<TResult>(response.Content, cancellationToken);
         }
 
-        var error = await DeserializeContentAsync<ErrorResponse>(response.Content);
+        var error = await DeserializeContentAsync<ErrorResponse>(response.Content, cancellationToken);
 
         throw new Exception($"({error.Code}) {error.Information}. {error.Description}");
     }
