@@ -16,13 +16,30 @@ public class SurrealRestClient : ISurrealClient
     }
 
     /// <summary>
+    ///     Creates a record in a specific table in the database. It is equivalent to the POST /key/:table endpoint.
+    /// </summary>
+    /// <param name="tableName">The name of the table to insert to</param>
+    /// <param name="content">A SurrealQL object that will be passed to the CONTENT keyword</param>
+    /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
+    /// <typeparam name="TRecord">The target type to deserialize to</typeparam>
+    /// <returns></returns>
+    public async Task<TRecord> CreateRecordAsync<TRecord>(string tableName, string content, CancellationToken cancellationToken = default)
+        where TRecord : class
+    {
+        var results = await ExecuteSqlAsync<TRecord[]>($"CREATE type::table('{tableName}') CONTENT {content};", cancellationToken);
+
+        return results.Single();
+    }
+
+    /// <summary>
     ///     Execute a SurrealQL query. It is equivalent to the POST /sql endpoint.
     /// </summary>
     /// <param name="sql">The SurrealQL query to execute</param>
-    /// <param name="cancellationToken">The cancellation token</param>
-    /// <typeparam name="TResult">The expected type of the result returned by the query</typeparam>
+    /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
+    /// <typeparam name="TResult">The target type to deserialize to</typeparam>
     /// <returns></returns>
-    public async Task<TResult> ExecuteSqlAsync<TResult>(string sql, CancellationToken cancellationToken = default) where TResult : class
+    public async Task<TResult> ExecuteSqlAsync<TResult>(string sql, CancellationToken cancellationToken = default)
+        where TResult : class
     {
         var payload = new StringContent(sql);
 
@@ -44,10 +61,11 @@ public class SurrealRestClient : ISurrealClient
     /// 	Selects all records in a table from the database. It is equivalent to the GET /key/:table endpoint.
     /// </summary>
     /// <param name="tableName">The name of the table to select from</param>
-    /// <param name="cancellationToken">The cancellation token</param>
-    /// <typeparam name="TRecord">The type of the record that will be returned by the query</typeparam>
+    /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
+    /// <typeparam name="TRecord">The target type to deserialize to</typeparam>
     /// <returns>An enumerable containing the records returned by the query</returns>
-    public async Task<IEnumerable<TRecord>> GetAllRecordsAsync<TRecord>(string tableName, CancellationToken cancellationToken = default) where TRecord : class
+    public async Task<IEnumerable<TRecord>> GetAllRecordsAsync<TRecord>(string tableName, CancellationToken cancellationToken = default)
+        where TRecord : class
     {
         return await ExecuteSqlAsync<IEnumerable<TRecord>>($"SELECT * FROM type::table('{tableName}');", cancellationToken);
     }
@@ -86,7 +104,8 @@ public class SurrealRestClient : ISurrealClient
         return new AuthenticationHeaderValue("Basic", base64);
     }
 
-    private static async Task<TResult> DeserializeContentAsync<TResult>(HttpContent content, CancellationToken cancellationToken = default) where TResult : class
+    private static async Task<TResult> DeserializeContentAsync<TResult>(HttpContent content, CancellationToken cancellationToken = default)
+        where TResult : class
     {
         var data = await content.ReadFromJsonAsync<TResult>(cancellationToken: cancellationToken);
 
@@ -98,7 +117,8 @@ public class SurrealRestClient : ISurrealClient
         return data;
     }
 
-    private static async Task<TResult> ParseResponseAsync<TResult>(HttpResponseMessage response, CancellationToken cancellationToken = default) where TResult : class
+    private static async Task<TResult> ParseResponseAsync<TResult>(HttpResponseMessage response, CancellationToken cancellationToken = default)
+        where TResult : class
     {
         if (response.IsSuccessStatusCode)
         {
