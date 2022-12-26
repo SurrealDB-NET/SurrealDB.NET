@@ -69,6 +69,14 @@ public class SurrealRestClient : ISurrealClient
         return results.FirstOrDefault();
     }
 
+    public async Task<TRecord> UpsertRecordAsync<TRecord>(string tableName, string id, string content, CancellationToken cancellationToken = default)
+        where TRecord : class
+    {
+        var results = await ExecuteSqlAsync<TRecord[]>($"UPDATE type::thing('{tableName}', '{id}') CONTENT {content};", cancellationToken);
+
+        return results.Single();
+    }
+
     private static ISurrealClientOptions BuildOptions(Action<SurrealClientOptionsBuilder> optionsBuilder)
     {
         var builder = new SurrealClientOptionsBuilder();

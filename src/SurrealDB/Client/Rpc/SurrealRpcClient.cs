@@ -13,7 +13,7 @@ public class SurrealRpcClient : ISurrealClient
         throw new NotImplementedException();
     }
 
-    public Task<TRecord> CreateRecordAsync<TRecord>(string tableName, string id, string content, CancellationToken cancellationToken = default) 
+    public Task<TRecord> CreateRecordAsync<TRecord>(string tableName, string id, string content, CancellationToken cancellationToken = default)
         where TRecord : class
     {
         throw new NotImplementedException();
@@ -37,6 +37,12 @@ public class SurrealRpcClient : ISurrealClient
     }
 
     public Task<TRecord?> GetRecordByIdAsync<TRecord>(string tableName, string id, CancellationToken cancellationToken = default)
+        where TRecord : class
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<TRecord> UpsertRecordAsync<TRecord>(string tableName, string id, string content, CancellationToken cancellationToken = default)
         where TRecord : class
     {
         throw new NotImplementedException();
