@@ -14,6 +14,18 @@ public interface ISurrealClient
         where TRecord : class;
 
     /// <summary>
+    ///     Creates a record in a specific table in the database. It is equivalent to the POST /key/:table/:id endpoint.
+    /// </summary>
+    /// <param name="tableName">The name of the table to insert to</param>
+    /// <param name="id">The ID of the new record</param>
+    /// <param name="content">A SurrealQL object that will be passed to the CONTENT keyword</param>
+    /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
+    /// <typeparam name="TRecord">The target type to deserialize to</typeparam>
+    /// <returns>The task object representing the asynchronous operation.</returns>
+    public Task<TRecord> CreateRecordAsync<TRecord>(string tableName, string id, string content, CancellationToken cancellationToken = default)
+        where TRecord : class;
+
+    /// <summary>
     /// 	Deletes all records from the specified table in the database. It is equivalent to the DELETE /key/:table endpoint.
     /// </summary>
     /// <param name="tableName">The name of the table to delete from</param>

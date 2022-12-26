@@ -22,8 +22,10 @@ public class CreateRecordWithRestClient : IExample
             time: time::now()
         }";
 
-        var createdRecord = await client.CreateRecordAsync<object>("test", newRecord, cancellationToken);
+        var createdRecord1 = await client.CreateRecordAsync<object>("test", newRecord, cancellationToken);
+        var createdRecord2 = await client.CreateRecordAsync<object>("test", "test_id", newRecord, cancellationToken);
 
-        Console.WriteLine(createdRecord);
+        Console.WriteLine(createdRecord1);
+        Console.WriteLine(createdRecord2);
     }
 }

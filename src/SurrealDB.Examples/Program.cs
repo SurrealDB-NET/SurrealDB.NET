@@ -1,5 +1,5 @@
 using SurrealDB.Examples;
 
-var example = new GetRecordByIdWithRestClient();
+var example = new CreateRecordWithRestClient();
 
 await example.RunAsync();
