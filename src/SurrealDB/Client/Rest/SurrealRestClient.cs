@@ -53,6 +53,14 @@ public class SurrealRestClient : ISurrealClient
         return await ExecuteSqlAsync<IEnumerable<TRecord>>($"SELECT * FROM type::table('{tableName}');", cancellationToken);
     }
 
+    public async Task<TRecord?> GetRecordByIdAsync<TRecord>(string tableName, string id, CancellationToken cancellationToken = default)
+        where TRecord : class
+    {
+        var results = await ExecuteSqlAsync<TRecord[]>($"SELECT * FROM type::thing('{tableName}', '{id}');", cancellationToken);
+
+        return results.FirstOrDefault();
+    }
+
     private static ISurrealClientOptions BuildOptions(Action<SurrealClientOptionsBuilder> optionsBuilder)
     {
         var builder = new SurrealClientOptionsBuilder();

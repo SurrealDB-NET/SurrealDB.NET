@@ -1,5 +1,5 @@
 using SurrealDB.Examples;
 
-var example = new DeleteAllRecordsWithRestClient();
+var example = new GetRecordByIdWithRestClient();
 
 await example.RunAsync();

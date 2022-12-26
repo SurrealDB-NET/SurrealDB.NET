@@ -29,4 +29,10 @@ public class SurrealRpcClient : ISurrealClient
     {
         throw new NotImplementedException();
     }
+
+    public Task<TRecord?> GetRecordByIdAsync<TRecord>(string tableName, string id, CancellationToken cancellationToken = default)
+        where TRecord : class
+    {
+        throw new NotImplementedException();
+    }
 }

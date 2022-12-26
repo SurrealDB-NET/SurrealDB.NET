@@ -40,4 +40,15 @@ public interface ISurrealClient
     /// <returns>The task object representing the asynchronous operation.</returns>
     public Task<IEnumerable<TRecord>> GetAllRecordsAsync<TRecord>(string tableName, CancellationToken cancellationToken = default)
         where TRecord : class;
+
+    /// <summary>
+    /// 	Select a specific record from the database by its ID. It is equivalent to the GET /key/:table/:id endpoint.
+    /// </summary>
+    /// <param name="tableName">The name of the table to select from</param>
+    /// <param name="id">The ID of the record to select</param>
+    /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
+    /// <typeparam name="TRecord">The target type to deserialize to</typeparam>
+    /// <returns>The task object representing the asynchronous operation.</returns>
+    public Task<TRecord?> GetRecordByIdAsync<TRecord>(string tableName, string id, CancellationToken cancellationToken = default)
+        where TRecord : class;
 }
