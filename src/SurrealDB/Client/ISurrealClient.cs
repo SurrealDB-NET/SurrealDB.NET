@@ -65,6 +65,19 @@ public interface ISurrealClient
         where TRecord : class;
 
     /// <summary>
+    /// 	Creates or updates a single specific record in the database by its ID. If the record already exists, then only the specified fields will be updated.
+    ///     It is equivalent to the PATCH /key/:table/:id endpoint.
+    /// </summary>
+    /// <param name="tableName">The name of the table</param>
+    /// <param name="id">The ID of the record</param>
+    /// <param name="content">A SurrealQL object that will be passed to the CONTENT keyword</param>
+    /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
+    /// <typeparam name="TRecord">The target type to deserialize to</typeparam>
+    /// <returns>The task object representing the asynchronous operation.</returns>
+    public Task<TRecord> PatchRecordAsync<TRecord>(string tableName, string id, string content, CancellationToken cancellationToken = default)
+        where TRecord : class;
+
+    /// <summary>
     /// 	Creates or updates a single specific record in the database by its ID. It is equivalent to the PUT /key/:table/:id endpoint.
     /// </summary>
     /// <param name="tableName">The name of the table to upsert to</param>

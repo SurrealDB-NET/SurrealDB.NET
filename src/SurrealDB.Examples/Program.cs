@@ -1,5 +1,5 @@
 using SurrealDB.Examples;
 
-var example = new UpsertRecordWithRestClient();
+var example = new PatchRecordWithRestClient();
 
 await example.RunAsync();
