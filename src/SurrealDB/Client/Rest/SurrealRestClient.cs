@@ -23,6 +23,11 @@ public class SurrealRestClient : ISurrealClient
         return results.Single();
     }
 
+    public async Task DeleteAllRecordsAsync(string tableName, CancellationToken cancellationToken = default)
+    {
+        await ExecuteSqlAsync<object[]>($"DELETE FROM type::table('{tableName}');", cancellationToken);
+    }
+
     public async Task<TResult> ExecuteSqlAsync<TResult>(string sql, CancellationToken cancellationToken = default)
         where TResult : class
     {

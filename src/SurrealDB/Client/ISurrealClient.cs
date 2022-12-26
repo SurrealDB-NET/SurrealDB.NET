@@ -10,23 +10,34 @@ public interface ISurrealClient
     /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
     /// <typeparam name="TRecord">The target type to deserialize to</typeparam>
     /// <returns>The task object representing the asynchronous operation.</returns>
-    public Task<TRecord> CreateRecordAsync<TRecord>(string tableName, string content, CancellationToken cancellationToken = default) where TRecord : class;
+    public Task<TRecord> CreateRecordAsync<TRecord>(string tableName, string content, CancellationToken cancellationToken = default)
+        where TRecord : class;
 
     /// <summary>
-    ///     Execute a SurrealQL query. It is equivalent to the POST /sql endpoint.
+    /// 	Deletes all records from the specified table in the database. It is equivalent to the DELETE /key/:table endpoint.
+    /// </summary>
+    /// <param name="tableName">The name of the table to delete from</param>
+    /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
+    /// <returns>The task object representing the asynchronous operation.</returns>
+    public Task DeleteAllRecordsAsync(string tableName, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    ///     Execute a set SurrealQL statements. It is equivalent to the POST /sql endpoint.
     /// </summary>
     /// <param name="sql">The SurrealQL query to execute</param>
     /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
     /// <typeparam name="TResult">The target type to deserialize to</typeparam>
     /// <returns>The task object representing the asynchronous operation.</returns>
-    public Task<TResult> ExecuteSqlAsync<TResult>(string sql, CancellationToken cancellationToken = default) where TResult : class;
+    public Task<TResult> ExecuteSqlAsync<TResult>(string sql, CancellationToken cancellationToken = default)
+        where TResult : class;
 
     /// <summary>
-    /// 	Selects all records in a table from the database. It is equivalent to the GET /key/:table endpoint.
+    /// 	Selects all records in a specific table in the database. It is equivalent to the GET /key/:table endpoint.
     /// </summary>
     /// <param name="tableName">The name of the table to select from</param>
     /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
     /// <typeparam name="TRecord">The target type to deserialize to</typeparam>
     /// <returns>The task object representing the asynchronous operation.</returns>
-    public Task<IEnumerable<TRecord>> GetAllRecordsAsync<TRecord>(string tableName, CancellationToken cancellationToken = default) where TRecord : class;
+    public Task<IEnumerable<TRecord>> GetAllRecordsAsync<TRecord>(string tableName, CancellationToken cancellationToken = default)
+        where TRecord : class;
 }
