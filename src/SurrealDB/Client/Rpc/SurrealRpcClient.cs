@@ -24,6 +24,11 @@ public class SurrealRpcClient : ISurrealClient
         throw new NotImplementedException();
     }
 
+    public Task DeleteRecordByIdAsync(string tableName, string id, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<TResult> ExecuteSqlAsync<TResult>(string sql, CancellationToken cancellationToken = default)
         where TResult : class
     {

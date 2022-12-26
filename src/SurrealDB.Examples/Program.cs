@@ -1,5 +1,5 @@
 using SurrealDB.Examples;
 
-var example = new PatchRecordWithRestClient();
+var example = new DeleteRecordByIdWithRestClient();
 
 await example.RunAsync();

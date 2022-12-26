@@ -36,6 +36,11 @@ public class SurrealRestClient : ISurrealClient
         await ExecuteSqlAsync<object[]>($"DELETE FROM type::table('{tableName}');", cancellationToken);
     }
 
+    public async Task DeleteRecordByIdAsync(string tableName, string id, CancellationToken cancellationToken = default)
+    {
+        await ExecuteSqlAsync<object[]>($"DELETE FROM type::thing('{tableName}', '{id}');", cancellationToken);
+    }
+
     public async Task<TResult> ExecuteSqlAsync<TResult>(string sql, CancellationToken cancellationToken = default)
         where TResult : class
     {

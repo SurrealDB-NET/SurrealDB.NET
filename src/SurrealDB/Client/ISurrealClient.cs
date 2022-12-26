@@ -32,6 +32,15 @@ public interface ISurrealClient
     /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
     /// <returns>The task object representing the asynchronous operation.</returns>
     public Task DeleteAllRecordsAsync(string tableName, CancellationToken cancellationToken = default);
+    
+    /// <summary>
+    /// 	Delete a specific record from the database by its ID. It is equivalent to the DELETE /key/:table/:id endpoint.
+    /// </summary>
+    /// <param name="tableName">The name of the table to delete from</param>
+    /// <param name="id">The ID of the record to delete</param>
+    /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
+    /// <returns>The task object representing the asynchronous operation.</returns>
+    public Task DeleteRecordByIdAsync(string tableName, string id, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Execute a set SurrealQL statements. It is equivalent to the POST /sql endpoint.
