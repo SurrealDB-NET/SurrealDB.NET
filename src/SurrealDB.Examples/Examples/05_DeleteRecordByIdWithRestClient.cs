@@ -4,6 +4,10 @@ using Client.Rest;
 
 public class DeleteRecordByIdWithRestClient : IExample
 {
+    public string Name => "Delete a specific record by its ID using the REST client";
+
+    public string Description => "This method maps directly to the DELETE /key/:table/:id endpoint";
+
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         var httpClient = new HttpClient();

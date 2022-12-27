@@ -2,8 +2,12 @@ namespace SurrealDB.Examples;
 
 using Client.Rest;
 
-public class PatchRecordWithRestClient : IExample
+public class ModifyRecordWithRestClient : IExample
 {
+    public string Name => "Modify a specific record by its ID using the REST client";
+
+    public string Description => "This method maps directly to the PATCH /key/:table/:id endpoint";
+
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         var httpClient = new HttpClient();

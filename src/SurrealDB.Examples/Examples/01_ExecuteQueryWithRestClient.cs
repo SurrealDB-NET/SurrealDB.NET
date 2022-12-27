@@ -4,6 +4,10 @@ using Client.Rest;
 
 public class ExecuteQueryWithRestClientExample : IExample
 {
+    public string Name => "Execute SurrealQL using the REST Client";
+
+    public string Description => "This method maps directly to the POST /sql endpoint.";
+
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         var httpClient = new HttpClient();
