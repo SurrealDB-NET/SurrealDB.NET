@@ -1,6 +1,6 @@
 namespace SurrealDB.Client.Rest.Responses;
 
-public record ErrorResponse
+public record FatalErrorResponse
 (
     uint Code,
     string Description,

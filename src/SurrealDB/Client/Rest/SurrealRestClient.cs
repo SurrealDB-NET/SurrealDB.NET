@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
+using SurrealDB.Client.Rest.Enums;
 using SurrealDB.Client.Rest.Responses;
 
 namespace SurrealDB.Client.Rest;
