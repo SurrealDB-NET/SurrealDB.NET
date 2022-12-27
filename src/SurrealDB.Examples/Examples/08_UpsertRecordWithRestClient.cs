@@ -2,8 +2,12 @@ namespace SurrealDB.Examples;
 
 using Client.Rest;
 
-public class PatchRecordWithRestClient : IExample
+public class UpsertRecordWithRestClient : IExample
 {
+    public string Name => "Upsert a specific record by its ID using the REST client";
+
+    public string Description => "This method maps directly to the PUT /key/:table/:id endpoint";
+
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         var httpClient = new HttpClient();
@@ -11,7 +15,7 @@ public class PatchRecordWithRestClient : IExample
         var client = new SurrealRestClient(httpClient, options =>
         {
             options
-                .WithBaseAddress("http://localhost:8000")
+                .WithAddress("http://localhost:8000")
                 .WithDatabase("test")
                 .WithNamespace("test")
                 .WithUsername("root")
@@ -22,7 +26,7 @@ public class PatchRecordWithRestClient : IExample
             time: time::now()
         }";
 
-        var record = await client.PatchRecordAsync<object>("test", "test_id", content, cancellationToken);
+        var record = await client.UpsertRecordAsync<object>("test", "test_id", content, cancellationToken);
 
         Console.WriteLine(record);
     }

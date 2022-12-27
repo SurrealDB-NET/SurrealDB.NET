@@ -1,13 +1,13 @@
-﻿namespace SurrealDB.Examples;
+namespace SurrealDB.Examples;
 
 using Client.Rest;
 
-public class ExecuteQueryWithRestClientExample : IExample
+public class GetAllRecordsWithRestClient : IExample
 {
-    public string Name => "Execute SurrealQL using the REST Client";
-
-    public string Description => "This method maps directly to the POST /sql endpoint.";
-
+    public string Name => "Select all records from a specific table using the REST client";
+    
+    public string Description => "This method maps directly to the GET /key/:table endpoint";
+    
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         var httpClient = new HttpClient();
@@ -22,9 +22,9 @@ public class ExecuteQueryWithRestClientExample : IExample
                 .WithPassword("root");
         });
 
-        var result = await client.ExecuteSqlAsync<IEnumerable<object>>("SELECT * FROM test", cancellationToken);
+        var records = await client.GetAllRecordsAsync<object>("test", cancellationToken);
 
-        foreach (var record in result)
+        foreach (var record in records)
         {
             Console.WriteLine(record);
         }

@@ -83,7 +83,7 @@ public interface ISurrealClient
     /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
     /// <typeparam name="TRecord">The target type to deserialize to</typeparam>
     /// <returns>The task object representing the asynchronous operation.</returns>
-    public Task<TRecord> PatchRecordAsync<TRecord>(string tableName, string id, string content, CancellationToken cancellationToken = default)
+    public Task<TRecord> ModifyRecordAsync<TRecord>(string tableName, string id, string content, CancellationToken cancellationToken = default)
         where TRecord : class;
 
     /// <summary>

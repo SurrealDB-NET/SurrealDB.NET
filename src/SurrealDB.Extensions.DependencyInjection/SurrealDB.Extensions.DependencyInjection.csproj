@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SurrealDB\SurrealDB.csproj" />
+      <ProjectReference Include="..\SurrealDB.Client\SurrealDB.Client.csproj" />
     </ItemGroup>
 
 </Project>

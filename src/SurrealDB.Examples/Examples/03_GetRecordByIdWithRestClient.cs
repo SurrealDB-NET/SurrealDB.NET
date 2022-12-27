@@ -2,8 +2,12 @@ namespace SurrealDB.Examples;
 
 using Client.Rest;
 
-public class DeleteAllRecordsWithRestClient : IExample
+public class GetRecordByIdWithRestClient : IExample
 {
+    public string Name => "Select a specific record by its ID using the REST client";
+
+    public string Description => "This method maps directly to the GET /key/:table/:id endpoint";
+
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         var httpClient = new HttpClient();
@@ -11,15 +15,15 @@ public class DeleteAllRecordsWithRestClient : IExample
         var client = new SurrealRestClient(httpClient, options =>
         {
             options
-                .WithBaseAddress("http://localhost:8000")
+                .WithAddress("http://localhost:8000")
                 .WithDatabase("test")
                 .WithNamespace("test")
                 .WithUsername("root")
                 .WithPassword("root");
         });
 
-        await client.DeleteAllRecordsAsync("test", cancellationToken);
+        var record = await client.GetRecordByIdAsync<object>("test", "k5qng7fmb0vpjqelzmt2", cancellationToken);
 
-        Console.WriteLine("OK");
+        Console.WriteLine(record);
     }
 }

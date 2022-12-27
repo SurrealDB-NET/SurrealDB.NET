@@ -4,7 +4,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{750F7DED-DB83-4BCA-A37A-8074CD4F7132}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurrealDB", "src\SurrealDB\SurrealDB.csproj", "{7DB203A6-F446-4926-84E0-3B421C67E94D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurrealDB.Client", "src\SurrealDB.Client\SurrealDB.Client.csproj", "{7DB203A6-F446-4926-84E0-3B421C67E94D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurrealDB.Extensions.DependencyInjection", "src\SurrealDB.Extensions.DependencyInjection\SurrealDB.Extensions.DependencyInjection.csproj", "{3A4797C7-1310-4E81-85C5-421E07563555}"
 EndProject

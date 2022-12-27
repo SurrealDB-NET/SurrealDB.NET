@@ -4,6 +4,10 @@ using Client.Rest;
 
 public class CreateRecordWithRestClient : IExample
 {
+    public string Name => "Create a record in a specific table using the REST client";
+
+    public string Description => "This method maps directly to the POST /key/:table and POST /key/:table/:id endpoint";
+
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         var httpClient = new HttpClient();
@@ -11,7 +15,7 @@ public class CreateRecordWithRestClient : IExample
         var client = new SurrealRestClient(httpClient, options =>
         {
             options
-                .WithBaseAddress("http://localhost:8000")
+                .WithAddress("http://localhost:8000")
                 .WithDatabase("test")
                 .WithNamespace("test")
                 .WithUsername("root")

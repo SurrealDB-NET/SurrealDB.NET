@@ -3,8 +3,12 @@ using SurrealDB.QueryBuilder.Enums;
 
 namespace SurrealDB.Examples;
 
-public class SelectAll : IExample
+public class QueryBuilder : IExample
 {
+    public string Name => throw new NotImplementedException();
+
+    public string Description => throw new NotImplementedException();
+
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         await Task.CompletedTask;

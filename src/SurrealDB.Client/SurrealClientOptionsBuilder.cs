@@ -26,7 +26,7 @@ public class SurrealClientOptionsBuilder
         _options = new SurrealClientOptions();
     }
 
-    public SurrealClientOptionsBuilder WithBaseAddress(string baseAddress)
+    public SurrealClientOptionsBuilder WithAddress(string baseAddress)
     {
         _options.BaseAddress = baseAddress;
 
