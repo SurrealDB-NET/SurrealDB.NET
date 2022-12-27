@@ -18,7 +18,7 @@ public class ExecuteQueryWithRestClientExample : IExample
                 .WithPassword("root");
         });
 
-        var result = await client.ExecuteSqlAsync<IEnumerable<object>>("SELECT * FROM `test`", cancellationToken);
+        var result = await client.ExecuteSqlAsync<IEnumerable<object>>("SELECT * FROM test", cancellationToken);
 
         foreach (var record in result)
         {

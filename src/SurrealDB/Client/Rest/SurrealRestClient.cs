@@ -1,10 +1,9 @@
-namespace SurrealDB.Client.Rest;
-
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
-using Enums;
-using Responses;
+using SurrealDB.Client.Rest.Responses;
+
+namespace SurrealDB.Client.Rest;
 
 public class SurrealRestClient : ISurrealClient
 {

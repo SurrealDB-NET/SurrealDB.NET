@@ -6,7 +6,7 @@ namespace SurrealDB.Client;
 internal class SurrealClientOptions : ISurrealClientOptions
 {
     public string BaseAddress { get; set; }
-    
+
     public string Database { get; set; }
 
     public string Namespace { get; set; }
