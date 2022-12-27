@@ -5,9 +5,9 @@ namespace SurrealDB.Examples;
 
 public class QueryBuilder : IExample
 {
-    public string Name => throw new NotImplementedException();
+    public string Name => "SurrealQuery Builder";
 
-    public string Description => throw new NotImplementedException();
+    public string Description => "This example shows how to use the query builder to build a query.";
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
@@ -17,13 +17,13 @@ public class QueryBuilder : IExample
                 .Select("id", "name")
                 .From(source: "pokemon",
                       alias: "Pokemon")
-                .Where(predicate: "primaryType.name == \"Fire\"")
+                .Where("primaryType.name == \"Fire\"")
                 .OrderBy(field: "name",
                          textSortMethod: TextSortMethod.Collate,
                          sortOrder: SortOrder.DESC)
                 .LimitBy(10)
                 .StartAt(5)
-                .Fetch("moveset")
+                .Fetch("moveset", "evolution")
                 .Timeout("30s")
                 .Parallel()
                 .Build());
