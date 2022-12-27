@@ -10,6 +10,7 @@
     <ItemGroup>
       <ProjectReference Include="..\SurrealDB.Extensions.DependencyInjection\SurrealDB.Extensions.DependencyInjection.csproj" />
       <ProjectReference Include="..\SurrealDB\SurrealDB.csproj" />
+      <ProjectReference Include="..\SurrealDB.QueryBuilder\SurrealDB.QueryBuilder.csproj" />
     </ItemGroup>
 
     <ItemGroup>
