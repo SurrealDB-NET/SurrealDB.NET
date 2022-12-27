@@ -18,6 +18,7 @@ public class QueryBuilder : IExample
                 .From(source: "pokemon",
                       alias: "Pokemon")
                 .Where("primaryType.name == \"Fire\"")
+                .GroupBy("secondaryType.name")
                 .OrderBy(field: "name",
                          textSortMethod: TextSortMethod.Collate,
                          sortOrder: SortOrder.DESC)
