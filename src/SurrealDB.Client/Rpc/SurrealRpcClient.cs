@@ -47,7 +47,7 @@ public class SurrealRpcClient : ISurrealClient
         throw new NotImplementedException();
     }
 
-    public Task<TRecord> PatchRecordAsync<TRecord>(string tableName, string id, string content, CancellationToken cancellationToken = default)
+    public Task<TRecord> ModifyRecordAsync<TRecord>(string tableName, string id, string content, CancellationToken cancellationToken = default)
         where TRecord : class
     {
         throw new NotImplementedException();

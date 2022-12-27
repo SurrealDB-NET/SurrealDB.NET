@@ -22,7 +22,7 @@ public class PatchRecordWithRestClient : IExample
             time: time::now()
         }";
 
-        var record = await client.PatchRecordAsync<object>("test", "test_id", content, cancellationToken);
+        var record = await client.ModifyRecordAsync<object>("test", "test_id", content, cancellationToken);
 
         Console.WriteLine(record);
     }
