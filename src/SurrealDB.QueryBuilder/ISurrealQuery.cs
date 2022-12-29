@@ -1,4 +1,4 @@
-using SurrealDB.QueryBuilder.IFluent;
+using SurrealDB.QueryBuilder.Fluent;
 
 namespace SurrealDB;
 

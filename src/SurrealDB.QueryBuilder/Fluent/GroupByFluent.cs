@@ -1,6 +1,5 @@
 using System.Text;
 using SurrealDB.QueryBuilder.Enums;
-using SurrealDB.QueryBuilder.IFluent;
 
 namespace SurrealDB.QueryBuilder.Fluent;
 
@@ -15,7 +14,7 @@ internal class GroupByFluent : OrderByFluent, IGroupByFluent
         return new OrderByFluent(Query);
     }
 
-    public IOrderByFluent OrderBy(string field, TextSortMethod textSortMethod = TextSortMethod.None, SortOrder sortOrder = SortOrder.Asc)
+    public IOrderByFluent OrderBy(string field, SortOrder sortOrder = SortOrder.ASC, TextSortMethod textSortMethod = TextSortMethod.None)
     {
         Query.Append(" ORDER ");
         Query.Append(field);

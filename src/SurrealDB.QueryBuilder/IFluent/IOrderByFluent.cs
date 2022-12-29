@@ -1,4 +1,4 @@
-namespace SurrealDB.QueryBuilder.IFluent;
+namespace SurrealDB.QueryBuilder.Fluent;
 
 public interface IOrderByFluent
     : ILimitByFluent,

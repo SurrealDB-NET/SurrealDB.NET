@@ -1,6 +1,6 @@
 using SurrealDB.QueryBuilder.Enums;
 
-namespace SurrealDB.QueryBuilder.IFluent;
+namespace SurrealDB.QueryBuilder.Fluent;
 
 public interface IGroupByFluent
     : IOrderByFluent,
@@ -13,5 +13,5 @@ public interface IGroupByFluent
 {
     IOrderByFluent OrderByRandom();
 
-    IOrderByFluent OrderBy(string field, TextSortMethod textSortMethod = TextSortMethod.None, SortOrder sortOrder = SortOrder.Asc);
+    IOrderByFluent OrderBy(string field, SortOrder sortOrder = SortOrder.ASC, TextSortMethod textSortMethod = TextSortMethod.None);
 }

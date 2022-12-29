@@ -1,5 +1,4 @@
 using System.Text;
-using SurrealDB.QueryBuilder.IFluent;
 
 namespace SurrealDB.QueryBuilder.Fluent;
 
