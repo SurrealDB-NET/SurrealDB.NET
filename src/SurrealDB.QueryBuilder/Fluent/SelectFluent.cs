@@ -5,7 +5,7 @@ namespace SurrealDB.QueryBuilder.Fluent;
 
 internal class SelectFluent : ISelectFluent
 {
-    private StringBuilder _query;
+    private readonly StringBuilder _query;
 
     internal SelectFluent(StringBuilder currentQuery)
         => _query = currentQuery;

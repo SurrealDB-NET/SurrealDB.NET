@@ -10,7 +10,7 @@ internal class TimeoutFluent : ParallelFluent, ITimeoutFluent
 
     public IParallelFluent Parallel()
     {
-        _query.Append(" PARALLEL");
-        return new ParallelFluent(_query);
+        Query.Append(" PARALLEL");
+        return new ParallelFluent(Query);
     }
 }

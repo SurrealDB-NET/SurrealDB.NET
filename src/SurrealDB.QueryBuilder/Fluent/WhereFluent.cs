@@ -10,7 +10,7 @@ internal class WhereFluent : SplitAtFluent, IWhereFluent
 
     public ISplitAtFluent SplitAt(params string[] fields)
     {
-        _query.Append($" SPLIT {string.Join(", ", fields)}");
-        return new SplitAtFluent(_query);
+        Query.Append($" SPLIT {string.Join(", ", fields)}");
+        return new SplitAtFluent(Query);
     }
 }

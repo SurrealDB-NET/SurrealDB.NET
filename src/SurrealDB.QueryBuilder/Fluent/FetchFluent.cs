@@ -10,7 +10,7 @@ internal class FetchFluent : TimeoutFluent, IFetchFluent
 
     public ITimeoutFluent Timeout(string timeout)
     {
-        _query.Append($" TIMEOUT {timeout}");
-        return new TimeoutFluent(_query);
+        Query.Append($" TIMEOUT {timeout}");
+        return new TimeoutFluent(Query);
     }
 }

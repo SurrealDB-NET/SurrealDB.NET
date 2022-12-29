@@ -6,7 +6,7 @@ namespace SurrealDB.QueryBuilder;
 
 public class SurrealQuery : ISurrealQuery
 {
-    private StringBuilder _query;
+    private readonly StringBuilder _query;
 
     public SurrealQuery()
         => _query = new StringBuilder();

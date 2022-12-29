@@ -21,7 +21,7 @@ public class QueryBuilder : IExample
                 .GroupBy("secondaryType.name")
                 .OrderBy(field: "name",
                          textSortMethod: TextSortMethod.Collate,
-                         sortOrder: SortOrder.DESC)
+                         sortOrder: SortOrder.Desc)
                 .LimitBy(10)
                 .StartAt(5)
                 .Fetch("moveset", "evolution")

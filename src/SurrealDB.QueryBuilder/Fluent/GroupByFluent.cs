@@ -11,17 +11,17 @@ internal class GroupByFluent : OrderByFluent, IGroupByFluent
 
     public IOrderByFluent OrderByRandom()
     {
-        _query.Append(" ORDER RAND()");
-        return new OrderByFluent(_query);
+        Query.Append(" ORDER RAND()");
+        return new OrderByFluent(Query);
     }
 
-    public IOrderByFluent OrderBy(string field, TextSortMethod textSortMethod = TextSortMethod.None, SortOrder sortOrder = SortOrder.ASC)
+    public IOrderByFluent OrderBy(string field, TextSortMethod textSortMethod = TextSortMethod.None, SortOrder sortOrder = SortOrder.Asc)
     {
-        _query.Append(" ORDER ");
-        _query.Append(field);
+        Query.Append(" ORDER ");
+        Query.Append(field);
         if (textSortMethod is not TextSortMethod.None)
-            _query.Append($" {textSortMethod.ToString().ToUpper()}");
-        _query.Append($" {sortOrder.ToString().ToUpper()}");
-        return new OrderByFluent(_query);
+            Query.Append($" {textSortMethod.ToString().ToUpper()}");
+        Query.Append($" {sortOrder.ToString().ToUpper()}");
+        return new OrderByFluent(Query);
     }
 }

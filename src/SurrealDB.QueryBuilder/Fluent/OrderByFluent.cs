@@ -10,7 +10,7 @@ internal class OrderByFluent : LimitByFluent, IOrderByFluent
 
     public ILimitByFluent LimitBy(int limit)
     {
-        _query.Append($" LIMIT {limit}");
-        return new LimitByFluent(_query);
+        Query.Append($" LIMIT {limit}");
+        return new LimitByFluent(Query);
     }
 }

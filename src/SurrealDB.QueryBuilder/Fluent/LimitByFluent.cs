@@ -10,7 +10,7 @@ internal class LimitByFluent : StartAtFluent, ILimitByFluent
 
     public IStartAtFluent StartAt(int startAt)
     {
-        _query.Append($" START {startAt}");
-        return new StartAtFluent(_query);
+        Query.Append($" START {startAt}");
+        return new StartAtFluent(Query);
     }
 }
