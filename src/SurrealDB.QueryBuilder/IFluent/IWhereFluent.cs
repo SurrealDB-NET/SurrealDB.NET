@@ -1,5 +1,3 @@
-using SurrealDB.QueryBuilder.Enums;
-
 namespace SurrealDB.QueryBuilder.IFluent;
 
 public interface IWhereFluent
