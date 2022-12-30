@@ -2,48 +2,48 @@ namespace SurrealDB.QueryBuilder.Functions;
 
 public static class StringFunction
 {
-    public static string Concat(params object[] values)
-        => $"string::concat([{string.Join(", ", values)}])";
+    public static string Concat(params string[] values)
+        => $"string::concat([{string.Join(", ", values.Select(value => $"'{value}'"))}])";
 
-    public static string EndsWith(object value, object suffix)
-        => $"string::endsWith({value}, {suffix})";
+    public static string EndsWith(string value, string suffix)
+        => $"string::endsWith('{value}', {suffix})";
 
-    public static string Join(object delimiter, params object[] values)
-        => $"string::join({delimiter}, {string.Join(", ", values)})";
+    public static string Join(string delimiter, params string[] values)
+        => $"string::join({delimiter}, {string.Join(", ", values.Select(value => $"'{value}'"))})";
 
-    public static string Length(object value)
-        => $"string::length({value})";
+    public static string Length(string value)
+        => $"string::length('{value}')";
 
-    public static string Lowercase(object value)
-        => $"string::lowercase({value})";
+    public static string Lowercase(string value)
+        => $"string::lowercase('{value}')";
 
-    public static string Repeat(object value, ulong count)
-        => $"string::repeat({value}, {count})";
+    public static string Repeat(string value, ulong count)
+        => $"string::repeat('{value}', {count})";
 
-    public static string Replace(object value, object search, object replace)
-        => $"string::replace({value}, {search}, {replace})";
+    public static string Replace(string value, string search, string replace)
+        => $"string::replace('{value}', '{search}', '{replace}')";
 
-    public static string Reverse(object value)
-        => $"string::reverse({value})";
+    public static string Reverse(string value)
+        => $"string::reverse('{value}')";
 
-    public static string Slice(object value, int start, int length)
-        => $"string::slice({value}, {start}, {length})";
+    public static string Slice(string value, long start, long length)
+        => $"string::slice('{value}', {start}, {length})";
 
-    public static string Slug(object value)
-        => $"string::slug({value})";
+    public static string Slug(string value)
+        => $"string::slug('{value}')";
 
-    public static string Split(object value, object delimiter)
-        => $"string::split({value}, {delimiter})";
+    public static string Split(string value, string delimiter)
+        => $"string::split('{value}', '{delimiter}')";
 
-    public static string StartsWith(object value, object prefix)
-        => $"string::startsWith({value}, {prefix})";
+    public static string StartsWith(string value, string prefix)
+        => $"string::startsWith('{value}', {prefix})";
 
-    public static string Trim(object value)
-        => $"string::trim({value})";
+    public static string Trim(string value)
+        => $"string::trim('{value}')";
 
-    public static string Uppercase(object value)
-        => $"string::uppercase({value})";
+    public static string Uppercase(string value)
+        => $"string::uppercase('{value}')";
 
-    public static string Words(object value)
-        => $"string::words({value})";
+    public static string Words(string value)
+        => $"string::words('{value}')";
 }
