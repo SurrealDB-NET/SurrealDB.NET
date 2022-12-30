@@ -1,6 +1,6 @@
 namespace SurrealDB.QueryBuilder.Functions;
 
-public sealed class SessionFunction
+public sealed class SessionFunctions
 {
     public static string DB()
         => "session::db()";

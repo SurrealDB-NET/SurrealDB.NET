@@ -1,6 +1,6 @@
 namespace SurrealDB.QueryBuilder.Functions;
 
-public static class StringFunction
+public static class StringFunctions
 {
     public static string Concat(params string[] values)
         => $"string::concat([{string.Join(", ", values.Select(value => $"'{value}'"))}])";

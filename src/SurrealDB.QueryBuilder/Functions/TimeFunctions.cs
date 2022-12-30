@@ -2,7 +2,7 @@ using SurrealDB.QueryBuilder.Enums;
 
 namespace SurrealDB.QueryBuilder.Functions;
 
-public static class TimeFunction
+public static class TimeFunctions
 {
     public static string Day(string datetime)
         => $"time::day('{datetime}')";

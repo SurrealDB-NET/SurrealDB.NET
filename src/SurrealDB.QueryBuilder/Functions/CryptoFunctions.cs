@@ -1,6 +1,6 @@
 namespace SurrealDB.QueryBuilder.Functions;
 
-public static class CryptoFunction
+public static class CryptoFunctions
 {
     public static string Md5(string value)
         => $"crypto::md5('{value}')";

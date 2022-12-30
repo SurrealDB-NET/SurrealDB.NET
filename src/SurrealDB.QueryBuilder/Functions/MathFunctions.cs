@@ -2,7 +2,7 @@ using System.Numerics;
 
 namespace SurrealDB.QueryBuilder.Functions;
 
-public static class MathFunction
+public static class MathFunctions
 {
     public static string Abs<TNumber>(TNumber number) where TNumber : INumber<TNumber>
         => $"math::abs({number})";

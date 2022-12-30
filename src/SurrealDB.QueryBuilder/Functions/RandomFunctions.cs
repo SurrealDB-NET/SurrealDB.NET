@@ -2,7 +2,7 @@ using System.Numerics;
 
 namespace SurrealDB.QueryBuilder.Functions;
 
-public static class RandomFunction
+public static class RandomFunctions
 {
     public static string Rand()
         => "rand()";

@@ -2,7 +2,7 @@ using SurrealDB.QueryBuilder.Enums;
 
 namespace SurrealDB.QueryBuilder.Functions;
 
-public static class ArrayFunction
+public static class ArrayFunctions
 {
     public static string Combine(IEnumerable<object> array1, IEnumerable<object> array2)
         => $"array::combine([{string.Join(", ", array1)}], [{string.Join(", ", array2)}])";

@@ -1,6 +1,6 @@
 namespace SurrealDB.QueryBuilder.Functions;
 
-public static class ValidationFunction
+public static class ValidationFunctions
 {
     public static string IsAlphanum(string value)
         => $"is::alphanum('{value}')";

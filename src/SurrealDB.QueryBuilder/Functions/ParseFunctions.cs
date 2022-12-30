@@ -1,6 +1,6 @@
 namespace SurrealDB.QueryBuilder.Functions;
 
-public static class ParseFunction
+public static class ParseFunctions
 {
     public static class Email
     {
