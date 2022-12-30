@@ -31,14 +31,11 @@ public static class ArrayFunction
     public static string Sort(IEnumerable<object> array, SortOrder sortOrder)
         => $"array::sort([{string.Join(", ", array)}], {sortOrder.ToString().ToLower()})";
 
-    public static class SortDirection
-    {
-        public static string Asc(IEnumerable<object> array)
-            => $"array::sort::asc([{string.Join(", ", array)}])";
+    public static string SortByAsc(IEnumerable<object> array)
+        => $"array::sort::asc([{string.Join(", ", array)}])";
 
-        public static string Desc(IEnumerable<object> array)
-            => $"array::sort::desc([{string.Join(", ", array)}])";
-    }
+    public static string SortByDesc(IEnumerable<object> array)
+        => $"array::sort::desc([{string.Join(", ", array)}])";
 
     public static string Union(IEnumerable<object> array1, IEnumerable<object> array2)
         => $"array::union([{string.Join(", ", array1)}], [{string.Join(", ", array2)}])";
