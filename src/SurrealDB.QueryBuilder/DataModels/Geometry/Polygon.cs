@@ -1,4 +1,4 @@
-namespace SurrealDB.DataModels.Geometry;
+namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
 public sealed class Polygon : IGeometrical
 {

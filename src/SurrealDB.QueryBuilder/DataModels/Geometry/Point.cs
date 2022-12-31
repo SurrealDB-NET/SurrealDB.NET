@@ -1,26 +1,28 @@
-namespace SurrealDB.DataModels;
+namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
-public struct Point : IGeometrical, IEquatable<Point>
+/// <summary>
+/// A class that represents a geolocation point with latitude and longitude. It is equivalent to SurrealDB's Point object.
+/// </summary>
+public struct Point : IEquatable<Point>
 {
     private const string _type = "Point";
 
     public decimal[] Coordinates { get; set; }
 
     public Point()
-        => Coordinates = new decimal[2] { 0m, 0m };
+        => Coordinates = new[] {0m, 0m};
 
     public Point(decimal longitude, decimal latitude)
-        => Coordinates = new decimal[2] { longitude, latitude };
+        => Coordinates = new[] {longitude, latitude};
 
     public static implicit operator Point((decimal longitude, decimal latitude) coordinates)
-        => new Point(coordinates.longitude, coordinates.latitude);
+        => new(coordinates.longitude, coordinates.latitude);
 
     public bool Equals(Point other)
         => Coordinates.SequenceEqual(other.Coordinates);
 
     public override bool Equals(object? other)
-        => other is Point point
-        && Equals(point);
+        => other is Point point && Equals(point);
 
     public override int GetHashCode()
         => HashCode.Combine(Coordinates);

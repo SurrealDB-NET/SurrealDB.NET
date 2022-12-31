@@ -1,4 +1,4 @@
-namespace SurrealDB.DataModels;
+namespace SurrealDB.QueryBuilder.DataModels;
 
 public interface IGeometrical
 {
