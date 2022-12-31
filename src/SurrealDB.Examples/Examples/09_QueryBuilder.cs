@@ -13,7 +13,7 @@ public class QueryBuilder : IExample
     {
         await Task.CompletedTask;
         Console.WriteLine(
-            new SurrealQuery()
+            SurrealQL
                 .Select("id", "name")
                 .From(source: "pokemon",
                       alias: "Pokemon")
