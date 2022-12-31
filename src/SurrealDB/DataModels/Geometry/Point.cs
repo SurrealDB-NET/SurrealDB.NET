@@ -1,4 +1,4 @@
-namespace SurrealDB.DataModels;
+namespace SurrealDB.DataModels.Geometry;
 
 public readonly struct Point : IEquatable<Point>
 {
@@ -7,20 +7,19 @@ public readonly struct Point : IEquatable<Point>
     public readonly decimal[] Coordinates { get; init; }
 
     public Point()
-        => Coordinates = new decimal[2] { 0m, 0m };
+        => Coordinates = new[] {0m, 0m};
 
     public Point(decimal longitude, decimal latitude)
-        => Coordinates = new decimal[2] { longitude, latitude };
+        => Coordinates = new[] {longitude, latitude};
 
     public static implicit operator Point((decimal longitude, decimal latitude) coordinates)
-        => new Point(coordinates.longitude, coordinates.latitude);
+        => new(coordinates.longitude, coordinates.latitude);
 
     public bool Equals(Point other)
         => Coordinates.SequenceEqual(other.Coordinates);
 
     public override bool Equals(object? other)
-        => other is Point point
-        && Equals(point);
+        => other is Point point && Equals(point);
 
     public override int GetHashCode()
         => HashCode.Combine(Coordinates);
@@ -28,7 +27,7 @@ public readonly struct Point : IEquatable<Point>
     public override string ToString()
         => $$"""
         {
-            type: {{_type}},
+            type: "{{_type}}",
             coordinates: [
                 {{Coordinates[0]}},
                 {{Coordinates[1]}}
