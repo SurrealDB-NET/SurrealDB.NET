@@ -22,7 +22,8 @@ public struct Point : IGeometry, IEquatable<Point>
         => Coordinates.SequenceEqual(other.Coordinates);
 
     public override bool Equals(object? other)
-        => other is Point point && Equals(point);
+        => other is Point point
+        && Equals(point);
 
     public override int GetHashCode()
         => HashCode.Combine(Coordinates);
