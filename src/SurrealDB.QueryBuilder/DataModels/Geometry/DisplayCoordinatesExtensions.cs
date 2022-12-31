@@ -1,6 +1,6 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
-internal static class GeometryDisplayExtension
+internal static class DisplayCoordinatesExtensions
 {
     internal static string DisplayCoordinates(this Point point)
         => $$"""
