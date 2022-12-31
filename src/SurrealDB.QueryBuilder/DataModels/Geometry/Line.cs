@@ -27,11 +27,3 @@ internal static class LineExtensions
             [ {{string.Join(", ", line.Coordinates.Select(p => $"[{p.Coordinates[0]}, {p.Coordinates[1]}]"))}} ]
         """;
 }
-
-public class Program
-{
-    public static void Main()
-    {
-        DateOnly date = new DateOnly(2021, 1, 1);
-    }
-}
