@@ -1,10 +1,10 @@
 namespace SurrealDB.DataModels;
 
-public readonly struct Point : IEquatable<Point>
+public struct Point : IGeometrical, IEquatable<Point>
 {
-    private const string _type = nameof(Point);
+    private const string _type = "Point";
 
-    public readonly decimal[] Coordinates { get; init; }
+    public decimal[] Coordinates { get; set; }
 
     public Point()
         => Coordinates = new decimal[2] { 0m, 0m };
@@ -28,11 +28,11 @@ public readonly struct Point : IEquatable<Point>
     public override string ToString()
         => $$"""
         {
-            type: {{_type}},
-            coordinates: [
-                {{Coordinates[0]}},
-                {{Coordinates[1]}}
-            ]
+          type: {{_type}},
+          coordinates: [
+            {{Coordinates[0]}},
+            {{Coordinates[1]}}
+          ]
         }
         """;
 
@@ -41,4 +41,12 @@ public readonly struct Point : IEquatable<Point>
 
     public static bool operator !=(Point left, Point right)
         => !left.Equals(right);
+}
+
+internal static class PointExtensions
+{
+    internal static string CoordinatesToString(this Point point)
+        => $$"""
+            [{{point.Coordinates[0]}}, {{point.Coordinates[1]}}]
+        """;
 }
