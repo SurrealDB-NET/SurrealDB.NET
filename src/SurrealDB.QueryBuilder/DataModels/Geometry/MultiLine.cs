@@ -14,7 +14,7 @@ public sealed class MultiLine : IGeometry
         {
           type: "{{_type}}",
           coordinates: [
-        {{string.Join(",\n", Coordinates.Select(l => l.DisplayCoordinates()))}}
+        {{string.Join(",\n", Coordinates.Select(line => line.DisplayCoordinates()))}}
           ]
         }
         """;

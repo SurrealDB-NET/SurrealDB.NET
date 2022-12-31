@@ -33,7 +33,7 @@ public sealed class Line : IGeometry, IEquatable<Line>
         {
           type: ""{{_type}}"",
           coordinates: [
-        {{string.Join(",\n", Coordinates.Select(p => p.DisplayCoordinates()))}}
+        {{string.Join(",\n", Coordinates.Select(point => point.DisplayCoordinates()))}}
           ]
         }
         """;

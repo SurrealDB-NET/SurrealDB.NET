@@ -17,7 +17,7 @@ public sealed class MultiPoint : IGeometry
         {
           type: "{{_type}}",
           coordinates: [
-        {{string.Join(",\n", Coordinates.Select(p => p.DisplayCoordinates()))}}
+        {{string.Join(",\n", Coordinates.Select(point => point.DisplayCoordinates()))}}
           ]
         }
         """;
