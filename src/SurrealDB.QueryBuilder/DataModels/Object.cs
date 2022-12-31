@@ -1,26 +1,23 @@
-namespace SurrealDB.QueryBuilder.DataModels;
-
 using System.Collections;
+using SurrealDB.QueryBuilder.DataModels.Geometry;
+
+namespace SurrealDB.QueryBuilder.DataModels;
 
 public class Object : IEnumerable
 {
-    private readonly IDictionary<string, object?> _items = new Dictionary<string, object?>();
+    private readonly IDictionary<string, object?> _items;
 
     public Object()
-    {
-    }
+        => _items = new Dictionary<string, object?>();
 
     public Object(IDictionary<string, object?> items)
-    {
-        _items = items;
-    }
+        => _items = items;
 
     public Object(IEnumerable<KeyValuePair<string, object?>> items)
     {
+        _items = new Dictionary<string, object?>(items.Count());
         foreach (var (key, value) in items)
-        {
             _items.Add(key, value);
-        }
     }
 
     public object? this[string key]
@@ -29,14 +26,11 @@ public class Object : IEnumerable
         set => _items[key] = value;
     }
 
-    public int Count
-        => _items.Count;
+    public int Count => _items.Count;
 
-    public IEnumerable<string> Keys
-        => _items.Keys;
+    public IEnumerable<string> Keys => _items.Keys;
 
-    public IEnumerable<object?> Values
-        => _items.Values;
+    public IEnumerable<object?> Values => _items.Values;
 
     public void Add(string key, object? value)
         => _items.Add(key, value);
@@ -49,7 +43,7 @@ public class Object : IEnumerable
 
     public IEnumerator GetEnumerator()
         => _items.GetEnumerator();
-    
+
     public bool Remove(string key)
         => _items.Remove(key);
 
@@ -106,11 +100,15 @@ public class Object : IEnumerable
                     break;
                 case IEnumerable<char>:
                 case IEnumerable<string>:
-                {
-                    var strings = value as IEnumerable<string> ?? Array.Empty<string>();
-                    body.Add(string.Join(",", strings.Select(v => $"\"{v}\"")));
+                    {
+                        var strings = value as IEnumerable<string> ?? Array.Empty<string>();
+                        body.Add(string.Join(",", strings.Select(str => $"\"{str}\"")));
+                        break;
+                    }
+
+                case IGeometry geometry:
+                    body.Add(geometry.ToString());
                     break;
-                }
                 case Object obj:
                     body.Add(obj.ToString());
                     break;
@@ -119,6 +117,9 @@ public class Object : IEnumerable
                     break;
                 case null:
                     body.Add("null");
+                    break;
+                case None:
+                    body.Add("none");
                     break;
                 default:
                     throw new NotSupportedException();
@@ -129,6 +130,6 @@ public class Object : IEnumerable
 
         body[^1] = ""; // Remove last comma
 
-        return "{" + body + "}";
+        return "{" + string.Join(",\n", body) + "}";
     }
 }
