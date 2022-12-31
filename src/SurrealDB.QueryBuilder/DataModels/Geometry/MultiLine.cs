@@ -1,6 +1,6 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
-public sealed class MultiLine : IGeometrical
+public sealed class MultiLine : IGeometry
 {
     private const string _type = "MultiLineString";
 
@@ -12,9 +12,9 @@ public sealed class MultiLine : IGeometrical
     public override string ToString()
         => $$"""
         {
-          type: {{_type}},
+          type: "{{_type}}",
           coordinates: [
-        {{string.Join(",\n", Coordinates.Select(l => l.CoordinatesToString()))}}
+        {{string.Join(",\n", Coordinates.Select(l => l.DisplayCoordinates()))}}
           ]
         }
         """;

@@ -1,6 +1,6 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
-public sealed class Line : IGeometrical
+public sealed class Line : IGeometry, IEquatable<Line>
 {
     private const string _type = "LineString";
 
@@ -9,21 +9,32 @@ public sealed class Line : IGeometrical
     public Line(Point[] coordinates)
         => Coordinates = coordinates;
 
+    public Line(IEnumerable<Point> coordinates)
+        => Coordinates = coordinates.ToArray();
+
+    public bool Equals(Line? other)
+      => other is Line
+      && Coordinates.SequenceEqual(other.Coordinates);
+
+    public override bool Equals(object? obj)
+      => Equals(obj as Line);
+
+    public override int GetHashCode()
+      => HashCode.Combine(Coordinates);
+
+    public static bool operator ==(Line? left, Line? right)
+      => Equals(left, right);
+
+    public static bool operator !=(Line? left, Line? right)
+      => !Equals(left, right);
+
     public override string ToString()
         => $$"""
         {
-          type: {{_type}},
+          type: ""{{_type}}"",
           coordinates: [
-        {{string.Join(",\n", Coordinates.Select(p => p.CoordinatesToString()))}}
+        {{string.Join(",\n", Coordinates.Select(p => p.DisplayCoordinates()))}}
           ]
         }
-        """;
-}
-
-internal static class LineExtensions
-{
-    internal static string CoordinatesToString(this Line line)
-        => $$"""
-            [ {{string.Join(", ", line.Coordinates.Select(p => $"[{p.Coordinates[0]}, {p.Coordinates[1]}]"))}} ]
         """;
 }

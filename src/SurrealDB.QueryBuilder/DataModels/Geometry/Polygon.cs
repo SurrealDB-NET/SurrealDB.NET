@@ -1,6 +1,6 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
-public sealed class Polygon : IGeometrical
+public sealed class Polygon : IGeometry
 {
     private const string _type = "Polygon";
 
@@ -9,12 +9,15 @@ public sealed class Polygon : IGeometrical
     public Polygon(Point[] coordinates)
         => Coordinates = coordinates;
 
+    public Polygon(IEnumerable<Point> coordinates)
+        => Coordinates = coordinates.ToArray();
+
     public override string ToString()
         => $$"""
         {
-          type: {{_type}},
+          type: "{{_type}}",
           coordinates: [[
-        {{string.Join(",\n", Coordinates.Select(p => p.CoordinatesToString()))}}
+        {{string.Join(",\n", Coordinates.Select(p => p.DisplayCoordinates()))}}
           ]]
         }
         """;

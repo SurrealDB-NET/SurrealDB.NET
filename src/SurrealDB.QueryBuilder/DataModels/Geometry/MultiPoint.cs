@@ -1,6 +1,6 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
-public sealed class MultiPoint : IGeometrical
+public sealed class MultiPoint : IGeometry
 {
     private const string _type = "MultiPoint";
 
@@ -9,12 +9,15 @@ public sealed class MultiPoint : IGeometrical
     public MultiPoint(Point[] coordinates)
         => Coordinates = coordinates;
 
+    public MultiPoint(IEnumerable<Point> coordinates)
+        => Coordinates = coordinates.ToArray();
+
     public override string ToString()
         => $$"""
         {
-          type: {{_type}},
+          type: "{{_type}}",
           coordinates: [
-        {{string.Join(",\n", Coordinates.Select(p => p.CoordinatesToString()))}}
+        {{string.Join(",\n", Coordinates.Select(p => p.DisplayCoordinates()))}}
           ]
         }
         """;
