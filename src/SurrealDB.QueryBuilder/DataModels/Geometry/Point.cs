@@ -1,5 +1,8 @@
-namespace SurrealDB.DataModels.Geometry;
+namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
+/// <summary>
+/// A class that represents a geolocation point with latitude and longitude. It is equivalent to SurrealDB's Point object.
+/// </summary>
 public readonly struct Point : IEquatable<Point>
 {
     private const string _type = nameof(Point);
