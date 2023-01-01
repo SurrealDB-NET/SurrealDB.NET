@@ -413,16 +413,11 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
         => d1._totalSeconds * d2._totalSeconds;
 
     /// <summary>
-    /// Divides two specified <see cref="Duration"/> instances in terms of their least common unit. The smallest common unit in this context is <see cref="Duration.Seconds"/>
-    /// to comply with SurrealDB's implmentation. Therefore, if either <paramref name="d1"/> and <paramref name="d2"/> is shorter than <see cref="Duration.Seconds"/>,
-    /// they are treated as 0s.
+    /// Divides two specified <see cref="Duration"/> instances in terms of their least common unit. The smallest common unit in this context is <see cref="Duration.Seconds"/> to comply with SurrealDB's implmentation. Therefore, if either <paramref name="d1"/> and <paramref name="d2"/> is shorter than <see cref="Duration.Seconds"/>, they are treated as 0s.
     /// </summary>
     /// <param name="d1">The <see cref="Duration"/> to divide from.</param>
     /// <param name="d2">The <see cref="Duration"/> to divide by.</param>
-    /// <returns>
-    /// If the largest unit of <paramref name="d2"/> is nanoseconds, <see langword="null"/> is returned to avoid division by zero. If the largest unit of
-    /// <paramref name="d1"/> is nanoseconds, "0" is returned, otherwise the result of the division is returned as a division of their least common unit as a <see cref="string"/>.
-    /// </returns>
+    /// <returns>If the largest unit of <paramref name="d2"/> is nanoseconds, <see langword="null"/> is returned to avoid division by zero. If the largest unit of <paramref name="d1"/> is nanoseconds, "0" is returned, otherwise the result of the division is returned as a division of their least common unit as a <see cref="string"/>.</returns>
     public static string? operator /(Duration d1, Duration d2)
     {
         if (d2._largestUnit == Unit.Nanoseconds)
@@ -542,8 +537,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
             .AddTicks((long)duration.Nanoseconds / 100);
 
     /// <summary>
-    /// Adds a <see cref="Duration"/> to a <see cref="DateTimeOffset"/> and returns the <see cref="DateTimeOffset"/> instance with the total time of the <see cref="Duration"/>
-    /// added to it.
+    /// Adds a <see cref="Duration"/> to a <see cref="DateTimeOffset"/> and returns the <see cref="DateTimeOffset"/> instance with the total time of the <see cref="Duration"/> added to it.
     /// </summary>
     /// <param name="dateTimeOffset">The <see cref="DateTimeOffset"/> to add the <see cref="Duration"/> to.</param>
     /// <param name="duration">The <see cref="Duration"/> to add to the <see cref="DateTimeOffset"/>.</param>
@@ -558,8 +552,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
             .AddTicks((long)duration.Nanoseconds / 100);
 
     /// <summary>
-    /// Subtracts a <see cref="Duration"/> from a <see cref="DateTime"/> and returns the <see cref="DateTime"/> instance with the total time of the <see cref="Duration"/> subtracted
-    /// from it.
+    /// Subtracts a <see cref="Duration"/> from a <see cref="DateTime"/> and returns the <see cref="DateTime"/> instance with the total time of the <see cref="Duration"/> subtracted from it.
     /// </summary>
     /// <param name="dateTime">The <see cref="DateTime"/> to subtract the <see cref="Duration"/> from.</param>
     /// <param name="duration">The <see cref="Duration"/> to subtract from the <see cref="DateTime"/>.</param>
@@ -574,8 +567,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
             .AddTicks(-(long)duration.Nanoseconds / 100);
 
     /// <summary>
-    /// Subtracts a <see cref="Duration"/> from a <see cref="DateTimeOffset"/> and returns the <see cref="DateTimeOffset"/> instance with the total time of the <see cref="Duration"/>
-    /// subtracted from it.
+    /// Subtracts a <see cref="Duration"/> from a <see cref="DateTimeOffset"/> and returns the <see cref="DateTimeOffset"/> instance with the total time of the <see cref="Duration"/>subtracted from it.
     /// </summary>
     /// <param name="dateTimeOffset">The <see cref="DateTimeOffset"/> to subtract the <see cref="Duration"/> from.</param>
     /// <param name="duration">The <see cref="Duration"/> to subtract from the <see cref="DateTimeOffset"/>.</param>
