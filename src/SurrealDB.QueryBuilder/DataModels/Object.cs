@@ -1,135 +1,66 @@
 using System.Collections;
-using SurrealDB.QueryBuilder.DataModels.Geometry;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SurrealDB.QueryBuilder.DataModels;
 
-public class Object : IEnumerable
+public sealed class Object : IDictionary<string, object?>
 {
-    private readonly IDictionary<string, object?> _items;
+    private readonly IDictionary<string, object?> _properties;
 
     public Object()
-        => _items = new Dictionary<string, object?>();
+        => _properties = new Dictionary<string, object?>();
 
-    public Object(IDictionary<string, object?> items)
-        => _items = items;
+    public Object(IDictionary<string, object?> properties)
+        => _properties = new Dictionary<string, object?>(properties);
 
-    public Object(IEnumerable<KeyValuePair<string, object?>> items)
-    {
-        _items = new Dictionary<string, object?>(items.Count());
-        foreach (var (key, value) in items)
-            _items.Add(key, value);
-    }
+    public Object(IEnumerable<KeyValuePair<string, object?>> properties)
+        => _properties = new Dictionary<string, object?>(properties);
 
     public object? this[string key]
     {
-        get => _items[key];
-        set => _items[key] = value;
+        get => _properties[key];
+        set => _properties[key] = value;
     }
 
-    public int Count => _items.Count;
+    public ICollection<string> Keys => _properties.Keys;
 
-    public IEnumerable<string> Keys => _items.Keys;
+    public ICollection<object?> Values => _properties.Values;
 
-    public IEnumerable<object?> Values => _items.Values;
+    public int Count => _properties.Count;
+
+    public bool IsReadOnly => false;
 
     public void Add(string key, object? value)
-        => _items.Add(key, value);
+        => _properties.Add(key, value);
+
+    public void Add(KeyValuePair<string, object?> item)
+        => _properties.Add(item.Key, item.Value);
 
     public void Clear()
-        => _items.Clear();
+        => _properties.Clear();
 
-    public bool Contains(string key)
-        => _items.ContainsKey(key);
+    public bool Contains(KeyValuePair<string, object?> item)
+        => _properties.Contains(item);
 
-    public IEnumerator GetEnumerator()
-        => _items.GetEnumerator();
+    public bool ContainsKey(string key)
+        => _properties.ContainsKey(key);
+
+    /// <inheritdoc/>
+    public void CopyTo(KeyValuePair<string, object?>[] array, int arrayIndex)
+        => _properties.CopyTo(array, arrayIndex);
+
+    public IEnumerator<KeyValuePair<string, object?>> GetEnumerator()
+        => _properties.GetEnumerator();
 
     public bool Remove(string key)
-        => _items.Remove(key);
+        => _properties.Remove(key);
 
-    public bool TryGetValue(string key, out object? value)
-        => _items.TryGetValue(key, out value);
+    public bool Remove(KeyValuePair<string, object?> item)
+        => _properties.Remove(item);
 
-    public override string ToString()
-    {
-        var body = new List<string>();
+    public bool TryGetValue(string key, [MaybeNullWhen(false)] out object? value)
+        => _properties.TryGetValue(key, out value);
 
-        foreach (var (key, value) in _items)
-        {
-            body.Add($"{key}:");
-
-            switch (value)
-            {
-                case bool boolean:
-                    body.Add(boolean.ToString().ToLower());
-                    break;
-                case IEnumerable<bool> booleans:
-                    body.Add(string.Join(",", booleans.Select(boolean => boolean.ToString().ToLower())));
-                    break;
-                case sbyte:
-                case byte:
-                case short:
-                case int:
-                case uint:
-                case long:
-                case ulong:
-                case nint:
-                case nuint:
-                case float:
-                case double:
-                case decimal:
-                    body.Add(value.ToString()!);
-                    break;
-                case IEnumerable<sbyte>:
-                case IEnumerable<byte>:
-                case IEnumerable<short>:
-                case IEnumerable<int>:
-                case IEnumerable<uint>:
-                case IEnumerable<long>:
-                case IEnumerable<ulong>:
-                case IEnumerable<nint>:
-                case IEnumerable<nuint>:
-                case IEnumerable<float>:
-                case IEnumerable<double>:
-                case IEnumerable<decimal>:
-                    body.Add(string.Join(",", value));
-                    break;
-                case char:
-                case string:
-                    body.Add($"\"{value}\"");
-                    break;
-                case IEnumerable<char>:
-                case IEnumerable<string>:
-                    {
-                        var strings = value as IEnumerable<string> ?? Array.Empty<string>();
-                        body.Add(string.Join(",", strings.Select(str => $"\"{str}\"")));
-                        break;
-                    }
-
-                case IGeometry geometry:
-                    body.Add(geometry.ToString());
-                    break;
-                case Object obj:
-                    body.Add(obj.ToString());
-                    break;
-                case IEnumerable<Object> objects:
-                    body.Add(string.Join(",", objects.Select(obj => obj.ToString())));
-                    break;
-                case null:
-                    body.Add("null");
-                    break;
-                case None:
-                    body.Add("none");
-                    break;
-                default:
-                    throw new NotSupportedException();
-            }
-
-            body.Add(","); // Add comma to separate each entry
-        }
-
-        body[^1] = ""; // Remove last comma
-
-        return "{" + string.Join(",\n", body) + "}";
-    }
+    IEnumerator IEnumerable.GetEnumerator()
+        => _properties.GetEnumerator();
 }
