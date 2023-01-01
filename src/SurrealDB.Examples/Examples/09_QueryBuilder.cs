@@ -3,7 +3,7 @@ using SurrealDB.QueryBuilder.Enums;
 
 namespace SurrealDB.Examples;
 
-public class QueryBuilder : IExample
+public sealed class QueryBuilder : IExample
 {
     public string Name => "SurrealQuery Builder";
 

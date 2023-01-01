@@ -2,7 +2,7 @@ namespace SurrealDB.Examples;
 
 using Client.Rest;
 
-public class CreateRecordWithRestClient : IExample
+public sealed class CreateRecordWithRestClient : IExample
 {
     public string Name => "Create a record in a specific table using the REST client";
 

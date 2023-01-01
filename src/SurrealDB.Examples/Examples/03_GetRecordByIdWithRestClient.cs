@@ -2,7 +2,7 @@ namespace SurrealDB.Examples;
 
 using Client.Rest;
 
-public class GetRecordByIdWithRestClient : IExample
+public sealed class GetRecordByIdWithRestClient : IExample
 {
     public string Name => "Select a specific record by its ID using the REST client";
 

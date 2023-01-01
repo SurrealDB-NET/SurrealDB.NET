@@ -2,7 +2,7 @@ namespace SurrealDB.Examples;
 
 using Client.Rest;
 
-public class DeleteAllRecordsWithRestClient : IExample
+public sealed class DeleteAllRecordsWithRestClient : IExample
 {
     public string Name => "Delete all records from a specific table using the REST client";
 

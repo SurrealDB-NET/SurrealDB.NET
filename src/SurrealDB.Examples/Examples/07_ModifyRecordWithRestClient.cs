@@ -2,7 +2,7 @@ namespace SurrealDB.Examples;
 
 using Client.Rest;
 
-public class ModifyRecordWithRestClient : IExample
+public sealed class ModifyRecordWithRestClient : IExample
 {
     public string Name => "Modify a specific record by its ID using the REST client";
 

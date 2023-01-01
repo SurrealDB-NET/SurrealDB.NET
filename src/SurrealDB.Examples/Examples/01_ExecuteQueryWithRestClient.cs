@@ -2,7 +2,7 @@
 
 using Client.Rest;
 
-public class ExecuteQueryWithRestClientExample : IExample
+public sealed class ExecuteQueryWithRestClientExample : IExample
 {
     public string Name => "Execute SurrealQL using the REST Client";
 

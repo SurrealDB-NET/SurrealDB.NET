@@ -2,7 +2,7 @@ namespace SurrealDB.Examples;
 
 using Client.Rest;
 
-public class UpsertRecordWithRestClient : IExample
+public sealed class UpsertRecordWithRestClient : IExample
 {
     public string Name => "Upsert a specific record by its ID using the REST client";
 

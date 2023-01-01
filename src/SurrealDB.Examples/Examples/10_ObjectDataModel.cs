@@ -2,7 +2,7 @@ namespace SurrealDB.Examples;
 
 using SurrealDB.QueryBuilder.DataModels;
 
-public class ObjectDataModel : IExample
+public sealed class ObjectDataModel : IExample
 {
     public string Name => "SurrealQL Object Data Model";
 
