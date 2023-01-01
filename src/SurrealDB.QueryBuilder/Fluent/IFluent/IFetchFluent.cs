@@ -1,3 +1,5 @@
+using SurrealDB.QueryBuilder.DataModels;
+
 namespace SurrealDB.QueryBuilder.Fluent;
 
 public interface IFetchFluent
@@ -5,5 +7,5 @@ public interface IFetchFluent
       IParallelFluent,
       IBuildFluent
 {
-    ITimeoutFluent Timeout(string timeout);
+    ITimeoutFluent Timeout(Duration timeout);
 }

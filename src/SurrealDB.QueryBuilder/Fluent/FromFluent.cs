@@ -9,7 +9,7 @@ internal class FromFluent : WhereFluent, IFromFluent
 
     public IWhereFluent Where(string predicate)
     {
-        Query.Append($" WHERE {predicate}");
-        return new WhereFluent(Query);
+        query.Append($" WHERE {predicate}");
+        return new WhereFluent(query);
     }
 }

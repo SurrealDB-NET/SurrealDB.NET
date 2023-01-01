@@ -9,8 +9,8 @@ internal class StartAtFluent : FetchFluent, IStartAtFluent
 
     public IFetchFluent Fetch(params string[] fields)
     {
-        Query.Append(" FETCH ");
-        Query.Append(string.Join(", ", fields));
-        return new FetchFluent(Query);
+        query.Append(" FETCH ");
+        query.Append(string.Join(", ", fields));
+        return new FetchFluent(query);
     }
 }

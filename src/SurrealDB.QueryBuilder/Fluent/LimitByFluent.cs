@@ -7,9 +7,9 @@ internal class LimitByFluent : StartAtFluent, ILimitByFluent
     internal LimitByFluent(StringBuilder currentQuery)
         : base(currentQuery) { }
 
-    public IStartAtFluent StartAt(int startAt)
+    public IStartAtFluent StartAt(uint startAt)
     {
-        Query.Append($" START {startAt}");
-        return new StartAtFluent(Query);
+        query.Append($" START {startAt}");
+        return new StartAtFluent(query);
     }
 }

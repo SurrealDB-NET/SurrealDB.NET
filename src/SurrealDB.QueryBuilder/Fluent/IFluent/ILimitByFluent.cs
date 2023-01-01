@@ -1,12 +1,11 @@
 namespace SurrealDB.QueryBuilder.Fluent;
 
-public interface IOrderByFluent
-    : ILimitByFluent,
-      IStartAtFluent,
+public interface ILimitByFluent
+    : IStartAtFluent,
       IFetchFluent,
       ITimeoutFluent,
       IParallelFluent,
       IBuildFluent
 {
-    ILimitByFluent LimitBy(int limit);
+    IStartAtFluent StartAt(uint startAt);
 }

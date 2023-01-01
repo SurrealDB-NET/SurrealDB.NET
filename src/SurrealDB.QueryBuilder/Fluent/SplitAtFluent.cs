@@ -9,7 +9,7 @@ internal class SplitAtFluent : GroupByFluent, ISplitAtFluent
 
     public IGroupByFluent GroupBy(params string[] fields)
     {
-        Query.Append($" GROUP {string.Join(", ", fields)}");
-        return new GroupByFluent(Query);
+        query.Append($" GROUP {string.Join(", ", fields)}");
+        return new GroupByFluent(query);
     }
 }
