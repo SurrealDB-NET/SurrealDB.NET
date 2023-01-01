@@ -1,9 +1,7 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
-public sealed class MultiPolygon : IGeometry
+public sealed class MultiPolygon : IGeometry, IEquatable<MultiPolygon>
 {
-    private const string _type = "MultiPolygon";
-
     public Polygon[] Coordinates { get; set; }
 
     public MultiPolygon(Polygon[] coordinates)
@@ -12,13 +10,20 @@ public sealed class MultiPolygon : IGeometry
     public MultiPolygon(IEnumerable<Polygon> coordinates)
         => Coordinates = coordinates.ToArray();
 
-    public override string ToString()
-        => $$"""
-        {
-          type: "{{_type}}",
-          coordinates: [
-        {{string.Join(",\n", Coordinates.Select(polygon => polygon.DisplayCoordinates()))}}
-          ]
-        }
-        """;
+    public bool Equals(MultiPolygon? value)
+        => value is MultiPolygon
+        && Coordinates.SequenceEqual(value.Coordinates);
+
+    public override bool Equals(object? value)
+        => value is MultiPolygon multiPolygon
+        && Equals(multiPolygon);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Coordinates);
+
+    public static bool operator ==(MultiPolygon? left, MultiPolygon? right)
+        => Equals(left, right);
+
+    public static bool operator !=(MultiPolygon? left, MultiPolygon? right)
+        => !Equals(left, right);
 }

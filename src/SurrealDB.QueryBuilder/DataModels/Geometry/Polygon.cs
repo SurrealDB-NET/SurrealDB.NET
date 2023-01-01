@@ -1,9 +1,7 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
-public sealed class Polygon : IGeometry
+public sealed class Polygon : IGeometry, IEquatable<Polygon>
 {
-    private const string _type = "Polygon";
-
     public Point[] Coordinates { get; set; }
 
     public Polygon(Point[] coordinates)
@@ -12,13 +10,20 @@ public sealed class Polygon : IGeometry
     public Polygon(IEnumerable<Point> coordinates)
         => Coordinates = coordinates.ToArray();
 
-    public override string ToString()
-        => $$"""
-        {
-          type: "{{_type}}",
-          coordinates: [[
-        {{string.Join(",\n", Coordinates.Select(point => point.DisplayCoordinates()))}}
-          ]]
-        }
-        """;
+    public bool Equals(Polygon? value)
+        => value is Polygon
+        && Coordinates.SequenceEqual(value.Coordinates);
+
+    public override bool Equals(object? value)
+        => value is Polygon polygon
+        && Equals(polygon);
+
+    public override int GetHashCode()
+        => HashCode.Combine(Coordinates);
+
+    public static bool operator ==(Polygon? left, Polygon? right)
+        => Equals(left, right);
+
+    public static bool operator !=(Polygon? left, Polygon? right)
+        => !Equals(left, right);
 }

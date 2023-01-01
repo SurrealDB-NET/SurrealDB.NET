@@ -1,47 +1,39 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
 /// <summary>
-/// A class that represents a geolocation point with latitude and longitude. It is equivalent to SurrealDB's Point object.
+/// Represents a geolocation point with a latitude and longitude. It is equivalent to SurrealDB's Point data type.
 /// </summary>
 public struct Point : IGeometry, IEquatable<Point>
 {
-    private const string _type = "Point";
+    public readonly decimal Longitude { get; init; }
 
-    public decimal[] Coordinates { get; set; }
+    public readonly decimal Latitude { get; init; }
 
     public Point()
-        => Coordinates = new[] { 0m, 0m };
+        => (Longitude, Latitude) = (0, 0);
 
     public Point(decimal longitude, decimal latitude)
-        => Coordinates = new[] { longitude, latitude };
+        => (Longitude, Latitude) = (longitude, latitude);
 
     public static implicit operator Point((decimal longitude, decimal latitude) coordinates)
         => new(coordinates.longitude, coordinates.latitude);
 
-    public bool Equals(Point other)
-        => Coordinates.SequenceEqual(other.Coordinates);
+    public bool Equals(Point value)
+        => Longitude == value.Longitude
+        && Latitude == value.Latitude;
 
-    public override bool Equals(object? other)
-        => other is Point point
+    public override bool Equals([NotNullWhen(true)] object? value)
+        => value is Point point
         && Equals(point);
 
     public override int GetHashCode()
-        => HashCode.Combine(Coordinates);
+        => HashCode.Combine(Longitude, Latitude);
 
     public static bool operator ==(Point left, Point right)
-        => left.Equals(right);
+        => Equals(left, right);
 
     public static bool operator !=(Point left, Point right)
-        => !left.Equals(right);
-
-    public override string ToString()
-        => $$"""
-        {
-          type: "{{_type}}",
-          coordinates: [
-            {{Coordinates[0]}},
-            {{Coordinates[1]}}
-          ]
-        }
-        """;
+        => !Equals(left, right);
 }
