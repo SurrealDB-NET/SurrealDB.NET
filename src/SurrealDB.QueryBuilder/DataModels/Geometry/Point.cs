@@ -3,7 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
 /// <summary>
-/// Represents a geolocation point with a latitude and longitude. It is equivalent to SurrealDB's Point data type.
+/// Represents a GeoJSON point with a <see cref="Longitude"/> and <see cref="Latitude"/>. It is equivalent to SurrealDB's Point data type. <br/>
+/// <see href="https://surrealdb.com/docs/surrealql/datamodel/geometries#point"/>
 /// </summary>
 public struct Point : IGeometry, IEquatable<Point>
 {

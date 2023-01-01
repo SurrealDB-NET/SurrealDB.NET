@@ -1,5 +1,9 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
+/// <summary>
+/// Represents a GeoJSON MultiLineString value which contains multiple geometry lines. It is equivalent to SurrealDB's MultiLine data type. <br/>
+/// <see href="https://surrealdb.com/docs/surrealql/datamodel/geometries#multilinestring"/>
+/// </summary>
 public sealed class MultiLine : IGeometry, IEquatable<MultiLine>
 {
     public Line[] Coordinates { get; set; }

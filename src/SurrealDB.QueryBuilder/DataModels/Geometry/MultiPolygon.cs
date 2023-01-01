@@ -1,5 +1,8 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
+/// <summary>
+/// A GeoJSON MultiPolygon value which contains multiple geometry polygons. It is equivalent to SurrealDB's MultiPolygon data type. <br/>
+/// </summary>
 public sealed class MultiPolygon : IGeometry, IEquatable<MultiPolygon>
 {
     public Polygon[] Coordinates { get; set; }

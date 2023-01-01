@@ -1,5 +1,9 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
+/// <summary>
+/// Represents a GeoJSON Polygon value for storing a geometric area. It is equivalent to SurrealDB's Polygon data type. <br/>
+/// <see href="https://surrealdb.com/docs/surrealql/datamodel/geometries#polygon"/>
+/// </summary>
 public sealed class Polygon : IGeometry, IEquatable<Polygon>
 {
     public Point[] Coordinates { get; set; }

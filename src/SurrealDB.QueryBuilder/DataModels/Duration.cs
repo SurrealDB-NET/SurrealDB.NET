@@ -4,7 +4,8 @@ using System.Text;
 namespace SurrealDB.QueryBuilder.DataModels;
 
 /// <summary>
-/// Represents a duration of time with year to nanosecond precision. It is equivalent to SurrealDB's Duration data type.
+/// Represents a duration of time with year to nanosecond precision. It is equivalent to SurrealDB's Duration data type. <br/>
+/// <see href="https://surrealdb.com/docs/surrealql/datamodel/datetimes"/>
 /// </summary>
 public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable<Duration>, IParsable<Duration>, ISpanParsable<Duration>
 {
@@ -53,7 +54,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <summary>
     /// The largest unit of time in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
-    private readonly TimeUnit _largestUnit;
+    private readonly Unit _largestUnit;
 
     /// <summary>
     /// The total number of seconds in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
@@ -134,19 +135,19 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
         Nanoseconds = nanoseconds;
 
         if (Years > 0)
-            _largestUnit = TimeUnit.Years;
+            _largestUnit = Unit.Years;
         else if (Weeks > 0)
-            _largestUnit = TimeUnit.Weeks;
+            _largestUnit = Unit.Weeks;
         else if (Days > 0)
-            _largestUnit = TimeUnit.Days;
+            _largestUnit = Unit.Days;
         else if (Hours > 0)
-            _largestUnit = TimeUnit.Hours;
+            _largestUnit = Unit.Hours;
         else if (Minutes > 0)
-            _largestUnit = TimeUnit.Minutes;
+            _largestUnit = Unit.Minutes;
         else if (Seconds > 0)
-            _largestUnit = TimeUnit.Seconds;
+            _largestUnit = Unit.Seconds;
         else
-            _largestUnit = TimeUnit.Nanoseconds;
+            _largestUnit = Unit.Nanoseconds;
     }
 
     /// <summary>
@@ -270,10 +271,10 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <param name="value">A <see cref="Duration"/> to compare.</param>
     /// do new lines to explain the return value
     /// <returns>
-    /// Value - Description <para/>
-    /// -1 - This instance is shorter than <paramref name="value"/>. <para/>
-    /// 0 - This instance is equal to <paramref name="value"/>. <para/>
-    /// 1 - This instance is longer than <paramref name="value"/>. <para/>
+    /// Value - Description <br/>
+    /// -1 - This instance is shorter than <paramref name="value"/>. <br/>
+    /// 0 - This instance is equal to <paramref name="value"/>. <br/>
+    /// 1 - This instance is longer than <paramref name="value"/>. <br/>
     /// </returns>
     public int CompareTo(Duration value)
     {
@@ -290,10 +291,10 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// </summary>
     /// <param name="value">An object to compare, or <see langword="null"/>.</param>
     /// <returns>
-    /// Value - Description <para/>
-    /// -1 - This instance is shorter than <paramref name="value"/>. <para/>
-    /// 0 - This instance is equal to <paramref name="value"/>. <para/>
-    /// 1 - This instance is longer than, or, <paramref name="value"/> is <see langword="null"/>. <para/>
+    /// Value - Description <br/>
+    /// -1 - This instance is shorter than <paramref name="value"/>. <br/>
+    /// 0 - This instance is equal to <paramref name="value"/>. <br/>
+    /// 1 - This instance is longer than, or, <paramref name="value"/> is <see langword="null"/>. <br/>
     /// </returns>
     /// <exception cref="ArgumentException"><paramref name="value"/> is not a <see cref="Duration"/>.</exception>
     public int CompareTo(object? value)
@@ -424,21 +425,21 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// </returns>
     public static string? operator /(Duration d1, Duration d2)
     {
-        if (d2._largestUnit == TimeUnit.Nanoseconds)
+        if (d2._largestUnit == Unit.Nanoseconds)
             return null;
-        if (d1._largestUnit == TimeUnit.Nanoseconds)
+        if (d1._largestUnit == Unit.Nanoseconds)
             return "0";
 
         var commonUnit = d1._largestUnit < d2._largestUnit ? d1._largestUnit : d2._largestUnit;
 
         return commonUnit switch
         {
-            TimeUnit.Seconds => ((decimal)d1._totalSeconds / (decimal)d2._totalSeconds).ToString(),
-            TimeUnit.Minutes => ((decimal)d1._totalMinutes / (decimal)d2._totalMinutes).ToString(),
-            TimeUnit.Hours => ((decimal)d1._totalHours / (decimal)d2._totalHours).ToString(),
-            TimeUnit.Days => ((decimal)d1._totalDays / (decimal)d2._totalDays).ToString(),
-            TimeUnit.Weeks => ((decimal)d1._totalWeeks / (decimal)d2._totalWeeks).ToString(),
-            TimeUnit.Years => (d1._totalYears / d2._totalYears).ToString(),
+            Unit.Seconds => ((decimal)d1._totalSeconds / (decimal)d2._totalSeconds).ToString(),
+            Unit.Minutes => ((decimal)d1._totalMinutes / (decimal)d2._totalMinutes).ToString(),
+            Unit.Hours => ((decimal)d1._totalHours / (decimal)d2._totalHours).ToString(),
+            Unit.Days => ((decimal)d1._totalDays / (decimal)d2._totalDays).ToString(),
+            Unit.Weeks => ((decimal)d1._totalWeeks / (decimal)d2._totalWeeks).ToString(),
+            Unit.Years => (d1._totalYears / d2._totalYears).ToString(),
             _ => null
         };
     }
@@ -589,10 +590,9 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
             .AddTicks(-(long)duration.Nanoseconds / 100);
 
     /// <summary>
-    /// Used to determine the largest unit that this <see cref="Duration"/> instance 
-    /// has.
+    /// Used to determine the largest unit that this <see cref="Duration"/> instance has.
     /// </summary>
-    internal enum TimeUnit
+    internal enum Unit
     {
         Nanoseconds,
         Seconds,

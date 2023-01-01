@@ -1,5 +1,9 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
+/// <summary>
+/// Represents a GeoJSON GeometryCollection value which contains multiple different geometry types. It is equivalent to SurrealDB's Collection data type. <br/>
+/// <see href="https://surrealdb.com/docs/surrealql/datamodel/geometries#collection"/>
+/// </summary>
 public sealed class GeometryCollection : IGeometry, IEquatable<GeometryCollection>
 {
     public IGeometry[] Geometries { get; set; }

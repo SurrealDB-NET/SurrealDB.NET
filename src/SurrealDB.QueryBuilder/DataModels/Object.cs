@@ -3,6 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SurrealDB.QueryBuilder.DataModels;
 
+/// <summary>
+/// Represents an Object containing key value pairs. It is equivalent to SurrealDB's Object data type. <br/>
+/// <see href="https://surrealdb.com/docs/surrealql/datamodel/simple"/>
+/// </summary>
 public sealed class Object : IDictionary<string, object?>
 {
     private readonly IDictionary<string, object?> _properties;

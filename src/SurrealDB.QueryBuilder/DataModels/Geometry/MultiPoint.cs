@@ -1,5 +1,9 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
+/// <summary>
+/// Represents a GeoJSON MultiPoint value which contains multiple geometry points. It is equivalent to SurrealDB's MultiPoint data type. <br/>
+/// <see href="https://surrealdb.com/docs/surrealql/datamodel/geometries#multipoint"/>
+/// </summary>
 public sealed class MultiPoint : IGeometry, IEquatable<MultiPoint>
 {
     public Point[] Coordinates { get; set; }
