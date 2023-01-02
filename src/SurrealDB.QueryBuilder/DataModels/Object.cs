@@ -1,13 +1,14 @@
-using System.Collections;
-using System.Diagnostics.CodeAnalysis;
-
 namespace SurrealDB.QueryBuilder.DataModels;
 
+using System.Collections;
+using System.Numerics;
+using Translators;
+
 /// <summary>
-/// Represents an Object containing key value pairs. It is equivalent to SurrealDB's Object data type. <br/>
+/// Represents an object containing key value pairs where the value can be any type. It is equivalent to SurrealDB's Object data type. <br/>
 /// <see href="https://surrealdb.com/docs/surrealql/datamodel/simple"/>
 /// </summary>
-public sealed class Object : IDictionary<string, object?>
+public class Object : IDictionary<string, object?>
 {
     private readonly IDictionary<string, object?> _properties;
 
@@ -49,7 +50,6 @@ public sealed class Object : IDictionary<string, object?>
     public bool ContainsKey(string key)
         => _properties.ContainsKey(key);
 
-    /// <inheritdoc/>
     public void CopyTo(KeyValuePair<string, object?>[] array, int arrayIndex)
         => _properties.CopyTo(array, arrayIndex);
 
@@ -62,9 +62,46 @@ public sealed class Object : IDictionary<string, object?>
     public bool Remove(KeyValuePair<string, object?> item)
         => _properties.Remove(item);
 
-    public bool TryGetValue(string key, [MaybeNullWhen(false)] out object? value)
+    public bool TryGetValue(string key, out object? value)
         => _properties.TryGetValue(key, out value);
 
     IEnumerator IEnumerable.GetEnumerator()
         => _properties.GetEnumerator();
+
+    public override string ToString()
+    {
+        var output = new List<string>();
+
+        foreach (var (key, value) in _properties)
+        {
+            var translatedValue = value switch
+            {
+                null => "null",
+                char @char => PrimitiveTranslator.Translate(@char),
+                string @string => PrimitiveTranslator.Translate(@string),
+                bool @bool => PrimitiveTranslator.Translate(@bool),
+                sbyte @sbyte => PrimitiveTranslator.Translate(@sbyte),
+                byte @byte => PrimitiveTranslator.Translate(@byte),
+                short @short => PrimitiveTranslator.Translate(@short),
+                ushort @ushort => PrimitiveTranslator.Translate(@ushort),
+                int @int => PrimitiveTranslator.Translate(@int),
+                uint @uint => PrimitiveTranslator.Translate(@uint),
+                long @long => PrimitiveTranslator.Translate(@long),
+                ulong @ulong => PrimitiveTranslator.Translate(@ulong),
+                float @float => PrimitiveTranslator.Translate(@float),
+                double @double => PrimitiveTranslator.Translate(@double),
+                decimal @decimal => PrimitiveTranslator.Translate(@decimal),
+                BigInteger bigInteger => PrimitiveTranslator.Translate(bigInteger),
+                None none => PrimitiveTranslator.Translate(none),
+                Array array => array.ToString(),
+                Object obj => obj.ToString(),
+                IEnumerable enumerable => Array.Translate(enumerable),
+                _ => throw new NotSupportedException($"The type {value.GetType()} is not supported.")
+            };
+
+            output.Add($"{key}:{translatedValue}");
+        }
+
+        return $"{{{string.Join(",", output)}}}";
+    }
 }

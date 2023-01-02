@@ -1,90 +1,91 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-
 namespace SurrealDB.QueryBuilder.DataModels;
+
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Text;
 
 /// <summary>
 /// Represents a duration of time with year to nanosecond precision. It is equivalent to SurrealDB's Duration data type. <br/>
 /// <see href="https://surrealdb.com/docs/surrealql/datamodel/datetimes"/>
 /// </summary>
-public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable<Duration>, IParsable<Duration>, ISpanParsable<Duration>
+public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable<Duration>, ISpanParsable<Duration>
 {
     /// <summary>
     /// Gets the years component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The years component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Years { get; }
+    public ulong Years { get; }
 
     /// <summary>
     /// Gets the weeks component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The weeks component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Weeks { get; }
+    public ulong Weeks { get; }
 
     /// <summary>
     /// Gets the days component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The days component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Days { get; }
+    public ulong Days { get; }
 
     /// <summary>
     /// Gets the hours component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The hours component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Hours { get; }
+    public ulong Hours { get; }
 
     /// <summary>
     /// Gets the minutes component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The minutes component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Minutes { get; }
+    public ulong Minutes { get; }
 
     /// <summary>
     /// Gets the seconds component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The seconds component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Seconds { get; }
+    public ulong Seconds { get; }
 
     /// <summary>
     /// Gets the nanoseconds component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The nanoseconds component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Nanoseconds { get; }
+    public ulong Nanoseconds { get; }
+
+    /// <summary>
+    /// The total number of years in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
+    /// </summary>
+    private decimal TotalYears { get; }
+
+    /// <summary>
+    /// The total number of seconds in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
+    /// </summary>
+    private UInt128 TotalSeconds => Years * 31536000 + Weeks * 604800 + Days * 86400 + Hours * 3600 + Minutes * 60 + Seconds;
+
+    /// <summary>
+    /// The total number of minutes in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
+    /// </summary>
+    private UInt128 TotalMinutes => Years * 525600 + Weeks * 10080 + Days * 1440 + Hours * 60 + Minutes;
+
+    /// <summary>
+    /// The total number of hours in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
+    /// </summary>
+    private UInt128 TotalHours => Years * 8760 + Weeks * 168 + Days * 24 + Hours;
+
+    /// <summary>
+    /// The total number of days in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
+    /// </summary>
+    private UInt128 TotalDays => Years * 365 + Weeks * 7 + Days;
+
+    /// <summary>
+    /// The total number of weeks in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
+    /// </summary>
+    private UInt128 TotalWeeks => Years * 52 + Weeks;
 
     /// <summary>
     /// The largest unit of time in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
     private readonly Unit _largestUnit;
-
-    /// <summary>
-    /// The total number of seconds in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
-    /// </summary>
-    private readonly UInt128 _totalSeconds => Years * 31536000 + Weeks * 604800 + Days * 86400 + Hours * 3600 + Minutes * 60 + Seconds;
-
-    /// <summary>
-    /// The total number of minutes in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
-    /// </summary>
-    private readonly UInt128 _totalMinutes => Years * 525600 + Weeks * 10080 + Days * 1440 + Hours * 60 + Minutes;
-
-    /// <summary>
-    /// The total number of hours in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
-    /// </summary>
-    private readonly UInt128 _totalHours => Years * 8760 + Weeks * 168 + Days * 24 + Hours;
-
-    /// <summary>
-    /// The total number of days in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
-    /// </summary>
-    private readonly UInt128 _totalDays => Years * 365 + Weeks * 7 + Days;
-
-    /// <summary>
-    /// The total number of weeks in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
-    /// </summary>
-    private readonly UInt128 _totalWeeks => Years * 52 + Weeks;
-
-    /// <summary>
-    /// The total number of years in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
-    /// </summary>
-    private readonly decimal _totalYears;
 
     /// <summary>
     /// Initializes a new structure of the <see cref="Duration"/> structure with the specified components.
@@ -122,7 +123,6 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
         hours %= 24;
         weeks += days / 7;
         days %= 7;
-        _totalYears = years + weeks / (365M / 7M);
         years += weeks / 52;
         weeks %= 52;
 
@@ -133,6 +133,8 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
         Minutes = minutes;
         Seconds = seconds;
         Nanoseconds = nanoseconds;
+
+        TotalYears = years + weeks / (365M / 7M);
 
         if (Years > 0)
             _largestUnit = Unit.Years;
@@ -159,54 +161,55 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     {
         ulong years = 0, weeks = 0, days = 0, hours = 0, minutes = 0, seconds = 0, milliseconds = 0, microseconds = 0, nanoseconds = 0;
 
-        HashSet<string> units = new() { "y", "w", "d", "h", "m", "s", "ms", "µs", "ns" };
+        HashSet<string> units = new() {"y", "w", "d", "h", "m", "s", "ms", "µs", "ns"};
 
-        for (int i = 0; i < duration.Length; i++)
+        for (var i = 0; i < duration.Length; i++)
         {
-            string value = "", unit = "";
+            var value = string.Empty;
 
             while (i < duration.Length && char.IsDigit(duration[i]))
                 value += duration[i++];
 
+            var unit = string.Empty;
+
             while (i < duration.Length && !char.IsDigit(duration[i]))
                 unit += duration[i++];
+
             --i;
 
-            if (value != "" && units.Contains(unit))
-            {
-                switch (unit)
-                {
-                    case "y":
-                        years += ulong.Parse(value);
-                        break;
-                    case "w":
-                        weeks += ulong.Parse(value);
-                        break;
-                    case "d":
-                        days += ulong.Parse(value);
-                        break;
-                    case "h":
-                        hours += ulong.Parse(value);
-                        break;
-                    case "m":
-                        minutes += ulong.Parse(value);
-                        break;
-                    case "s":
-                        seconds += ulong.Parse(value);
-                        break;
-                    case "ms":
-                        milliseconds += ulong.Parse(value);
-                        break;
-                    case "µs":
-                        microseconds += ulong.Parse(value);
-                        break;
-                    case "ns":
-                        nanoseconds += ulong.Parse(value);
-                        break;
-                }
-            }
-            else
+            if (value == string.Empty || !units.Contains(unit))
                 throw new FormatException("Invalid duration format.");
+
+            switch (unit)
+            {
+                case "y":
+                    years += ulong.Parse(value);
+                    break;
+                case "w":
+                    weeks += ulong.Parse(value);
+                    break;
+                case "d":
+                    days += ulong.Parse(value);
+                    break;
+                case "h":
+                    hours += ulong.Parse(value);
+                    break;
+                case "m":
+                    minutes += ulong.Parse(value);
+                    break;
+                case "s":
+                    seconds += ulong.Parse(value);
+                    break;
+                case "ms":
+                    milliseconds += ulong.Parse(value);
+                    break;
+                case "µs":
+                    microseconds += ulong.Parse(value);
+                    break;
+                case "ns":
+                    nanoseconds += ulong.Parse(value);
+                    break;
+            }
         }
 
         return new Duration(years, weeks, days, hours, minutes, seconds, milliseconds, microseconds, nanoseconds);
@@ -215,30 +218,33 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <summary>
     /// Converts the <see cref="string"/> representation of a duration to its <see cref="Duration"/> equivalent.
     /// </summary>
-    /// <param name="s">A <see cref="string"/> containing a <see cref="Duration"/> to convert.</param>
-    /// <returns>A <see cref="Duration"/> equivalent to the duration contained in <paramref name="s"/>.</returns>
-    /// <exception cref="FormatException">The <paramref name="s"/> parameter is not in a recognized format.</exception>
-    public static Duration Parse(string s, IFormatProvider? provider = null)
-        => s;
+    /// <param name="durationString">A <see cref="string"/> containing a <see cref="Duration"/> to convert.</param>
+    /// <param name="provider"></param>
+    /// <returns>A <see cref="Duration"/> equivalent to the duration contained in <paramref name="durationString"/>.</returns>
+    /// <exception cref="FormatException">The <paramref name="durationString"/> parameter is not in a recognized format.</exception>
+    public static Duration Parse(string durationString, IFormatProvider? provider = null)
+        => durationString;
 
     /// <summary>
     /// Converts the span of representation of a duration to its <see cref="Duration"/> equivalent.
     /// </summary>
-    /// <param name="s">A span containing a <see cref="Duration"/> to convert.</param>
-    /// <returns>A <see cref="Duration"/> equivalent to the duration contained in <paramref name="s"/>.</returns>
-    /// <exception cref="FormatException">The <paramref name="s"/> parameter is not in a recognized format.</exception>
-    public static Duration Parse(ReadOnlySpan<char> s, IFormatProvider? provider = null)
-        => s.ToString();
+    /// <param name="durationSpan">A span containing a <see cref="Duration"/> to convert.</param>
+    /// <param name="provider"></param>
+    /// <returns>A <see cref="Duration"/> equivalent to the duration contained in <paramref name="durationSpan"/>.</returns>
+    /// <exception cref="FormatException">The <paramref name="durationSpan"/> parameter is not in a recognized format.</exception>
+    public static Duration Parse(ReadOnlySpan<char> durationSpan, IFormatProvider? provider = null)
+        => durationSpan.ToString();
 
     /// <summary>
     /// Converts the <see cref="string"/> representation of a duration to its <see cref="Duration"/> equivalent. A return value indicates whether the conversion succeeded.
     /// </summary>
-    /// <param name="s">A <see cref="string"/> containing a <see cref="Duration"/> to convert.</param>
-    /// <param name="result">When this method returns, contains the <see cref="Duration"/> value equivalent to the duration contained in <paramref name="s"/>, if the conversion succeeded, or an empty <see cref="Duration"/> if the conversion failed. The conversion fails if the <paramref name="s"/> parameter is <see langword="null"/> or <see cref="string.Empty"/>, is not of the correct format. This parameter is passed uninitialized.</param>
-    /// <returns><see langword="true"/> if <paramref name="s"/> was converted successfully; otherwise, <see langword="false"/>.</returns>
-    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, out Duration result)
+    /// <param name="durationString">A <see cref="string"/> containing a <see cref="Duration"/> to convert.</param>
+    /// <param name="provider"></param>
+    /// <param name="result">When this method returns, contains the <see cref="Duration"/> value equivalent to the duration contained in <paramref name="durationString"/>, if the conversion succeeded, or an empty <see cref="Duration"/> if the conversion failed. The conversion fails if the <paramref name="durationString"/> parameter is <see langword="null"/> or <see cref="string.Empty"/>, is not of the correct format. This parameter is passed uninitialized.</param>
+    /// <returns><see langword="true"/> if <paramref name="durationString"/> was converted successfully; otherwise, <see langword="false"/>.</returns>
+    public static bool TryParse([NotNullWhen(true)] string? durationString, IFormatProvider? provider, out Duration result)
     {
-        if (s is null)
+        if (durationString is null)
         {
             result = default;
             return false;
@@ -246,7 +252,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
 
         try
         {
-            result = Parse(s);
+            result = Parse(durationString);
             return true;
         }
         catch (Exception)
@@ -259,11 +265,12 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <summary>
     /// Converts the <see cref="string"/> representation of a duration to its <see cref="Duration"/> equivalent. A return value indicates whether the conversion succeeded.
     /// </summary>
-    /// <param name="s">A span containing a <see cref="Duration"/> to convert.</param>
-    /// <param name="result">When this method returns, contains the <see cref="Duration"/> value equivalent to the duration contained in <paramref name="s"/>, if the conversion succeeded, or an empty <see cref="Duration"/> if the conversion failed. The conversion fails if the <paramref name="s"/> parameter is <see langword="null"/> or <see cref="string.Empty"/>, is not of the correct format. This parameter is passed uninitialized.</param>
-    /// <returns><see langword="true"/> if <paramref name="s"/> was converted successfully; otherwise, <see langword="false"/>.</returns>
-    public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, out Duration result)
-        => TryParse(s.ToString(), null, out result);
+    /// <param name="durationSpan">A span containing a <see cref="Duration"/> to convert.</param>
+    /// <param name="provider"></param>
+    /// <param name="result">When this method returns, contains the <see cref="Duration"/> value equivalent to the duration contained in <paramref name="durationSpan"/>, if the conversion succeeded, or an empty <see cref="Duration"/> if the conversion failed. The conversion fails if the <paramref name="durationSpan"/> parameter is <see langword="null"/> or <see cref="string.Empty"/>, is not of the correct format. This parameter is passed uninitialized.</param>
+    /// <returns><see langword="true"/> if <paramref name="durationSpan"/> was converted successfully; otherwise, <see langword="false"/>.</returns>
+    public static bool TryParse(ReadOnlySpan<char> durationSpan, IFormatProvider? provider, out Duration result)
+        => TryParse(durationSpan.ToString(), null, out result);
 
     /// <summary>
     /// Compares this instance to a specified <see cref="Duration"/> and returns an integer that indicates whether the value of this instance is shorter than, equal to, or longer than the value of the specified <see cref="Duration"/>.
@@ -280,10 +287,9 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     {
         if (this > value)
             return 1;
-        else if (this < value)
+        if (this < value)
             return -1;
-        else
-            return 0;
+        return 0;
     }
 
     /// <summary>
@@ -304,8 +310,8 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
 
         if (value is Duration duration)
             return CompareTo(duration);
-        else
-            throw new ArgumentException($"{nameof(value)} must be of type {nameof(Duration)} to be compared.");
+
+        throw new ArgumentException($"{nameof(value)} must be of type {nameof(Duration)} to be compared.");
     }
 
     /// <summary>
@@ -314,13 +320,13 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <param name="value">A <see cref="Duration"/> to compare to this instance.</param>
     /// <returns><see langword="true"/> if <paramref name="value"/> has the same total time as this instance; otherwise, <see langword="false"/>.</returns>
     public bool Equals(Duration value)
-        => Years == value.Years
-        && Weeks == value.Weeks
-        && Days == value.Days
-        && Hours == value.Hours
-        && Minutes == value.Minutes
-        && Seconds == value.Seconds
-        && Nanoseconds == value.Nanoseconds;
+        => Years == value.Years &&
+           Weeks == value.Weeks &&
+           Days == value.Days &&
+           Hours == value.Hours &&
+           Minutes == value.Minutes &&
+           Seconds == value.Seconds &&
+           Nanoseconds == value.Nanoseconds;
 
     /// <summary>
     /// Returns a value indicating whether this instance is equal to a specified object.
@@ -328,8 +334,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <param name="value">An object to compare to this instance.</param>
     /// <returns><see langword="true"/> if <paramref name="value"/> is <see cref="Duration"/> that has the same total time as this instance; otherwise, <see langword="false"/>.</returns>
     public override bool Equals([NotNullWhen(true)] object? value)
-        => value is Duration duration
-        && Equals(duration);
+        => value is Duration duration && Equals(duration);
 
     /// <summary>
     /// Returns the hash code for this instance.
@@ -372,7 +377,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <returns>A <see cref="Duration"/> whose value is the sum of the values of <paramref name="d1"/> and <paramref name="d2"/>.</returns>
     /// <exception cref="OverflowException">The resulting <see cref="Duration"/> is too large.</exception>
     public static Duration operator +(Duration d1, Duration d2)
-        => new Duration(
+        => new(
             d1.Years + d2.Years,
             d1.Weeks + d2.Weeks,
             d1.Days + d2.Days,
@@ -410,10 +415,10 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <param name="d2">The second <see cref="Duration"/> to multiply.</param>
     /// <returns>The total seconds of <paramref name="d1"/> multiplied by the total seconds of <paramref name="d2"/>.</returns>
     public static UInt128 operator *(Duration d1, Duration d2)
-        => d1._totalSeconds * d2._totalSeconds;
+        => d1.TotalSeconds * d2.TotalSeconds;
 
     /// <summary>
-    /// Divides two specified <see cref="Duration"/> instances in terms of their least common unit. The smallest common unit in this context is <see cref="Duration.Seconds"/> to comply with SurrealDB's implmentation. Therefore, if either <paramref name="d1"/> and <paramref name="d2"/> is shorter than <see cref="Duration.Seconds"/>, they are treated as 0s.
+    /// Divides two specified <see cref="Duration"/> instances in terms of their least common unit. The smallest common unit in this context is <see cref="Duration.Seconds"/> to comply with SurrealDB's implementation. Therefore, if either <paramref name="d1"/> and <paramref name="d2"/> is shorter than <see cref="Duration.Seconds"/>, they are treated as 0s.
     /// </summary>
     /// <param name="d1">The <see cref="Duration"/> to divide from.</param>
     /// <param name="d2">The <see cref="Duration"/> to divide by.</param>
@@ -429,12 +434,12 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
 
         return commonUnit switch
         {
-            Unit.Seconds => ((decimal)d1._totalSeconds / (decimal)d2._totalSeconds).ToString(),
-            Unit.Minutes => ((decimal)d1._totalMinutes / (decimal)d2._totalMinutes).ToString(),
-            Unit.Hours => ((decimal)d1._totalHours / (decimal)d2._totalHours).ToString(),
-            Unit.Days => ((decimal)d1._totalDays / (decimal)d2._totalDays).ToString(),
-            Unit.Weeks => ((decimal)d1._totalWeeks / (decimal)d2._totalWeeks).ToString(),
-            Unit.Years => (d1._totalYears / d2._totalYears).ToString(),
+            Unit.Seconds => ((decimal) d1.TotalSeconds / (decimal) d2.TotalSeconds).ToString(CultureInfo.InvariantCulture),
+            Unit.Minutes => ((decimal) d1.TotalMinutes / (decimal) d2.TotalMinutes).ToString(CultureInfo.InvariantCulture),
+            Unit.Hours => ((decimal) d1.TotalHours / (decimal) d2.TotalHours).ToString(CultureInfo.InvariantCulture),
+            Unit.Days => ((decimal) d1.TotalDays / (decimal) d2.TotalDays).ToString(CultureInfo.InvariantCulture),
+            Unit.Weeks => ((decimal) d1.TotalWeeks / (decimal) d2.TotalWeeks).ToString(CultureInfo.InvariantCulture),
+            Unit.Years => (d1.TotalYears / d2.TotalYears).ToString(CultureInfo.InvariantCulture),
             _ => null
         };
     }
@@ -444,7 +449,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// </summary>
     /// <param name="d1">A <see cref="Duration"/> to compare.</param>
     /// <param name="d2">A <see cref="Duration"/> to compare.</param>
-    /// <returns><see langword="true"/> if <paramref name="value"/> has the same total time as this instance; otherwise, <see langword="false"/>.</returns>
+    /// <returns><see langword="true"/> if <paramref name="d1"/> has the same total time as <paramref name="d2"/>; otherwise, <see langword="false"/>.</returns>
     public static bool operator ==(Duration d1, Duration d2)
         => Equals(d1, d2);
 
@@ -453,7 +458,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// </summary>
     /// <param name="d1">A <see cref="Duration"/> to compare.</param>
     /// <param name="d2">A <see cref="Duration"/> to compare.</param>
-    /// <returns><see langword="true"/> if <paramref name="value"/> does not have the same total time as this instance; otherwise, <see langword="false"/>.</returns>
+    /// <returns><see langword="true"/> if <paramref name="d1"/> does not have the same total time as <paramref name="d2"/>; otherwise, <see langword="false"/>.</returns>
     public static bool operator !=(Duration d1, Duration d2)
         => !Equals(d1, d2);
 
@@ -465,13 +470,13 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <param name="d2">The second <see cref="Duration"/> to compare.</param>
     /// <returns><see langword="true"/> if <paramref name="d1"/> is shorter than <paramref name="d2"/>; otherwise, <see langword="false"/>.</returns>
     public static bool operator <(Duration d1, Duration d2)
-        => d1.Years < d2.Years
-        || d1.Weeks < d2.Weeks
-        || d1.Days < d2.Days
-        || d1.Hours < d2.Hours
-        || d1.Minutes < d2.Minutes
-        || d1.Seconds < d2.Seconds
-        || d1.Nanoseconds < d2.Nanoseconds;
+        => d1.Years < d2.Years ||
+           d1.Weeks < d2.Weeks ||
+           d1.Days < d2.Days ||
+           d1.Hours < d2.Hours ||
+           d1.Minutes < d2.Minutes ||
+           d1.Seconds < d2.Seconds ||
+           d1.Nanoseconds < d2.Nanoseconds;
 
     /// <summary>
     /// Returns a value indicating whether this instance is greater than a specified <see cref="Duration"/>. The comparison is done by comparing the total time of each
@@ -481,13 +486,13 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <param name="d2">The second <see cref="Duration"/> to compare.</param>
     /// <returns><see langword="true"/> if <paramref name="d1"/> is longer than <paramref name="d2"/>; otherwise, <see langword="false"/>.</returns>
     public static bool operator >(Duration d1, Duration d2)
-        => d1.Years > d2.Years
-        || d1.Weeks > d2.Weeks
-        || d1.Days > d2.Days
-        || d1.Hours > d2.Hours
-        || d1.Minutes > d2.Minutes
-        || d1.Seconds > d2.Seconds
-        || d1.Nanoseconds > d2.Nanoseconds;
+        => d1.Years > d2.Years ||
+           d1.Weeks > d2.Weeks ||
+           d1.Days > d2.Days ||
+           d1.Hours > d2.Hours ||
+           d1.Minutes > d2.Minutes ||
+           d1.Seconds > d2.Seconds ||
+           d1.Nanoseconds > d2.Nanoseconds;
 
     /// <summary>
     /// Returns a value indicating whether this instance is less than or equal to a specified <see cref="Duration"/>. The comparison is done by comparing the total time of each
@@ -497,13 +502,13 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <param name="d2">The second <see cref="Duration"/> to compare.</param>
     /// <returns><see langword="true"/> if <paramref name="d1"/> is shorter than or equal to <paramref name="d2"/>; otherwise, <see langword="false"/>.</returns>
     public static bool operator <=(Duration d1, Duration d2)
-        => d1.Years <= d2.Years
-        || d1.Weeks <= d2.Weeks
-        || d1.Days <= d2.Days
-        || d1.Hours <= d2.Hours
-        || d1.Minutes <= d2.Minutes
-        || d1.Seconds <= d2.Seconds
-        || d1.Nanoseconds <= d2.Nanoseconds;
+        => d1.Years <= d2.Years ||
+           d1.Weeks <= d2.Weeks ||
+           d1.Days <= d2.Days ||
+           d1.Hours <= d2.Hours ||
+           d1.Minutes <= d2.Minutes ||
+           d1.Seconds <= d2.Seconds ||
+           d1.Nanoseconds <= d2.Nanoseconds;
 
     /// <summary>
     /// Returns a value indicating whether this instance is greater than or equal to a specified <see cref="Duration"/>. The comparison is done by comparing the total time of each
@@ -513,13 +518,13 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <param name="d2">The second <see cref="Duration"/> to compare.</param>
     /// <returns><see langword="true"/> if <paramref name="d1"/> is longer than or equal to <paramref name="d2"/>; otherwise, <see langword="false"/>.</returns>
     public static bool operator >=(Duration d1, Duration d2)
-        => d1.Years >= d2.Years
-        || d1.Weeks >= d2.Weeks
-        || d1.Days >= d2.Days
-        || d1.Hours >= d2.Hours
-        || d1.Minutes >= d2.Minutes
-        || d1.Seconds >= d2.Seconds
-        || d1.Nanoseconds >= d2.Nanoseconds;
+        => d1.Years >= d2.Years ||
+           d1.Weeks >= d2.Weeks ||
+           d1.Days >= d2.Days ||
+           d1.Hours >= d2.Hours ||
+           d1.Minutes >= d2.Minutes ||
+           d1.Seconds >= d2.Seconds ||
+           d1.Nanoseconds >= d2.Nanoseconds;
 
     /// <summary>
     /// Adds a <see cref="Duration"/> to a <see cref="DateTime"/> and returns the <see cref="DateTime"/> instance with the total time of the <see cref="Duration"/> added to it.
@@ -529,12 +534,12 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <returns><paramref name="dateTime"/> with the total time of <paramref name="duration"/> added to it.</returns>
     public static DateTime operator +(DateTime dateTime, Duration duration)
         => dateTime
-            .AddYears((int)duration.Years)
-            .AddDays((int)duration.Weeks * 7 + (int)duration.Days)
-            .AddHours((int)duration.Hours)
-            .AddMinutes((int)duration.Minutes)
-            .AddSeconds((int)duration.Seconds)
-            .AddTicks((long)duration.Nanoseconds / 100);
+            .AddYears((int) duration.Years)
+            .AddDays((int) duration.Weeks * 7 + (int) duration.Days)
+            .AddHours((int) duration.Hours)
+            .AddMinutes((int) duration.Minutes)
+            .AddSeconds((int) duration.Seconds)
+            .AddTicks((long) duration.Nanoseconds / 100);
 
     /// <summary>
     /// Adds a <see cref="Duration"/> to a <see cref="DateTimeOffset"/> and returns the <see cref="DateTimeOffset"/> instance with the total time of the <see cref="Duration"/> added to it.
@@ -544,12 +549,12 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <returns><paramref name="dateTimeOffset"/> with the total time of <paramref name="duration"/> added to it.</returns>
     public static DateTimeOffset operator +(DateTimeOffset dateTimeOffset, Duration duration)
         => dateTimeOffset
-            .AddYears((int)duration.Years)
-            .AddDays((int)duration.Weeks * 7 + (int)duration.Days)
-            .AddHours((int)duration.Hours)
-            .AddMinutes((int)duration.Minutes)
-            .AddSeconds((int)duration.Seconds)
-            .AddTicks((long)duration.Nanoseconds / 100);
+            .AddYears((int) duration.Years)
+            .AddDays((int) duration.Weeks * 7 + (int) duration.Days)
+            .AddHours((int) duration.Hours)
+            .AddMinutes((int) duration.Minutes)
+            .AddSeconds((int) duration.Seconds)
+            .AddTicks((long) duration.Nanoseconds / 100);
 
     /// <summary>
     /// Subtracts a <see cref="Duration"/> from a <see cref="DateTime"/> and returns the <see cref="DateTime"/> instance with the total time of the <see cref="Duration"/> subtracted from it.
@@ -559,12 +564,12 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <returns><paramref name="dateTime"/> with the total time of <paramref name="duration"/> subtracted from it.</returns>
     public static DateTime operator -(DateTime dateTime, Duration duration)
         => dateTime
-            .AddYears(-(int)duration.Years)
-            .AddDays(-(int)duration.Weeks * 7 - (int)duration.Days)
-            .AddHours(-(int)duration.Hours)
-            .AddMinutes(-(int)duration.Minutes)
-            .AddSeconds(-(int)duration.Seconds)
-            .AddTicks(-(long)duration.Nanoseconds / 100);
+            .AddYears(-(int) duration.Years)
+            .AddDays(-(int) duration.Weeks * 7 - (int) duration.Days)
+            .AddHours(-(int) duration.Hours)
+            .AddMinutes(-(int) duration.Minutes)
+            .AddSeconds(-(int) duration.Seconds)
+            .AddTicks(-(long) duration.Nanoseconds / 100);
 
     /// <summary>
     /// Subtracts a <see cref="Duration"/> from a <see cref="DateTimeOffset"/> and returns the <see cref="DateTimeOffset"/> instance with the total time of the <see cref="Duration"/>subtracted from it.
@@ -574,12 +579,12 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <returns><paramref name="dateTimeOffset"/> with the total time of <paramref name="duration"/> subtracted from it.</returns>
     public static DateTimeOffset operator -(DateTimeOffset dateTimeOffset, Duration duration)
         => dateTimeOffset
-            .AddYears(-(int)duration.Years)
-            .AddDays(-(int)duration.Weeks * 7 - (int)duration.Days)
-            .AddHours(-(int)duration.Hours)
-            .AddMinutes(-(int)duration.Minutes)
-            .AddSeconds(-(int)duration.Seconds)
-            .AddTicks(-(long)duration.Nanoseconds / 100);
+            .AddYears(-(int) duration.Years)
+            .AddDays(-(int) duration.Weeks * 7 - (int) duration.Days)
+            .AddHours(-(int) duration.Hours)
+            .AddMinutes(-(int) duration.Minutes)
+            .AddSeconds(-(int) duration.Seconds)
+            .AddTicks(-(long) duration.Nanoseconds / 100);
 
     /// <summary>
     /// Used to determine the largest unit that this <see cref="Duration"/> instance has.

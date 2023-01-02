@@ -3,23 +3,31 @@ namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 /// <summary>
 /// A GeoJSON MultiPolygon value which contains multiple geometry polygons. It is equivalent to SurrealDB's MultiPolygon data type. <br/>
 /// </summary>
-public sealed class MultiPolygon : IGeometry, IEquatable<MultiPolygon>
+public class MultiPolygon : Object, IGeometry, IEquatable<MultiPolygon>
 {
-    public Polygon[] Coordinates { get; set; }
+    public decimal[][][][] Coordinates { get; }
 
-    public MultiPolygon(Polygon[] coordinates)
-        => Coordinates = coordinates;
+    public MultiPolygon(params Polygon[] polygons)
+    {
+        Coordinates = polygons.Select(polygon => polygon.Coordinates).ToArray();
 
-    public MultiPolygon(IEnumerable<Polygon> coordinates)
-        => Coordinates = coordinates.ToArray();
+        Add("coordinates", Coordinates);
+        Add("type", nameof(MultiPolygon));
+    }
+
+    public MultiPolygon(IEnumerable<Polygon> polygons)
+    {
+        Coordinates = polygons.Select(polygon => polygon.Coordinates).ToArray();
+
+        Add("coordinates", Coordinates);
+        Add("type", nameof(MultiPolygon));
+    }
 
     public bool Equals(MultiPolygon? value)
-        => value is MultiPolygon
-        && Coordinates.SequenceEqual(value.Coordinates);
+        => value is not null && Coordinates.SequenceEqual(value.Coordinates);
 
     public override bool Equals(object? value)
-        => value is MultiPolygon multiPolygon
-        && Equals(multiPolygon);
+        => value is MultiPolygon multiPolygon && Equals(multiPolygon);
 
     public override int GetHashCode()
         => HashCode.Combine(Coordinates);

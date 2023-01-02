@@ -4,23 +4,31 @@ namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 /// Represents a GeoJSON GeometryCollection value which contains multiple different geometry types. It is equivalent to SurrealDB's Collection data type. <br/>
 /// <see href="https://surrealdb.com/docs/surrealql/datamodel/geometries#collection"/>
 /// </summary>
-public sealed class GeometryCollection : IGeometry, IEquatable<GeometryCollection>
+public class GeometryCollection : Object, IGeometry, IEquatable<GeometryCollection>
 {
-    public IGeometry[] Geometries { get; set; }
+    public IGeometry[] Geometries { get; }
 
-    public GeometryCollection(IGeometry[] geometries)
-        => Geometries = geometries;
+    public GeometryCollection(params IGeometry[] geometries)
+    {
+        Geometries = geometries;
+
+        Add("geometries", Geometries);
+        Add("type", nameof(GeometryCollection));
+    }
 
     public GeometryCollection(IEnumerable<IGeometry> geometries)
-        => Geometries = geometries.ToArray();
+    {
+        Geometries = geometries.ToArray();
+
+        Add("geometries", Geometries);
+        Add("type", nameof(GeometryCollection));
+    }
 
     public bool Equals(GeometryCollection? value)
-        => value is GeometryCollection
-        && Geometries.SequenceEqual(value.Geometries);
+        => value is not null && Geometries.SequenceEqual(value.Geometries);
 
     public override bool Equals(object? value)
-        => value is GeometryCollection geometryCollection
-        && Equals(geometryCollection);
+        => value is GeometryCollection collection && Equals(collection);
 
     public override int GetHashCode()
         => HashCode.Combine(Geometries);
