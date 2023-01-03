@@ -27,6 +27,7 @@ public class ObjectTranslatorExample : IExample
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
+        // notice that SSN is not included in the output
         Console.WriteLine(
             ObjectTranslator.Translate(
                 new Person

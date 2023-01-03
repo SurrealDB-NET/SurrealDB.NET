@@ -28,6 +28,7 @@ public readonly struct Point : IGeometry, IEquatable<Point>
     public static implicit operator (decimal x, decimal y)(Point point)
         => (point.X, point.Y);
 
+    /// <inheritdoc/>
     public SchemalessObject ToGeoJson()
         => new() { { "type", nameof(Point) }, { "coordinates", CoordinatesOnly() } };
 

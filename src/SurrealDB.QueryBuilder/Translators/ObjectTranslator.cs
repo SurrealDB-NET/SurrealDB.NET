@@ -27,6 +27,7 @@ public static class ObjectTranslator
             uint @uint => PrimitiveTranslator.Translate(@uint),
             long @long => PrimitiveTranslator.Translate(@long),
             ulong @ulong => PrimitiveTranslator.Translate(@ulong),
+            Half half => PrimitiveTranslator.Translate(half),
             float @float => PrimitiveTranslator.Translate(@float),
             double @double => PrimitiveTranslator.Translate(@double),
             decimal @decimal => PrimitiveTranslator.Translate(@decimal),
@@ -35,10 +36,10 @@ public static class ObjectTranslator
             BigInteger bigInteger => PrimitiveTranslator.Translate(bigInteger),
             None none => PrimitiveTranslator.Translate(none),
             Function function => FunctionTranslator.Translate(function),
-            SchemalessObject obj => obj.ToString(),
+            SchemalessObject schemalessObject => $"{schemalessObject}",
             IEnumerable enumerable => EnumerableTranslator.Translate(enumerable),
             IGeometry geometry => ObjectTranslator.Translate(geometry.ToGeoJson()),
-            not null => TranslateUnknownObject(@object)
+            _ => TranslateUnknownObject(@object)
         };
 
     private static string TranslateUnknownObject(object unknownObject)

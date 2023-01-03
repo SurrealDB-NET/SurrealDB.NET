@@ -14,6 +14,7 @@ public class MultiLineString : IGeometry, IEquatable<MultiLineString>
     public MultiLineString(IEnumerable<LineString> lines)
         => Coordinates = lines.ToArray();
 
+    /// <inheritdoc/>
     public SchemalessObject ToGeoJson()
         => new() { { "type", nameof(MultiLineString) }, { "coordinates", CoordinatesOnly() } };
 

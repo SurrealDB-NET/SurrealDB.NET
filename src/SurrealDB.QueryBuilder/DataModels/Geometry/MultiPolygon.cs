@@ -13,6 +13,7 @@ public class MultiPolygon : IGeometry, IEquatable<MultiPolygon>
     public MultiPolygon(IEnumerable<Polygon> polygons)
         => Coordinates = polygons.ToArray();
 
+    /// <inheritdoc/>
     public SchemalessObject ToGeoJson()
         => new() { { "type", nameof(MultiPolygon) }, { "coordinates", CoordinatesOnly() } };
 

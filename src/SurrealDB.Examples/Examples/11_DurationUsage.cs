@@ -12,7 +12,7 @@ public sealed class DurationUsage : IExample
     {
         var durationFromConstructor = new Duration(years: 4, weeks: 20, minutes: 78, nanoseconds: 1000000000); // specify the units you want to use
 
-        Duration durationFromString = "2y10w10w2y78m1s"; // order doesn't matter, as long as the unit is specified (y, w, d, h, m, s, ms, µs, ns)
+        Duration durationFromString = "1s2y10w10w2y78m"; // order doesn't matter, as long as the unit is specified (y, w, d, h, m, s, ms, µs, ns)
 
         Console.WriteLine(durationFromConstructor == durationFromString);
 

@@ -14,73 +14,73 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// Gets the years component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The years component of this <see cref="Duration"/> structure.</returns>
-    public ulong Years { get; }
+    public readonly ulong Years { get; }
 
     /// <summary>
     /// Gets the weeks component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The weeks component of this <see cref="Duration"/> structure.</returns>
-    public ulong Weeks { get; }
+    public readonly ulong Weeks { get; }
 
     /// <summary>
     /// Gets the days component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The days component of this <see cref="Duration"/> structure.</returns>
-    public ulong Days { get; }
+    public readonly ulong Days { get; }
 
     /// <summary>
     /// Gets the hours component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The hours component of this <see cref="Duration"/> structure.</returns>
-    public ulong Hours { get; }
+    public readonly ulong Hours { get; }
 
     /// <summary>
     /// Gets the minutes component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The minutes component of this <see cref="Duration"/> structure.</returns>
-    public ulong Minutes { get; }
+    public readonly ulong Minutes { get; }
 
     /// <summary>
     /// Gets the seconds component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The seconds component of this <see cref="Duration"/> structure.</returns>
-    public ulong Seconds { get; }
+    public readonly ulong Seconds { get; }
 
     /// <summary>
     /// Gets the nanoseconds component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The nanoseconds component of this <see cref="Duration"/> structure.</returns>
-    public ulong Nanoseconds { get; }
+    public readonly ulong Nanoseconds { get; }
 
     /// <summary>
     /// The total number of years in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
-    private decimal TotalYears { get; }
+    private readonly decimal TotalYears { get; }
 
     /// <summary>
     /// The total number of seconds in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
-    private UInt128 TotalSeconds => Years * 31536000 + Weeks * 604800 + Days * 86400 + Hours * 3600 + Minutes * 60 + Seconds;
+    private readonly UInt128 TotalSeconds => Years * 31536000 + Weeks * 604800 + Days * 86400 + Hours * 3600 + Minutes * 60 + Seconds;
 
     /// <summary>
     /// The total number of minutes in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
-    private UInt128 TotalMinutes => Years * 525600 + Weeks * 10080 + Days * 1440 + Hours * 60 + Minutes;
+    private readonly UInt128 TotalMinutes => Years * 525600 + Weeks * 10080 + Days * 1440 + Hours * 60 + Minutes;
 
     /// <summary>
     /// The total number of hours in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
-    private UInt128 TotalHours => Years * 8760 + Weeks * 168 + Days * 24 + Hours;
+    private readonly UInt128 TotalHours => Years * 8760 + Weeks * 168 + Days * 24 + Hours;
 
     /// <summary>
     /// The total number of days in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
-    private UInt128 TotalDays => Years * 365 + Weeks * 7 + Days;
+    private readonly UInt128 TotalDays => Years * 365 + Weeks * 7 + Days;
 
     /// <summary>
     /// The total number of weeks in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
-    private UInt128 TotalWeeks => Years * 52 + Weeks;
+    private readonly UInt128 TotalWeeks => Years * 52 + Weeks;
 
     /// <summary>
     /// The largest unit of time in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
@@ -163,7 +163,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
 
         HashSet<string> units = new() { "y", "w", "d", "h", "m", "s", "ms", "µs", "ns" };
 
-        for (var i = 0; i < duration.Length; i++)
+        for (var i = 0; i < duration.Length; ++i)
         {
             var value = string.Empty;
 
@@ -239,7 +239,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// Converts the <see cref="string"/> representation of a duration to its <see cref="Duration"/> equivalent. A return value indicates whether the conversion succeeded.
     /// </summary>
     /// <param name="durationString">A <see cref="string"/> containing a <see cref="Duration"/> to convert.</param>
-    /// <param name="provider"></param>
+    /// <param name="provider">The <paramref name="provider"/> is ignored.</param>
     /// <param name="result">When this method returns, contains the <see cref="Duration"/> value equivalent to the duration contained in <paramref name="durationString"/>, if the conversion succeeded, or an empty <see cref="Duration"/> if the conversion failed. The conversion fails if the <paramref name="durationString"/> parameter is <see langword="null"/> or <see cref="string.Empty"/>, is not of the correct format. This parameter is passed uninitialized.</param>
     /// <returns><see langword="true"/> if <paramref name="durationString"/> was converted successfully; otherwise, <see langword="false"/>.</returns>
     public static bool TryParse([NotNullWhen(true)] string? durationString, IFormatProvider? provider, out Duration result)
@@ -266,7 +266,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// Converts the <see cref="string"/> representation of a duration to its <see cref="Duration"/> equivalent. A return value indicates whether the conversion succeeded.
     /// </summary>
     /// <param name="durationSpan">A span containing a <see cref="Duration"/> to convert.</param>
-    /// <param name="provider"></param>
+    /// <param name="provider">The <paramref name="provider"/> is ignored.</param>
     /// <param name="result">When this method returns, contains the <see cref="Duration"/> value equivalent to the duration contained in <paramref name="durationSpan"/>, if the conversion succeeded, or an empty <see cref="Duration"/> if the conversion failed. The conversion fails if the <paramref name="durationSpan"/> parameter is <see langword="null"/> or <see cref="string.Empty"/>, is not of the correct format. This parameter is passed uninitialized.</param>
     /// <returns><see langword="true"/> if <paramref name="durationSpan"/> was converted successfully; otherwise, <see langword="false"/>.</returns>
     public static bool TryParse(ReadOnlySpan<char> durationSpan, IFormatProvider? provider, out Duration result)

@@ -1,10 +1,9 @@
 namespace SurrealDB.QueryBuilder.DataModels;
 
-using System.Collections;
 using SurrealDB.QueryBuilder.Translators;
 
 /// <summary>
-/// Represents an object containing key value pairs where the value can be any type. It is equivalent to SurrealDB's Object data type. <br/>
+/// Represents an object containing key value pairs where the value can be of any type. It is equivalent to SurrealDB's Object data type. <br/>
 /// <see href="https://surrealdb.com/docs/surrealql/datamodel/simple"/>
 /// </summary>
 public class SchemalessObject : Dictionary<string, object?>

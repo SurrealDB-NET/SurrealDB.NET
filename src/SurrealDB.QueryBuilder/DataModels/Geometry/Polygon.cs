@@ -14,6 +14,7 @@ public class Polygon : IGeometry, IEquatable<Polygon>
     public Polygon(IEnumerable<Point> lines)
         => Coordinates = lines.ToArray();
 
+    /// <inheritdoc/>
     public SchemalessObject ToGeoJson()
         => new() { { "type", nameof(Polygon) }, { "coordinates", CoordinatesOnly() } };
 

@@ -14,6 +14,7 @@ public class GeometryCollection : IGeometry, IEquatable<GeometryCollection>
     public GeometryCollection(IEnumerable<IGeometry> geometries)
         => Geometries = geometries.ToArray();
 
+    /// <inheritdoc/>
     public SchemalessObject ToGeoJson()
         => new() { { "type", nameof(GeometryCollection) }, { "geometries", Geometries } };
 

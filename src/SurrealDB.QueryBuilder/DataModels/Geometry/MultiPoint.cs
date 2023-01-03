@@ -14,6 +14,7 @@ public class MultiPoint : IGeometry, IEquatable<MultiPoint>
     public MultiPoint(IEnumerable<Point> points)
         => Coordinates = points.ToArray();
 
+    /// <inheritdoc/>
     public SchemalessObject ToGeoJson()
         => new() { { "type", nameof(MultiPoint) }, { "coordinates", CoordinatesOnly() } };
 

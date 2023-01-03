@@ -10,6 +10,10 @@ public class LineString : IGeometry, IEquatable<LineString>
     public LineString(IEnumerable<Point> points)
         => Coordinates = points.ToArray();
 
+    /// <inheritdoc/>
+    public SchemalessObject ToGeoJson()
+            => new() { { "type", nameof(LineString) }, { "coordinates", CoordinatesOnly() } };
+
     public bool Equals(LineString? value)
         => value is not null && Coordinates.SequenceEqual(value.Coordinates);
 
@@ -18,9 +22,6 @@ public class LineString : IGeometry, IEquatable<LineString>
 
     public override int GetHashCode()
         => HashCode.Combine(Coordinates);
-
-    public SchemalessObject ToGeoJson()
-            => new() { { "type", nameof(LineString) }, { "coordinates", CoordinatesOnly() } };
 
     internal decimal[][] CoordinatesOnly()
         => Coordinates.Select(point => point.CoordinatesOnly()).ToArray();
