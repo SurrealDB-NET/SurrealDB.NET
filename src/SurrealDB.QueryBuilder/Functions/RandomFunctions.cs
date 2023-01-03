@@ -12,7 +12,7 @@ public static class RandomFunctions
         => new("rand::bool()");
 
     public static Function Enum(params object[] values)
-        => new($"rand::enum({ArrayTranslator.Translate(values)})");
+        => new($"rand::enum({EnumerableTranslator.Translate(values)})");
 
     public static Function Float()
         => new("rand::float()");

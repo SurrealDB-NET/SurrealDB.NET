@@ -49,7 +49,7 @@ public static class ObjectTranslator
         // Array types
         if (type.IsArray || type.IsAssignableTo(typeof(IEnumerable)))
         {
-            var method = typeof(ArrayTranslator).GetMethod(nameof(ArrayTranslator.Translate), BindingFlags.Static | BindingFlags.NonPublic);
+            var method = typeof(EnumerableTranslator).GetMethod(nameof(EnumerableTranslator.Translate), BindingFlags.Static | BindingFlags.NonPublic);
             var genericMethod = method!.MakeGenericMethod(type.GetElementType()!);
             return (string) genericMethod.Invoke(null, new object[] {@object})!;
         }

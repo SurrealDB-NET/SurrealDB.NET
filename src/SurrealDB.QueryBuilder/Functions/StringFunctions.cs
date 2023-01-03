@@ -5,13 +5,13 @@ using Translators;
 public static class StringFunctions
 {
     public static Function Concat(params string[] values)
-        => new($"string::concat({ArrayTranslator.Translate(values.Select(PrimitiveTranslator.Translate))})");
+        => new($"string::concat({EnumerableTranslator.Translate(values.Select(PrimitiveTranslator.Translate))})");
 
     public static Function EndsWith(string value, string suffix)
         => new($"string::endsWith({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(suffix)})");
 
     public static Function Join(string delimiter, params string[] values)
-        => new($"string::join({PrimitiveTranslator.Translate(delimiter)}, {ArrayTranslator.Translate(values.Select(PrimitiveTranslator.Translate))})");
+        => new($"string::join({PrimitiveTranslator.Translate(delimiter)}, {EnumerableTranslator.Translate(values.Select(PrimitiveTranslator.Translate))})");
 
     public static Function Length(string value)
         => new($"string::length({PrimitiveTranslator.Translate(value)})");

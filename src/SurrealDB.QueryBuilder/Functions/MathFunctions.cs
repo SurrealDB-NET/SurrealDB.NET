@@ -18,19 +18,19 @@ public static class MathFunctions
         => new($"math::floor({PrimitiveTranslator.Translate(number)})");
 
     public static Function Max<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new($"math::log({ArrayTranslator.Translate(numbers)})");
+        => new($"math::log({EnumerableTranslator.Translate(numbers)})");
 
     public static Function Mean<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new($"math::mean({ArrayTranslator.Translate(numbers)})");
+        => new($"math::mean({EnumerableTranslator.Translate(numbers)})");
 
     public static Function Median<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new($"math::median({ArrayTranslator.Translate(numbers)})");
+        => new($"math::median({EnumerableTranslator.Translate(numbers)})");
 
     public static Function Min<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new($"math::min({ArrayTranslator.Translate(numbers)})");
+        => new($"math::min({EnumerableTranslator.Translate(numbers)})");
 
     public static Function Product<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new($"math::product({ArrayTranslator.Translate(numbers)})");
+        => new($"math::product({EnumerableTranslator.Translate(numbers)})");
 
     public static Function Round<TNumber>(TNumber number) where TNumber : INumber<TNumber>
         => new($"math::round({PrimitiveTranslator.Translate(number)})");
@@ -39,5 +39,5 @@ public static class MathFunctions
         => new($"math::sqrt({PrimitiveTranslator.Translate(number)})");
 
     public static Function Sum<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new($"math::sum({ArrayTranslator.Translate(numbers)})");
+        => new($"math::sum({EnumerableTranslator.Translate(numbers)})");
 }

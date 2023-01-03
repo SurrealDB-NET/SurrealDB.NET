@@ -96,7 +96,7 @@ public class Object : IDictionary<string, object?>
                 None none => PrimitiveTranslator.Translate(none),
                 Function function => FunctionTranslator.Translate(function),
                 Object obj => obj.ToString(),
-                IEnumerable enumerable => ArrayTranslator.Translate(enumerable),
+                IEnumerable enumerable => EnumerableTranslator.Translate(enumerable),
                 _ => throw new NotSupportedException($"The type {value.GetType()} is not supported.")
             };
 

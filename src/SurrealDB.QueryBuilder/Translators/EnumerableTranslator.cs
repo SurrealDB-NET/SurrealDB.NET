@@ -2,7 +2,7 @@ namespace SurrealDB.QueryBuilder.Translators;
 
 using System.Collections;
 
-internal static class ArrayTranslator
+internal static class EnumerableTranslator
 {
     internal static string Translate(IEnumerable array)
         => Translate(array.Cast<object>());
