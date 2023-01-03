@@ -4,31 +4,24 @@ namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 /// Represents a GeoJSON MultiPoint value which contains multiple geometry points. It is equivalent to SurrealDB's MultiPoint data type. <br/>
 /// <see href="https://surrealdb.com/docs/surrealql/datamodel/geometries#multipoint"/>
 /// </summary>
-public class MultiPoint : Object, IGeometry, IEquatable<MultiPoint>
+public class MultiPoint : IGeometry, IEquatable<MultiPoint>
 {
-    public decimal[][] Coordinates { get; }
+    public Point[] Coordinates { get; }
 
-    public MultiPoint(params (decimal x, decimal y)[] point)
-    {
-        Coordinates = point.Select(p => new[] {p.x, p.y}).ToArray();
-
-        Add("coordinates", Coordinates);
-        Add("type", nameof(LineString));
-    }
+    public MultiPoint(params Point[] points)
+        => Coordinates = points;
 
     public MultiPoint(IEnumerable<Point> points)
-    {
-        Coordinates = points.Select(point => new[] {point.X, point.Y}).ToArray();
+        => Coordinates = points.ToArray();
 
-        Add("coordinates", Coordinates);
-        Add("type", nameof(MultiPoint));
-    }
+    public SchemalessObject ToGeoJson()
+        => new() { { "type", nameof(MultiPoint) }, { "coordinates", Coordinates } };
 
     public bool Equals(MultiPoint? value)
         => value is not null && Coordinates.SequenceEqual(value.Coordinates);
 
     public override bool Equals(object? value)
-        => value is MultiPoint multiPoint && Equals(multiPoint);
+        => Equals(value as MultiPoint);
 
     public override int GetHashCode()
         => HashCode.Combine(Coordinates);

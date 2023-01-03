@@ -1,33 +1,26 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
-public class LineString : Object, IGeometry, IEquatable<LineString>
+public class LineString : IGeometry, IEquatable<LineString>
 {
-    public decimal[][] Coordinates { get; }
+    public Point[] Coordinates { get; }
 
-    public LineString(params (decimal x, decimal y)[] point)
-    {
-        Coordinates = point.Select(p => new[] { p.x, p.y }).ToArray();
-        
-        Add("coordinates", Coordinates);
-        Add("type", nameof(LineString));
-    }
+    public LineString(params Point[] points)
+        => Coordinates = points;
 
     public LineString(IEnumerable<Point> points)
-    {
-        Coordinates = points.Select(point => new[] {point.X, point.Y}).ToArray();
+        => Coordinates = points.ToArray();
 
-        Add("coordinates", Coordinates);
-        Add("type", nameof(LineString));
-    }
+    public bool Equals(LineString? value)
+        => value is not null && Coordinates.SequenceEqual(value.Coordinates);
 
-    public bool Equals(LineString? other)
-        => other is not null && Coordinates.SequenceEqual(other.Coordinates);
-
-    public override bool Equals(object? obj)
-        => obj is LineString lineString && Equals(lineString);
+    public override bool Equals(object? value)
+        => Equals(value as LineString);
 
     public override int GetHashCode()
         => HashCode.Combine(Coordinates);
+
+        public SchemalessObject ToGeoJson()
+            => new() { { "type", nameof(LineString) }, { "coordinates", Coordinates } };
 
     public static bool operator ==(LineString? left, LineString? right)
         => Equals(left, right);

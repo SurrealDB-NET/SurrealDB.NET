@@ -4,31 +4,24 @@ namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 /// Represents a GeoJSON MultiLineString value which contains multiple geometry lines. It is equivalent to SurrealDB's MultiLine data type. <br/>
 /// <see href="https://surrealdb.com/docs/surrealql/datamodel/geometries#multilinestring"/>
 /// </summary>
-public class MultiLineString : Object, IGeometry, IEquatable<MultiLineString>
+public class MultiLineString : IGeometry, IEquatable<MultiLineString>
 {
-    public decimal[][][] Coordinates { get; }
+    public LineString[] Coordinates { get; }
 
     public MultiLineString(params LineString[] lines)
-    {
-        Coordinates = lines.Select(line => line.Coordinates).ToArray();
-
-        Add("coordinates", Coordinates);
-        Add("type", nameof(MultiLineString));
-    }
+        => Coordinates = lines;
 
     public MultiLineString(IEnumerable<LineString> lines)
-    {
-        Coordinates = lines.Select(line => line.Coordinates).ToArray();
+        => Coordinates = lines.ToArray();
 
-        Add("coordinates", Coordinates);
-        Add("type", nameof(MultiLineString));
-    }
+    public SchemalessObject ToGeoJson()
+        => new() { { "type", nameof(MultiLineString) }, { "coordinates", Coordinates } };
 
     public bool Equals(MultiLineString? value)
         => value is not null && Coordinates.SequenceEqual(value.Coordinates);
 
     public override bool Equals(object? value)
-        => value is MultiLineString multiLine && Equals(multiLine);
+        => Equals(value as MultiLineString);
 
     public override int GetHashCode()
         => HashCode.Combine(Coordinates);
