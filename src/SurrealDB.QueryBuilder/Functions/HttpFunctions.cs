@@ -1,6 +1,6 @@
-namespace SurrealDB.QueryBuilder.Functions;
+using SurrealDB.QueryBuilder.Translators;
 
-using Translators;
+namespace SurrealDB.QueryBuilder.Functions;
 
 public static class HttpFunctions
 {

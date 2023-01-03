@@ -1,6 +1,6 @@
-namespace SurrealDB.QueryBuilder.Functions;
+using SurrealDB.QueryBuilder.Translators;
 
-using Translators;
+namespace SurrealDB.QueryBuilder.Functions;
 
 public static class CryptoFunctions
 {
@@ -19,7 +19,8 @@ public static class CryptoFunctions
     public static class Argon2
     {
         public static Function Compare(string hash, string plainText)
-            => new($"crypto::argon2::compare({PrimitiveTranslator.Translate(hash)}, {PrimitiveTranslator.Translate(plainText)})");
+            => new(
+                $"crypto::argon2::compare({PrimitiveTranslator.Translate(hash)}, {PrimitiveTranslator.Translate(plainText)})");
 
         public static Function Generate(string value)
             => new($"crypto::argon2::generate({PrimitiveTranslator.Translate(value)})");
@@ -28,7 +29,8 @@ public static class CryptoFunctions
     public static class Pbkdf2
     {
         public static Function Compare(string hash, string plainText)
-            => new($"crypto::pbkdf2::compare({PrimitiveTranslator.Translate(hash)}, {PrimitiveTranslator.Translate(plainText)})");
+            => new(
+                $"crypto::pbkdf2::compare({PrimitiveTranslator.Translate(hash)}, {PrimitiveTranslator.Translate(plainText)})");
 
         public static Function Generate(string value)
             => new($"crypto::pbkdf2::generate({PrimitiveTranslator.Translate(value)})");
@@ -37,7 +39,8 @@ public static class CryptoFunctions
     public static class Scrypt
     {
         public static Function Compare(string hash, string plainText)
-            => new($"crypto::scrypt::compare({PrimitiveTranslator.Translate(hash)}, {PrimitiveTranslator.Translate(plainText)})");
+            => new(
+                $"crypto::scrypt::compare({PrimitiveTranslator.Translate(hash)}, {PrimitiveTranslator.Translate(plainText)})");
 
         public static Function Generate(string value)
             => new($"crypto::scrypt::generate({PrimitiveTranslator.Translate(value)})");

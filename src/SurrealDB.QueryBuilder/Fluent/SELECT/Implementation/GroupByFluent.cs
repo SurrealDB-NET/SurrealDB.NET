@@ -1,12 +1,14 @@
 using System.Text;
 using SurrealDB.QueryBuilder.Enums;
 
-namespace SurrealDB.QueryBuilder.Fluent;
+namespace SurrealDB.QueryBuilder.Fluent.Select.Implementation;
 
 internal class GroupByFluent : OrderByFluent, IGroupByFluent
 {
     internal GroupByFluent(StringBuilder currentQuery)
-        : base(currentQuery) { }
+        : base(currentQuery)
+    {
+    }
 
     public IOrderByFluent OrderByRandom()
     {
@@ -14,12 +16,16 @@ internal class GroupByFluent : OrderByFluent, IGroupByFluent
         return new OrderByFluent(query);
     }
 
-    public IOrderByFluent OrderBy(string field, SortOrder sortOrder = SortOrder.ASC, TextSortMethod textSortMethod = TextSortMethod.None)
+    public IOrderByFluent OrderBy(string field, SortOrder sortOrder = SortOrder.ASC,
+        TextSortMethod textSortMethod = TextSortMethod.None)
     {
         query.Append(" ORDER ");
         query.Append(field);
         if (textSortMethod is not TextSortMethod.None)
+        {
             query.Append($" {textSortMethod.ToString().ToUpper()}");
+        }
+
         query.Append($" {sortOrder.ToString().ToUpper()}");
         return new OrderByFluent(query);
     }

@@ -1,11 +1,13 @@
 using System.Text;
 
-namespace SurrealDB.QueryBuilder.Fluent;
+namespace SurrealDB.QueryBuilder.Fluent.Select.Implementation;
 
 internal class LimitByFluent : StartAtFluent, ILimitByFluent
 {
     internal LimitByFluent(StringBuilder currentQuery)
-        : base(currentQuery) { }
+        : base(currentQuery)
+    {
+    }
 
     public IStartAtFluent StartAt(uint startAt)
     {

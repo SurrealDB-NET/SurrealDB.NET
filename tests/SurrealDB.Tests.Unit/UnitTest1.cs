@@ -1,6 +1,6 @@
-namespace SurrealDB.Tests.Unit;
-
 using Xunit;
+
+namespace SurrealDB.Tests.Unit;
 
 public class UnitTest1
 {

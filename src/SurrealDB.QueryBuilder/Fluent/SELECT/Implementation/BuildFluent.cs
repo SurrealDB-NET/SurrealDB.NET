@@ -1,6 +1,7 @@
 using System.Text;
+using SurrealDB.QueryBuilder.Fluent.Shared;
 
-namespace SurrealDB.QueryBuilder.Fluent;
+namespace SurrealDB.QueryBuilder.Fluent.Select.Implementation;
 
 public class BuildFluent : IBuildFluent
 {

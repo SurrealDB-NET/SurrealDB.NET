@@ -1,11 +1,13 @@
 using System.Text;
 
-namespace SurrealDB.QueryBuilder.Fluent;
+namespace SurrealDB.QueryBuilder.Fluent.Select.Implementation;
 
 internal class StartAtFluent : FetchFluent, IStartAtFluent
 {
     internal StartAtFluent(StringBuilder currentQuery)
-        : base(currentQuery) { }
+        : base(currentQuery)
+    {
+    }
 
     public IFetchFluent Fetch(params string[] fields)
     {

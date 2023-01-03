@@ -1,11 +1,13 @@
 using System.Text;
 
-namespace SurrealDB.QueryBuilder.Fluent;
+namespace SurrealDB.QueryBuilder.Fluent.Select.Implementation;
 
 internal class FromFluent : WhereFluent, IFromFluent
 {
     internal FromFluent(StringBuilder currentQuery)
-        : base(currentQuery) { }
+        : base(currentQuery)
+    {
+    }
 
     public IWhereFluent Where(string predicate)
     {

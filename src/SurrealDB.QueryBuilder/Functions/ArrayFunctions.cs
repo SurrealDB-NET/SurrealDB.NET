@@ -1,7 +1,7 @@
-namespace SurrealDB.QueryBuilder.Functions;
+using SurrealDB.QueryBuilder.Enums;
+using SurrealDB.QueryBuilder.Translators;
 
-using Enums;
-using Translators;
+namespace SurrealDB.QueryBuilder.Functions;
 
 public static class ArrayFunctions
 {
@@ -12,7 +12,8 @@ public static class ArrayFunctions
         => new($"array::concat({EnumerableTranslator.Translate(array1)}, {EnumerableTranslator.Translate(array2)})");
 
     public static Function Difference(IEnumerable<object> array1, IEnumerable<object> array2)
-        => new($"array::difference({EnumerableTranslator.Translate(array1)}, {EnumerableTranslator.Translate(array2)})");
+        => new(
+            $"array::difference({EnumerableTranslator.Translate(array1)}, {EnumerableTranslator.Translate(array2)})");
 
     public static Function Distinct(IEnumerable<object> array)
         => new($"array::distinct({EnumerableTranslator.Translate(array)})");
@@ -27,10 +28,12 @@ public static class ArrayFunctions
         => new($"array::sort({EnumerableTranslator.Translate(array)})");
 
     public static Function Sort(IEnumerable<object> array, bool isAscending)
-        => new($"array::sort({EnumerableTranslator.Translate(array)}, {PrimitiveTranslator.Translate(isAscending.ToString()).ToLower()})");
+        => new(
+            $"array::sort({EnumerableTranslator.Translate(array)}, {PrimitiveTranslator.Translate(isAscending.ToString()).ToLower()})");
 
     public static Function Sort(IEnumerable<object> array, SortOrder sortOrder)
-        => new($"array::sort({EnumerableTranslator.Translate(array)}, {PrimitiveTranslator.Translate(sortOrder.ToString()).ToLower()})");
+        => new(
+            $"array::sort({EnumerableTranslator.Translate(array)}, {PrimitiveTranslator.Translate(sortOrder.ToString()).ToLower()})");
 
     public static Function SortByAsc(IEnumerable<object> array)
         => new($"array::sort::asc({EnumerableTranslator.Translate(array)})");

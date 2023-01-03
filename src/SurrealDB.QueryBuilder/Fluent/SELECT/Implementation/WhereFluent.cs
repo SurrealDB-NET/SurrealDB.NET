@@ -1,11 +1,13 @@
 using System.Text;
 
-namespace SurrealDB.QueryBuilder.Fluent;
+namespace SurrealDB.QueryBuilder.Fluent.Select.Implementation;
 
 internal class WhereFluent : SplitAtFluent, IWhereFluent
 {
     internal WhereFluent(StringBuilder currentQuery)
-        : base(currentQuery) { }
+        : base(currentQuery)
+    {
+    }
 
     public ISplitAtFluent SplitAt(params string[] fields)
     {

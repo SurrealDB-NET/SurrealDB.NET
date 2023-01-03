@@ -1,6 +1,6 @@
-namespace SurrealDB.QueryBuilder.Translators;
+using SurrealDB.QueryBuilder.Functions;
 
-using Functions;
+namespace SurrealDB.QueryBuilder.Translators;
 
 internal static class FunctionTranslator
 {

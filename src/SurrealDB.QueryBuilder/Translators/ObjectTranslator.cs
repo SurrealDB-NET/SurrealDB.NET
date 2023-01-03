@@ -1,14 +1,14 @@
-namespace SurrealDB.QueryBuilder.Translators;
-
 using System.Collections;
 using System.Numerics;
 using System.Reflection;
-using DataModels;
-using Functions;
+using SurrealDB.QueryBuilder.DataModels;
 using SurrealDB.QueryBuilder.DataModels.Geometry;
+using SurrealDB.QueryBuilder.Functions;
+
+namespace SurrealDB.QueryBuilder.Translators;
 
 /// <summary>
-/// Translates an object to a SurrealQL object
+///     Translates an object to a SurrealQL object
 /// </summary>
 public static class ObjectTranslator
 {
@@ -38,25 +38,25 @@ public static class ObjectTranslator
             Function function => FunctionTranslator.Translate(function),
             SchemalessObject schemalessObject => $"{schemalessObject}",
             IEnumerable enumerable => EnumerableTranslator.Translate(enumerable),
-            IGeometry geometry => ObjectTranslator.Translate(geometry.ToGeoJson()),
+            IGeometry geometry => Translate(geometry.ToGeoJson()),
             _ => TranslateUnknownObject(@object)
         };
 
     private static string TranslateUnknownObject(object unknownObject)
     {
-        var type = unknownObject.GetType();
+        Type type = unknownObject.GetType();
 
-        var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+        PropertyInfo[] properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-        var @object = new SchemalessObject();
+        SchemalessObject @object = new SchemalessObject();
 
-        foreach (var field in fields)
+        foreach (FieldInfo field in fields)
         {
             @object.Add(field.Name, field.GetValue(unknownObject));
         }
 
-        foreach (var property in properties)
+        foreach (PropertyInfo property in properties)
         {
             @object.Add(property.Name, property.GetValue(unknownObject));
         }

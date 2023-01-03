@@ -1,12 +1,12 @@
-namespace SurrealDB.QueryBuilder.Functions;
+using SurrealDB.QueryBuilder.Translators;
 
-using Translators;
+namespace SurrealDB.QueryBuilder.Functions;
 
 public static class ValidationFunctions
 {
     public static Function IsAlpha(string value)
         => new($"is::alpha({PrimitiveTranslator.Translate(value)})");
-    
+
     public static Function IsAlphaNum(string value)
         => new($"is::alphanum({PrimitiveTranslator.Translate(value)})");
 

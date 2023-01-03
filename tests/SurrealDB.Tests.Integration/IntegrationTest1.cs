@@ -1,6 +1,6 @@
-namespace SurrealDB.Tests.Integration;
-
 using Xunit;
+
+namespace SurrealDB.Tests.Integration;
 
 public class IntegrationTest1
 {

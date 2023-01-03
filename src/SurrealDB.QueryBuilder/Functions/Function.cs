@@ -2,10 +2,10 @@ namespace SurrealDB.QueryBuilder.Functions;
 
 public class Function
 {
-    private string Translated { get; }
-
     internal Function(string translatedFunction)
         => Translated = translatedFunction;
+
+    private string Translated { get; }
 
     public override string ToString()
         => Translated;

@@ -1,7 +1,7 @@
-namespace SurrealDB.QueryBuilder.Functions;
-
 using System.Numerics;
-using Translators;
+using SurrealDB.QueryBuilder.Translators;
+
+namespace SurrealDB.QueryBuilder.Functions;
 
 public static class MathFunctions
 {

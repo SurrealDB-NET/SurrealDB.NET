@@ -1,6 +1,6 @@
-namespace SurrealDB.QueryBuilder.Functions;
+using SurrealDB.QueryBuilder.DataModels.Geometry;
 
-using DataModels.Geometry;
+namespace SurrealDB.QueryBuilder.Functions;
 
 public static class GeoFunctions
 {

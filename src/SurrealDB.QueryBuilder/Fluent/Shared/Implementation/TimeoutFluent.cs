@@ -1,11 +1,13 @@
 using System.Text;
 
-namespace SurrealDB.QueryBuilder.Fluent;
+namespace SurrealDB.QueryBuilder.Fluent.Shared.Implementation;
 
 internal class TimeoutFluent : ParallelFluent, ITimeoutFluent
 {
     internal TimeoutFluent(StringBuilder currentQuery)
-        : base(currentQuery) { }
+        : base(currentQuery)
+    {
+    }
 
     public IParallelFluent Parallel()
     {

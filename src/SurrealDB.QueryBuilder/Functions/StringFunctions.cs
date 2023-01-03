@@ -1,6 +1,6 @@
-namespace SurrealDB.QueryBuilder.Functions;
+using SurrealDB.QueryBuilder.Translators;
 
-using Translators;
+namespace SurrealDB.QueryBuilder.Functions;
 
 public static class StringFunctions
 {
@@ -11,7 +11,8 @@ public static class StringFunctions
         => new($"string::endsWith({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(suffix)})");
 
     public static Function Join(string delimiter, params string[] values)
-        => new($"string::join({PrimitiveTranslator.Translate(delimiter)}, {EnumerableTranslator.Translate(values.Select(PrimitiveTranslator.Translate))})");
+        => new(
+            $"string::join({PrimitiveTranslator.Translate(delimiter)}, {EnumerableTranslator.Translate(values.Select(PrimitiveTranslator.Translate))})");
 
     public static Function Length(string value)
         => new($"string::length({PrimitiveTranslator.Translate(value)})");
@@ -23,13 +24,15 @@ public static class StringFunctions
         => new($"string::repeat({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(count)})");
 
     public static Function Replace(string value, string search, string replace)
-        => new($"string::replace({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(search)}, {PrimitiveTranslator.Translate(replace)})");
+        => new(
+            $"string::replace({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(search)}, {PrimitiveTranslator.Translate(replace)})");
 
     public static Function Reverse(string value)
         => new($"string::reverse({PrimitiveTranslator.Translate(value)})");
 
     public static Function Slice(string value, long start, long length)
-        => new($"string::slice({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(start)}, {PrimitiveTranslator.Translate(length)})");
+        => new(
+            $"string::slice({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(start)}, {PrimitiveTranslator.Translate(length)})");
 
     public static Function Slug(string value)
         => new($"string::slug({PrimitiveTranslator.Translate(value)})");

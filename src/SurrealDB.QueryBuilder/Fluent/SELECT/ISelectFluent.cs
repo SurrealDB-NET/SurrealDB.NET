@@ -1,4 +1,4 @@
-namespace SurrealDB.QueryBuilder.Fluent;
+namespace SurrealDB.QueryBuilder.Fluent.Select;
 
 public interface ISelectFluent
 {

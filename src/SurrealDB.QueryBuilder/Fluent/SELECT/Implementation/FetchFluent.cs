@@ -1,12 +1,16 @@
 using System.Text;
 using SurrealDB.QueryBuilder.DataModels;
+using SurrealDB.QueryBuilder.Fluent.Shared;
+using SurrealDB.QueryBuilder.Fluent.Shared.Implementation;
 
-namespace SurrealDB.QueryBuilder.Fluent;
+namespace SurrealDB.QueryBuilder.Fluent.Select.Implementation;
 
 internal class FetchFluent : TimeoutFluent, IFetchFluent
 {
     internal FetchFluent(StringBuilder currentQuery)
-        : base(currentQuery) { }
+        : base(currentQuery)
+    {
+    }
 
     public ITimeoutFluent Timeout(Duration timeout)
     {

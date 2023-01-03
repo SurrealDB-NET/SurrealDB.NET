@@ -1,7 +1,7 @@
-namespace SurrealDB.QueryBuilder.Functions;
-
 using System.Numerics;
-using Translators;
+using SurrealDB.QueryBuilder.Translators;
+
+namespace SurrealDB.QueryBuilder.Functions;
 
 public static class RandomFunctions
 {
@@ -55,7 +55,8 @@ public static class RandomFunctions
     public static Function Time<TMinUnixTime, TMaxUnixTime>(TMinUnixTime minUnixTime, TMaxUnixTime maxUnixTime)
         where TMinUnixTime : INumber<TMinUnixTime>
         where TMaxUnixTime : INumber<TMaxUnixTime>
-        => new($"rand::time({PrimitiveTranslator.Translate(minUnixTime)}, {PrimitiveTranslator.Translate(maxUnixTime)})");
+        => new(
+            $"rand::time({PrimitiveTranslator.Translate(minUnixTime)}, {PrimitiveTranslator.Translate(maxUnixTime)})");
 
     public static Function Uuid()
         => new("rand::uuid()");

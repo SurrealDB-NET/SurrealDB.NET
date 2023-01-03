@@ -1,7 +1,7 @@
-namespace SurrealDB.QueryBuilder.Functions;
+using SurrealDB.QueryBuilder.Enums;
+using SurrealDB.QueryBuilder.Translators;
 
-using Enums;
-using Translators;
+namespace SurrealDB.QueryBuilder.Functions;
 
 public static class TimeFunctions
 {
@@ -12,7 +12,8 @@ public static class TimeFunctions
         => new($"time::floor({PrimitiveTranslator.Translate(dateTime)}, {PrimitiveTranslator.Translate(duration)})");
 
     public static Function Group(string dateTime, TimeUnit timeUnit)
-        => new($"time::group({PrimitiveTranslator.Translate(dateTime)}, {PrimitiveTranslator.Translate(timeUnit.ToString()).ToLower()})");
+        => new(
+            $"time::group({PrimitiveTranslator.Translate(dateTime)}, {PrimitiveTranslator.Translate(timeUnit.ToString()).ToLower()})");
 
     public static Function Hour(string dateTime)
         => new($"time::hour({PrimitiveTranslator.Translate(dateTime)})");

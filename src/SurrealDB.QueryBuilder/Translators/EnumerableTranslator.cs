@@ -1,6 +1,6 @@
-namespace SurrealDB.QueryBuilder.Translators;
-
 using System.Collections;
+
+namespace SurrealDB.QueryBuilder.Translators;
 
 internal static class EnumerableTranslator
 {
