@@ -24,16 +24,4 @@ internal static class PrimitiveTranslator
 
     internal static string Translate(string @string)
         => $"\"{@string}\"";
-
-    internal static string Translate(Duration duration)
-        => $"\"{duration}\"";
-
-    internal static string Translate(DateTime dateTime)
-        => $"\"{dateTime.ToString("o")}\"";
-
-    internal static string Translate(DateTimeOffset dateTimeOffset)
-        => $"\"{dateTimeOffset.ToString("o")}\"";
-
-    internal static string Translate(IGeometry geometry)
-        => $"\"{geometry}\"";
 }
