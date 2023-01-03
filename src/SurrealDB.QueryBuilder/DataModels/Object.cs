@@ -2,6 +2,7 @@ namespace SurrealDB.QueryBuilder.DataModels;
 
 using System.Collections;
 using System.Numerics;
+using Functions;
 using Translators;
 
 /// <summary>
@@ -93,9 +94,9 @@ public class Object : IDictionary<string, object?>
                 decimal @decimal => PrimitiveTranslator.Translate(@decimal),
                 BigInteger bigInteger => PrimitiveTranslator.Translate(bigInteger),
                 None none => PrimitiveTranslator.Translate(none),
-                Array array => array.ToString(),
+                Function function => FunctionTranslator.Translate(function),
                 Object obj => obj.ToString(),
-                IEnumerable enumerable => Array.Translate(enumerable),
+                IEnumerable enumerable => ArrayTranslator.Translate(enumerable),
                 _ => throw new NotSupportedException($"The type {value.GetType()} is not supported.")
             };
 

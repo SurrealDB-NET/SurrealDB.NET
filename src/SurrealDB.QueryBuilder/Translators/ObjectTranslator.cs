@@ -1,11 +1,11 @@
+namespace SurrealDB.QueryBuilder.Translators;
+
 using System.Collections;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
-using SurrealDB.QueryBuilder.DataModels;
-using SurrealDB.QueryBuilder.DataModels.Geometry;
-
-namespace SurrealDB.QueryBuilder.Translators;
+using DataModels;
+using Functions;
 
 /// <summary>
 /// lol
@@ -32,6 +32,8 @@ public static class ObjectTranslator
                 return DateTimeTranslator.Translate(dateTime);
             case DateTimeOffset dateTimeOffset:
                 return DateTimeTranslator.Translate(dateTimeOffset);
+            case Function function:
+                return FunctionTranslator.Translate(function);
         }
 
         var type = @object.GetType();
@@ -41,7 +43,7 @@ public static class ObjectTranslator
         {
             var method = typeof(PrimitiveTranslator).GetMethod(nameof(PrimitiveTranslator.Translate), BindingFlags.Static | BindingFlags.NonPublic);
             var genericMethod = method!.MakeGenericMethod(type);
-            return (string)genericMethod.Invoke(null, new object[] { @object })!;
+            return (string) genericMethod.Invoke(null, new object[] {@object})!;
         }
 
         // Array types
@@ -49,7 +51,7 @@ public static class ObjectTranslator
         {
             var method = typeof(ArrayTranslator).GetMethod(nameof(ArrayTranslator.Translate), BindingFlags.Static | BindingFlags.NonPublic);
             var genericMethod = method!.MakeGenericMethod(type.GetElementType()!);
-            return (string)genericMethod.Invoke(null, new object[] { @object })!;
+            return (string) genericMethod.Invoke(null, new object[] {@object})!;
         }
 
         // Object types

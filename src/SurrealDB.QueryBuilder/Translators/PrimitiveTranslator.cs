@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Numerics;
-using SurrealDB.QueryBuilder.DataModels;
-using SurrealDB.QueryBuilder.DataModels.Geometry;
-
 namespace SurrealDB.QueryBuilder.Translators;
+
+using System.Numerics;
+using DataModels;
 
 /// <summary>
 /// Translates a value to a string that matches the SurrealQL syntax.

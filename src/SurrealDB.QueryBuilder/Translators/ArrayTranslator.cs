@@ -1,11 +1,11 @@
-using System.Collections;
-
 namespace SurrealDB.QueryBuilder.Translators;
+
+using System.Collections;
 
 internal static class ArrayTranslator
 {
     internal static string Translate(IEnumerable array)
-        => ArrayTranslator.Translate(array.Cast<object>());
+        => Translate(array.Cast<object>());
 
     internal static string Translate<T>(IEnumerable<T> array)
         => $"[{string.Join(", ", array.Select(obj => ObjectTranslator.Translate(obj)))}]";

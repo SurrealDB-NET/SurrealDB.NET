@@ -1,6 +1,6 @@
-using SurrealDB.QueryBuilder.DataModels;
-
 namespace SurrealDB.QueryBuilder.Translators;
+
+using DataModels;
 
 internal static class DateTimeTranslator
 {
