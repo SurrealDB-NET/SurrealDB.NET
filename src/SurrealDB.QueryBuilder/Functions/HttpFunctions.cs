@@ -1,51 +1,42 @@
 namespace SurrealDB.QueryBuilder.Functions;
 
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Translators;
 
 public static class HttpFunctions
 {
-    public static string Head(string url)
-        => $"http::head('{url}')";
+    public static Function Head(string url)
+        => new($"http::head({PrimitiveTranslator.Translate(url)})");
 
-    public static string Head(string url, object headers)
-        => $"http::head('{url}', {SerializeHeaders(headers)})";
+    public static Function Head(string url, object headers)
+        => new($"http::head({PrimitiveTranslator.Translate(url)}, {ObjectTranslator.Translate(headers)})");
 
-    public static string Get(string url)
-        => $"http::get('{url}')";
+    public static Function Get(string url)
+        => new($"http::get({PrimitiveTranslator.Translate(url)})");
 
-    public static string Get(string url, object headers)
-        => $"http::get('{url}', {SerializeHeaders(headers)})";
+    public static Function Get(string url, object headers)
+        => new($"http::get({PrimitiveTranslator.Translate(url)}, {ObjectTranslator.Translate(headers)})");
 
-    public static string Put(string url)
-        => $"http::put('{url}')";
+    public static Function Put(string url)
+        => new($"http::put({PrimitiveTranslator.Translate(url)})");
 
-    public static string Put(string url, object headers)
-        => $"http::put('{url}', {SerializeHeaders(headers)})";
+    public static Function Put(string url, object headers)
+        => new($"http::put({PrimitiveTranslator.Translate(url)}, {ObjectTranslator.Translate(headers)})");
 
-    public static string Post(string url)
-        => $"http::post('{url}')";
+    public static Function Post(string url)
+        => new($"http::post({PrimitiveTranslator.Translate(url)})");
 
-    public static string Post(string url, object headers)
-        => $"http::post('{url}', {SerializeHeaders(headers)})";
+    public static Function Post(string url, object headers)
+        => new($"http::post({PrimitiveTranslator.Translate(url)}, {ObjectTranslator.Translate(headers)})");
 
-    public static string Patch(string url)
-        => $"http::patch('{url}')";
+    public static Function Patch(string url)
+        => new($"http::patch({PrimitiveTranslator.Translate(url)})");
 
-    public static string Patch(string url, object headers)
-        => $"http::patch('{url}', {SerializeHeaders(headers)})";
+    public static Function Patch(string url, object headers)
+        => new($"http::patch({PrimitiveTranslator.Translate(url)}, {ObjectTranslator.Translate(headers)})");
 
-    public static string Delete(string url)
-        => $"http::delete('{url}')";
+    public static Function Delete(string url)
+        => new($"http::delete({PrimitiveTranslator.Translate(url)})");
 
-    public static string Delete(string url, object headers)
-        => $"http::delete('{url}', {SerializeHeaders(headers)})";
-
-    private static string SerializeHeaders(object headers)
-    {
-        return JsonSerializer.Serialize(headers, new JsonSerializerOptions
-        {
-            NumberHandling = JsonNumberHandling.WriteAsString
-        });
-    }
+    public static Function Delete(string url, object headers)
+        => new($"http::delete({PrimitiveTranslator.Translate(url)}, {ObjectTranslator.Translate(headers)})");
 }

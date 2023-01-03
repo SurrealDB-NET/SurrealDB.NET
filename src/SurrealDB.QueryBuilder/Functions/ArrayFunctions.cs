@@ -1,42 +1,43 @@
-using SurrealDB.QueryBuilder.Enums;
-
 namespace SurrealDB.QueryBuilder.Functions;
+
+using Enums;
+using Translators;
 
 public static class ArrayFunctions
 {
-    public static string Combine(IEnumerable<object> array1, IEnumerable<object> array2)
-        => $"array::combine([{string.Join(", ", array1)}], [{string.Join(", ", array2)}])";
+    public static Function Combine(IEnumerable<object> array1, IEnumerable<object> array2)
+        => new($"array::combine({ArrayTranslator.Translate(array1)}, {ArrayTranslator.Translate(array2)})");
 
-    public static string Concat(IEnumerable<object> array1, IEnumerable<object> array2)
-        => $"array::concat([{string.Join(", ", array1)}], [{string.Join(", ", array2)}])";
+    public static Function Concat(IEnumerable<object> array1, IEnumerable<object> array2)
+        => new($"array::concat({ArrayTranslator.Translate(array1)}, {ArrayTranslator.Translate(array2)})");
 
-    public static string Difference(IEnumerable<object> array1, IEnumerable<object> array2)
-        => $"array::difference([{string.Join(", ", array1)}], [{string.Join(", ", array2)}])";
+    public static Function Difference(IEnumerable<object> array1, IEnumerable<object> array2)
+        => new($"array::difference({ArrayTranslator.Translate(array1)}, {ArrayTranslator.Translate(array2)})");
 
-    public static string Distinct(IEnumerable<object> array)
-        => $"array::distinct([{string.Join(", ", array)}])";
+    public static Function Distinct(IEnumerable<object> array)
+        => new($"array::distinct({ArrayTranslator.Translate(array)})");
 
-    public static string Intersect(IEnumerable<object> array1, IEnumerable<object> array2)
-        => $"array::intersect([{string.Join(", ", array1)}], [{string.Join(", ", array2)}])";
+    public static Function Intersect(IEnumerable<object> array1, IEnumerable<object> array2)
+        => new($"array::intersect({ArrayTranslator.Translate(array1)}, {ArrayTranslator.Translate(array2)})");
 
-    public static string Len(IEnumerable<object> array)
-        => $"array::len([{string.Join(", ", array)}])";
+    public static Function Len(IEnumerable<object> array)
+        => new($"array::len({ArrayTranslator.Translate(array)})");
 
-    public static string Sort(IEnumerable<object> array)
-        => $"array::sort([{string.Join(", ", array)}])";
+    public static Function Sort(IEnumerable<object> array)
+        => new($"array::sort({ArrayTranslator.Translate(array)})");
 
-    public static string Sort(IEnumerable<object> array, bool isAscending)
-        => $"array::sort([{string.Join(", ", array)}], {isAscending.ToString().ToLower()})";
+    public static Function Sort(IEnumerable<object> array, bool isAscending)
+        => new($"array::sort({ArrayTranslator.Translate(array)}, {PrimitiveTranslator.Translate(isAscending.ToString()).ToLower()})");
 
-    public static string Sort(IEnumerable<object> array, SortOrder sortOrder)
-        => $"array::sort([{string.Join(", ", array)}], {sortOrder.ToString().ToLower()})";
+    public static Function Sort(IEnumerable<object> array, SortOrder sortOrder)
+        => new($"array::sort({ArrayTranslator.Translate(array)}, {PrimitiveTranslator.Translate(sortOrder.ToString()).ToLower()})");
 
-    public static string SortByAsc(IEnumerable<object> array)
-        => $"array::sort::asc([{string.Join(", ", array)}])";
+    public static Function SortByAsc(IEnumerable<object> array)
+        => new($"array::sort::asc({ArrayTranslator.Translate(array)})");
 
-    public static string SortByDesc(IEnumerable<object> array)
-        => $"array::sort::desc([{string.Join(", ", array)}])";
+    public static Function SortByDesc(IEnumerable<object> array)
+        => new($"array::sort::desc({ArrayTranslator.Translate(array)})");
 
-    public static string Union(IEnumerable<object> array1, IEnumerable<object> array2)
-        => $"array::union([{string.Join(", ", array1)}], [{string.Join(", ", array2)}])";
+    public static Function Union(IEnumerable<object> array1, IEnumerable<object> array2)
+        => new($"array::union({ArrayTranslator.Translate(array1)}, {ArrayTranslator.Translate(array2)})");
 }

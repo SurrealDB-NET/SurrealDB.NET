@@ -1,22 +1,22 @@
 namespace SurrealDB.QueryBuilder.Functions;
 
-public sealed class SessionFunctions
+public static class SessionFunctions
 {
-    public static string DB()
-        => "session::db()";
+    public static Function Db()
+        => new("session::db()");
 
-    public static string ID()
-        => "session::id()";
+    public static Function Id()
+        => new("session::id()");
 
-    public static string IP()
-        => "session::ip()";
+    public static Function Ip()
+        => new("session::ip()");
 
-    public static string NS()
-        => "session::ns()";
+    public static Function Ns()
+        => new("session::ns()");
 
-    public static string Origin()
-        => "session::origin()";
+    public static Function Origin()
+        => new("session::origin()");
 
-    public static string SC()
-        => "session::sc()";
+    public static Function Sc()
+        => new("session::sc()");
 }

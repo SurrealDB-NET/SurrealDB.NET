@@ -1,31 +1,33 @@
 namespace SurrealDB.QueryBuilder.Functions;
 
+using Translators;
+
 public static class ParseFunctions
 {
     public static class Email
     {
-        public static string Domain(string value)
-            => $"parse::email::domain('{value}')";
+        public static Function Domain(string value)
+            => new($"parse::email::domain({PrimitiveTranslator.Translate(value)})");
 
-        public static string User(string value)
-            => $"parse::email::user('{value}')";
+        public static Function User(string value)
+            => new($"parse::email::user({PrimitiveTranslator.Translate(value)})");
     }
 
     public static class Url
     {
-        public static string Domain(string value)
-            => $"parse::url::domain('{value}')";
+        public static Function Domain(string value)
+            => new($"parse::url::domain({PrimitiveTranslator.Translate(value)})");
 
-        public static string Fragment(string value)
-            => $"parse::url::fragment('{value}')";
+        public static Function Fragment(string value)
+            => new($"parse::url::fragment({PrimitiveTranslator.Translate(value)})");
 
-        public static string Host(string value)
-            => $"parse::url::host('{value}')";
+        public static Function Host(string value)
+            => new($"parse::url::host({PrimitiveTranslator.Translate(value)})");
 
-        public static string Path(string value)
-            => $"parse::url::path('{value}')";
+        public static Function Path(string value)
+            => new($"parse::url::path({PrimitiveTranslator.Translate(value)})");
 
-        public static string Port(string value)
-            => $"parse::url::port('{value}')";
+        public static Function Port(string value)
+            => new($"parse::url::port({PrimitiveTranslator.Translate(value)})");
     }
 }

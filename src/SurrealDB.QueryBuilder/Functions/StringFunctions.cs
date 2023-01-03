@@ -1,49 +1,51 @@
 namespace SurrealDB.QueryBuilder.Functions;
 
+using Translators;
+
 public static class StringFunctions
 {
-    public static string Concat(params string[] values)
-        => $"string::concat([{string.Join(", ", values.Select(value => $"'{value}'"))}])";
+    public static Function Concat(params string[] values)
+        => new($"string::concat({ArrayTranslator.Translate(values.Select(PrimitiveTranslator.Translate))})");
 
-    public static string EndsWith(string value, string suffix)
-        => $"string::endsWith('{value}', {suffix})";
+    public static Function EndsWith(string value, string suffix)
+        => new($"string::endsWith({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(suffix)})");
 
-    public static string Join(string delimiter, params string[] values)
-        => $"string::join({delimiter}, {string.Join(", ", values.Select(value => $"'{value}'"))})";
+    public static Function Join(string delimiter, params string[] values)
+        => new($"string::join({PrimitiveTranslator.Translate(delimiter)}, {ArrayTranslator.Translate(values.Select(PrimitiveTranslator.Translate))})");
 
-    public static string Length(string value)
-        => $"string::length('{value}')";
+    public static Function Length(string value)
+        => new($"string::length({PrimitiveTranslator.Translate(value)})");
 
-    public static string Lowercase(string value)
-        => $"string::lowercase('{value}')";
+    public static Function Lowercase(string value)
+        => new($"string::lowercase({PrimitiveTranslator.Translate(value)})");
 
-    public static string Repeat(string value, ulong count)
-        => $"string::repeat('{value}', {count})";
+    public static Function Repeat(string value, ulong count)
+        => new($"string::repeat({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(count)})");
 
-    public static string Replace(string value, string search, string replace)
-        => $"string::replace('{value}', '{search}', '{replace}')";
+    public static Function Replace(string value, string search, string replace)
+        => new($"string::replace({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(search)}, {PrimitiveTranslator.Translate(replace)})");
 
-    public static string Reverse(string value)
-        => $"string::reverse('{value}')";
+    public static Function Reverse(string value)
+        => new($"string::reverse({PrimitiveTranslator.Translate(value)})");
 
-    public static string Slice(string value, long start, long length)
-        => $"string::slice('{value}', {start}, {length})";
+    public static Function Slice(string value, long start, long length)
+        => new($"string::slice({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(start)}, {PrimitiveTranslator.Translate(length)})");
 
-    public static string Slug(string value)
-        => $"string::slug('{value}')";
+    public static Function Slug(string value)
+        => new($"string::slug({PrimitiveTranslator.Translate(value)})");
 
-    public static string Split(string value, string delimiter)
-        => $"string::split('{value}', '{delimiter}')";
+    public static Function Split(string value, string delimiter)
+        => new($"string::split({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(delimiter)})");
 
-    public static string StartsWith(string value, string prefix)
-        => $"string::startsWith('{value}', {prefix})";
+    public static Function StartsWith(string value, string prefix)
+        => new($"string::startsWith({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(prefix)})");
 
-    public static string Trim(string value)
-        => $"string::trim('{value}')";
+    public static Function Trim(string value)
+        => new($"string::trim({PrimitiveTranslator.Translate(value)})");
 
-    public static string Uppercase(string value)
-        => $"string::uppercase('{value}')";
+    public static Function Uppercase(string value)
+        => new($"string::uppercase({PrimitiveTranslator.Translate(value)})");
 
-    public static string Words(string value)
-        => $"string::words('{value}')";
+    public static Function Words(string value)
+        => new($"string::words({PrimitiveTranslator.Translate(value)})");
 }

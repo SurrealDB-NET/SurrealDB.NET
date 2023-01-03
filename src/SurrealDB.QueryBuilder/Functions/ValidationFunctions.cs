@@ -1,37 +1,39 @@
 namespace SurrealDB.QueryBuilder.Functions;
 
+using Translators;
+
 public static class ValidationFunctions
 {
-    public static string IsAlphanum(string value)
-        => $"is::alphanum('{value}')";
+    public static Function IsAlpha(string value)
+        => new($"is::alpha({PrimitiveTranslator.Translate(value)})");
+    
+    public static Function IsAlphaNum(string value)
+        => new($"is::alphanum({PrimitiveTranslator.Translate(value)})");
 
-    public static string IsAlpha(string value)
-        => $"is::alpha('{value}')";
+    public static Function IsAscii(string value)
+        => new($"is::ascii({PrimitiveTranslator.Translate(value)})");
 
-    public static string IsAscii(string value)
-        => $"is::ascii('{value}')";
+    public static Function IsDomain(string value)
+        => new($"is::domain({PrimitiveTranslator.Translate(value)})");
 
-    public static string IsDomain(string value)
-        => $"is::domain('{value}')";
+    public static Function IsEmail(string value)
+        => new($"is::email({PrimitiveTranslator.Translate(value)})");
 
-    public static string IsEmail(string value)
-        => $"is::email('{value}')";
+    public static Function IsHexadecimal(string value)
+        => new($"is::hexadecimal({PrimitiveTranslator.Translate(value)})");
 
-    public static string IsHexadecimal(string value)
-        => $"is::hexadecimal('{value}')";
+    public static Function IsLatitude(string value)
+        => new($"is::latitude({PrimitiveTranslator.Translate(value)})");
 
-    public static string IsLatitude(string value)
-        => $"is::latitude('{value}')";
+    public static Function IsLongitude(string value)
+        => new($"is::longitude({PrimitiveTranslator.Translate(value)})");
 
-    public static string IsLongitude(string value)
-        => $"is::longitude('{value}')";
+    public static Function IsNumeric(string value)
+        => new($"is::numeric({PrimitiveTranslator.Translate(value)})");
 
-    public static string IsNumeric(string value)
-        => $"is::numeric('{value}')";
+    public static Function IsSemver(string value)
+        => new($"is::semver({PrimitiveTranslator.Translate(value)})");
 
-    public static string IsSemver(string value)
-        => $"is::semver('{value}')";
-
-    public static string IsUuid(string value)
-        => $"is::uuid('{value}')";
+    public static Function IsUuid(string value)
+        => new($"is::uuid({PrimitiveTranslator.Translate(value)})");
 }
