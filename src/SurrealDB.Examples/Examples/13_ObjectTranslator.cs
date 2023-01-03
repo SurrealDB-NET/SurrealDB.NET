@@ -20,9 +20,9 @@ public class ObjectTranslatorExample : IExample
 
         public Person? BestFriend { get; set; }
 
-        internal string SSN { get; set; }
+        internal string? SSN { get; set; } = null!;
 
-        public Function CurrentTime { get; set; }
+        public Function CurrentTime { get; set; } = null!;
     }
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
