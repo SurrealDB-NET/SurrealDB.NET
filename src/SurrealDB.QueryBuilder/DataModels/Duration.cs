@@ -161,7 +161,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     {
         ulong years = 0, weeks = 0, days = 0, hours = 0, minutes = 0, seconds = 0, milliseconds = 0, microseconds = 0, nanoseconds = 0;
 
-        HashSet<string> units = new() {"y", "w", "d", "h", "m", "s", "ms", "µs", "ns"};
+        HashSet<string> units = new() { "y", "w", "d", "h", "m", "s", "ms", "µs", "ns" };
 
         for (var i = 0; i < duration.Length; i++)
         {
@@ -434,11 +434,11 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
 
         return commonUnit switch
         {
-            Unit.Seconds => ((decimal) d1.TotalSeconds / (decimal) d2.TotalSeconds).ToString(CultureInfo.InvariantCulture),
-            Unit.Minutes => ((decimal) d1.TotalMinutes / (decimal) d2.TotalMinutes).ToString(CultureInfo.InvariantCulture),
-            Unit.Hours => ((decimal) d1.TotalHours / (decimal) d2.TotalHours).ToString(CultureInfo.InvariantCulture),
-            Unit.Days => ((decimal) d1.TotalDays / (decimal) d2.TotalDays).ToString(CultureInfo.InvariantCulture),
-            Unit.Weeks => ((decimal) d1.TotalWeeks / (decimal) d2.TotalWeeks).ToString(CultureInfo.InvariantCulture),
+            Unit.Seconds => ((decimal)d1.TotalSeconds / (decimal)d2.TotalSeconds).ToString(CultureInfo.InvariantCulture),
+            Unit.Minutes => ((decimal)d1.TotalMinutes / (decimal)d2.TotalMinutes).ToString(CultureInfo.InvariantCulture),
+            Unit.Hours => ((decimal)d1.TotalHours / (decimal)d2.TotalHours).ToString(CultureInfo.InvariantCulture),
+            Unit.Days => ((decimal)d1.TotalDays / (decimal)d2.TotalDays).ToString(CultureInfo.InvariantCulture),
+            Unit.Weeks => ((decimal)d1.TotalWeeks / (decimal)d2.TotalWeeks).ToString(CultureInfo.InvariantCulture),
             Unit.Years => (d1.TotalYears / d2.TotalYears).ToString(CultureInfo.InvariantCulture),
             _ => null
         };
@@ -534,12 +534,12 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <returns><paramref name="dateTime"/> with the total time of <paramref name="duration"/> added to it.</returns>
     public static DateTime operator +(DateTime dateTime, Duration duration)
         => dateTime
-            .AddYears((int) duration.Years)
-            .AddDays((int) duration.Weeks * 7 + (int) duration.Days)
-            .AddHours((int) duration.Hours)
-            .AddMinutes((int) duration.Minutes)
-            .AddSeconds((int) duration.Seconds)
-            .AddTicks((long) duration.Nanoseconds / 100);
+            .AddYears((int)duration.Years)
+            .AddDays((int)duration.Weeks * 7 + (int)duration.Days)
+            .AddHours((int)duration.Hours)
+            .AddMinutes((int)duration.Minutes)
+            .AddSeconds((int)duration.Seconds)
+            .AddTicks((long)duration.Nanoseconds / 100);
 
     /// <summary>
     /// Adds a <see cref="Duration"/> to a <see cref="DateTimeOffset"/> and returns the <see cref="DateTimeOffset"/> instance with the total time of the <see cref="Duration"/> added to it.
@@ -549,12 +549,12 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <returns><paramref name="dateTimeOffset"/> with the total time of <paramref name="duration"/> added to it.</returns>
     public static DateTimeOffset operator +(DateTimeOffset dateTimeOffset, Duration duration)
         => dateTimeOffset
-            .AddYears((int) duration.Years)
-            .AddDays((int) duration.Weeks * 7 + (int) duration.Days)
-            .AddHours((int) duration.Hours)
-            .AddMinutes((int) duration.Minutes)
-            .AddSeconds((int) duration.Seconds)
-            .AddTicks((long) duration.Nanoseconds / 100);
+            .AddYears((int)duration.Years)
+            .AddDays((int)duration.Weeks * 7 + (int)duration.Days)
+            .AddHours((int)duration.Hours)
+            .AddMinutes((int)duration.Minutes)
+            .AddSeconds((int)duration.Seconds)
+            .AddTicks((long)duration.Nanoseconds / 100);
 
     /// <summary>
     /// Subtracts a <see cref="Duration"/> from a <see cref="DateTime"/> and returns the <see cref="DateTime"/> instance with the total time of the <see cref="Duration"/> subtracted from it.
@@ -564,12 +564,12 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <returns><paramref name="dateTime"/> with the total time of <paramref name="duration"/> subtracted from it.</returns>
     public static DateTime operator -(DateTime dateTime, Duration duration)
         => dateTime
-            .AddYears(-(int) duration.Years)
-            .AddDays(-(int) duration.Weeks * 7 - (int) duration.Days)
-            .AddHours(-(int) duration.Hours)
-            .AddMinutes(-(int) duration.Minutes)
-            .AddSeconds(-(int) duration.Seconds)
-            .AddTicks(-(long) duration.Nanoseconds / 100);
+            .AddYears(-(int)duration.Years)
+            .AddDays(-(int)duration.Weeks * 7 - (int)duration.Days)
+            .AddHours(-(int)duration.Hours)
+            .AddMinutes(-(int)duration.Minutes)
+            .AddSeconds(-(int)duration.Seconds)
+            .AddTicks(-(long)duration.Nanoseconds / 100);
 
     /// <summary>
     /// Subtracts a <see cref="Duration"/> from a <see cref="DateTimeOffset"/> and returns the <see cref="DateTimeOffset"/> instance with the total time of the <see cref="Duration"/>subtracted from it.
@@ -579,12 +579,12 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <returns><paramref name="dateTimeOffset"/> with the total time of <paramref name="duration"/> subtracted from it.</returns>
     public static DateTimeOffset operator -(DateTimeOffset dateTimeOffset, Duration duration)
         => dateTimeOffset
-            .AddYears(-(int) duration.Years)
-            .AddDays(-(int) duration.Weeks * 7 - (int) duration.Days)
-            .AddHours(-(int) duration.Hours)
-            .AddMinutes(-(int) duration.Minutes)
-            .AddSeconds(-(int) duration.Seconds)
-            .AddTicks(-(long) duration.Nanoseconds / 100);
+            .AddYears(-(int)duration.Years)
+            .AddDays(-(int)duration.Weeks * 7 - (int)duration.Days)
+            .AddHours(-(int)duration.Hours)
+            .AddMinutes(-(int)duration.Minutes)
+            .AddSeconds(-(int)duration.Seconds)
+            .AddTicks(-(long)duration.Nanoseconds / 100);
 
     /// <summary>
     /// Used to determine the largest unit that this <see cref="Duration"/> instance has.
