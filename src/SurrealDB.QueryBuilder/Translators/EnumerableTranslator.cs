@@ -8,8 +8,8 @@ internal static class EnumerableTranslator
         => Translate(array.Cast<object>());
 
     internal static string Translate<T>(IEnumerable<T> array)
-        => $"[{string.Join(", ", array.Select(obj => ObjectTranslator.Translate(obj)))}]";
+        => $"[{string.Join(",", array.Select(obj => ObjectTranslator.Translate(obj)))}]";
 
     internal static string Translate<T>(T[] array)
-        => $"[{string.Join(", ", array.Select(obj => ObjectTranslator.Translate(obj)))}]";
+        => $"[{string.Join(",", array.Select(obj => ObjectTranslator.Translate(obj)))}]";
 }
