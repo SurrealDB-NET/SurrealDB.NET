@@ -3,73 +3,63 @@ namespace SurrealDB.QueryBuilder.Translators;
 using System.Collections;
 using System.Numerics;
 using System.Reflection;
-using System.Text;
 using DataModels;
 using Functions;
 
 /// <summary>
-/// lol
+/// Translates an object to a SurrealQL object
 /// </summary>
 public static class ObjectTranslator
 {
     public static string Translate(object? @object)
     {
-        switch (@object)
+        return @object switch
         {
-            case null:
-                return "null";
-            case None none:
-                return PrimitiveTranslator.Translate(none);
-            case bool @bool:
-                return PrimitiveTranslator.Translate(@bool);
-            case char @char:
-                return PrimitiveTranslator.Translate(@char);
-            case string @string:
-                return PrimitiveTranslator.Translate(@string);
-            case Duration duration:
-                return DateTimeTranslator.Translate(duration);
-            case DateTime dateTime:
-                return DateTimeTranslator.Translate(dateTime);
-            case DateTimeOffset dateTimeOffset:
-                return DateTimeTranslator.Translate(dateTimeOffset);
-            case Function function:
-                return FunctionTranslator.Translate(function);
-        }
+            null => "null",
+            char @char => PrimitiveTranslator.Translate(@char),
+            string @string => PrimitiveTranslator.Translate(@string),
+            bool @bool => PrimitiveTranslator.Translate(@bool),
+            sbyte @sbyte => PrimitiveTranslator.Translate(@sbyte),
+            byte @byte => PrimitiveTranslator.Translate(@byte),
+            short @short => PrimitiveTranslator.Translate(@short),
+            ushort @ushort => PrimitiveTranslator.Translate(@ushort),
+            int @int => PrimitiveTranslator.Translate(@int),
+            uint @uint => PrimitiveTranslator.Translate(@uint),
+            long @long => PrimitiveTranslator.Translate(@long),
+            ulong @ulong => PrimitiveTranslator.Translate(@ulong),
+            float @float => PrimitiveTranslator.Translate(@float),
+            double @double => PrimitiveTranslator.Translate(@double),
+            decimal @decimal => PrimitiveTranslator.Translate(@decimal),
+            nint nint => PrimitiveTranslator.Translate(nint),
+            nuint nuint => PrimitiveTranslator.Translate(nuint),
+            BigInteger bigInteger => PrimitiveTranslator.Translate(bigInteger),
+            None none => PrimitiveTranslator.Translate(none),
+            Function function => FunctionTranslator.Translate(function),
+            Object obj => obj.ToString(),
+            IEnumerable enumerable => EnumerableTranslator.Translate(enumerable),
+            not null => TranslateUnknownObject(@object)
+        };
+    }
 
-        var type = @object.GetType();
-
-        // Number types
-        if (type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(INumber<>)))
-        {
-            var method = typeof(PrimitiveTranslator).GetMethod(nameof(PrimitiveTranslator.Translate), BindingFlags.Static | BindingFlags.NonPublic);
-            var genericMethod = method!.MakeGenericMethod(type);
-            return (string) genericMethod.Invoke(null, new object[] {@object})!;
-        }
-
-        // Array types
-        if (type.IsArray || type.IsAssignableTo(typeof(IEnumerable)))
-        {
-            var method = typeof(EnumerableTranslator).GetMethod(nameof(EnumerableTranslator.Translate), BindingFlags.Static | BindingFlags.NonPublic);
-            var genericMethod = method!.MakeGenericMethod(type.GetElementType()!);
-            return (string) genericMethod.Invoke(null, new object[] {@object})!;
-        }
-
-        // Object types
-        var result = new StringBuilder("{");
+    private static string TranslateUnknownObject(object unknownObject)
+    {
+        var type = unknownObject.GetType();
 
         var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
         var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
+        var @object = new Object();
+
         foreach (var field in fields)
-            result.Append($"{field.Name}:{Translate(field.GetValue(@object))},");
+        {
+            @object.Add(field.Name, field.GetValue(unknownObject));
+        }
 
         foreach (var property in properties)
-            result.Append($"{property.Name}:{Translate(property.GetValue(@object))},");
+        {
+            @object.Add(property.Name, property.GetValue(unknownObject));
+        }
 
-        result.Remove(result.Length - 1, 1); // Remove last comma
-
-        result.Append("}");
-
-        return result.ToString();
+        return @object.ToString();
     }
 }

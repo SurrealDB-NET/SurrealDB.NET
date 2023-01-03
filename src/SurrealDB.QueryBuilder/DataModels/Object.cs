@@ -1,8 +1,6 @@
 namespace SurrealDB.QueryBuilder.DataModels;
 
 using System.Collections;
-using System.Numerics;
-using Functions;
 using Translators;
 
 /// <summary>
@@ -75,30 +73,7 @@ public class Object : IDictionary<string, object?>
 
         foreach (var (key, value) in _properties)
         {
-            var translatedValue = value switch
-            {
-                null => "null",
-                char @char => PrimitiveTranslator.Translate(@char),
-                string @string => PrimitiveTranslator.Translate(@string),
-                bool @bool => PrimitiveTranslator.Translate(@bool),
-                sbyte @sbyte => PrimitiveTranslator.Translate(@sbyte),
-                byte @byte => PrimitiveTranslator.Translate(@byte),
-                short @short => PrimitiveTranslator.Translate(@short),
-                ushort @ushort => PrimitiveTranslator.Translate(@ushort),
-                int @int => PrimitiveTranslator.Translate(@int),
-                uint @uint => PrimitiveTranslator.Translate(@uint),
-                long @long => PrimitiveTranslator.Translate(@long),
-                ulong @ulong => PrimitiveTranslator.Translate(@ulong),
-                float @float => PrimitiveTranslator.Translate(@float),
-                double @double => PrimitiveTranslator.Translate(@double),
-                decimal @decimal => PrimitiveTranslator.Translate(@decimal),
-                BigInteger bigInteger => PrimitiveTranslator.Translate(bigInteger),
-                None none => PrimitiveTranslator.Translate(none),
-                Function function => FunctionTranslator.Translate(function),
-                Object obj => obj.ToString(),
-                IEnumerable enumerable => EnumerableTranslator.Translate(enumerable),
-                _ => throw new NotSupportedException($"The type {value.GetType()} is not supported.")
-            };
+            var translatedValue = ObjectTranslator.Translate(value);
 
             output.Add($"{key}:{translatedValue}");
         }
