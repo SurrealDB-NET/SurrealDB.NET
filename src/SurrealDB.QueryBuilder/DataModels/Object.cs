@@ -16,7 +16,7 @@ public class Object : Dictionary<string, object?>
         {
             var translatedValue = ObjectTranslator.Translate(value);
 
-            output.Add($"{key}:{translatedValue}");
+            output.Add($"\"{key}\":{translatedValue}");
         }
 
         return $"{{{string.Join(",", output)}}}";
