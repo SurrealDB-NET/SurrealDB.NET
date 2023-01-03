@@ -10,26 +10,26 @@ public class GeometryDataModels : IExample
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
-        Console.WriteLine(new Point(1, 2));
+        Console.WriteLine(new Point(1, 2).ToGeoJson());
 
-        Console.WriteLine(new LineString((1, 2), (3, 4)));
+        Console.WriteLine(new LineString((1, 2), (3, 4)).ToGeoJson());
 
-        Console.WriteLine(new Polygon((1, 2), (3, 4), (5, 6), (7, 8), (9, 10), (1, 2)));
+        Console.WriteLine(new Polygon((1, 2), (3, 4), (5, 6), (7, 8), (9, 10), (1, 2)).ToGeoJson());
 
-        Console.WriteLine(new MultiPoint((1, 2), (3, 4)));
+        Console.WriteLine(new MultiPoint((1, 2), (3, 4)).ToGeoJson());
 
         Console.WriteLine(
             new MultiLineString(
                 new((1, 2), (3, 4)),
                 new((5, 6), (7, 8))
-            )
+            ).ToGeoJson()
         );
 
         Console.WriteLine(
             new MultiPolygon(
                 new Polygon((1, 2), (3, 4), (5, 6), (7, 8), (9, 10), (1, 2)),
                 new Polygon((11, 12), (13, 14), (15, 16), (17, 18), (19, 20), (11, 12))
-            )
+            ).ToGeoJson()
         );
 
         Console.WriteLine(
@@ -60,7 +60,7 @@ public class GeometryDataModels : IExample
                     new LineString((1, 2), (3, 4)),
                     new Polygon((1, 2), (3, 4), (5, 6), (7, 8))
                 )
-            )
+            ).ToGeoJson()
         );
 
         await Task.CompletedTask;
