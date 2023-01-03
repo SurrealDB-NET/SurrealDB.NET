@@ -8,8 +8,8 @@ internal static class DateTimeTranslator
         => $"\"{duration}\"";
 
     internal static string Translate(DateTime dateTime)
-        => $"\"{dateTime.ToString("o")}\"";
+        => $"\"{dateTime:o}\"";
 
     internal static string Translate(DateTimeOffset dateTimeOffset)
-        => $"\"{dateTimeOffset.ToString("o")}\"";
+        => $"\"{dateTimeOffset:o}\"";
 }
