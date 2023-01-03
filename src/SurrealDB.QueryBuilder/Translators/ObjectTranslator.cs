@@ -1,26 +1,38 @@
 using System.Collections;
 using System.Numerics;
 using System.Reflection;
+using System.Text;
 using SurrealDB.QueryBuilder.DataModels;
+using SurrealDB.QueryBuilder.DataModels.Geometry;
 
 namespace SurrealDB.QueryBuilder.Translators;
 
-internal static class ObjectTranslator
+/// <summary>
+/// lol
+/// </summary>
+public static class ObjectTranslator
 {
-    internal static string Translate(object? @object)
+    public static string Translate(object? @object)
     {
-        if (@object is null)
-            return "null";
-        if (@object is None)
-            return PrimitiveTranslator.Translate((None)@object);
-        if (@object is bool @bool)
-            return PrimitiveTranslator.Translate(@bool);
-        if (@object is char @char)
-            return PrimitiveTranslator.Translate(@char);
-        if (@object is string @string)
-            return PrimitiveTranslator.Translate(@string);
-        if (@object is DateTime @DateTime)
-            return PrimitiveTranslator.Translate(@DateTime);
+        switch (@object)
+        {
+            case null:
+                return "null";
+            case None none:
+                return PrimitiveTranslator.Translate(none);
+            case bool @bool:
+                return PrimitiveTranslator.Translate(@bool);
+            case char @char:
+                return PrimitiveTranslator.Translate(@char);
+            case string @string:
+                return PrimitiveTranslator.Translate(@string);
+            case Duration duration:
+                return DateTimeTranslator.Translate(duration);
+            case DateTime dateTime:
+                return DateTimeTranslator.Translate(dateTime);
+            case DateTimeOffset dateTimeOffset:
+                return DateTimeTranslator.Translate(dateTimeOffset);
+        }
 
         var type = @object.GetType();
 
@@ -40,6 +52,22 @@ internal static class ObjectTranslator
             return (string)genericMethod.Invoke(null, new object[] { @object })!;
         }
 
-        throw new NotSupportedException($"The type {type} is not supported.");
+        // Object types
+        var result = new StringBuilder("{");
+
+        var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+        foreach (var field in fields)
+            result.Append($"{field.Name}:{Translate(field.GetValue(@object))},");
+
+        foreach (var property in properties)
+            result.Append($"{property.Name}:{Translate(property.GetValue(@object))},");
+
+        result.Remove(result.Length - 1, 1); // Remove last comma
+
+        result.Append("}");
+
+        return result.ToString();
     }
 }
