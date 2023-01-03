@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Reflection;
 using DataModels;
 using Functions;
+using SurrealDB.QueryBuilder.DataModels.Geometry;
 
 /// <summary>
 /// Translates an object to a SurrealQL object
@@ -12,8 +13,7 @@ using Functions;
 public static class ObjectTranslator
 {
     public static string Translate(object? @object)
-    {
-        return @object switch
+        => @object switch
         {
             null => "null",
             char @char => PrimitiveTranslator.Translate(@char),
@@ -35,11 +35,11 @@ public static class ObjectTranslator
             BigInteger bigInteger => PrimitiveTranslator.Translate(bigInteger),
             None none => PrimitiveTranslator.Translate(none),
             Function function => FunctionTranslator.Translate(function),
-            Object obj => obj.ToString(),
+            SchemalessObject obj => obj.ToString(),
             IEnumerable enumerable => EnumerableTranslator.Translate(enumerable),
+            IGeometry geometry => ObjectTranslator.Translate(geometry.ToGeoJson()),
             not null => TranslateUnknownObject(@object)
         };
-    }
 
     private static string TranslateUnknownObject(object unknownObject)
     {
@@ -48,7 +48,7 @@ public static class ObjectTranslator
         var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
         var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-        var @object = new Object();
+        var @object = new SchemalessObject();
 
         foreach (var field in fields)
         {
