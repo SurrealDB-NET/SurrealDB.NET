@@ -19,8 +19,11 @@ public class LineString : IGeometry, IEquatable<LineString>
     public override int GetHashCode()
         => HashCode.Combine(Coordinates);
 
-        public SchemalessObject ToGeoJson()
-            => new() { { "type", nameof(LineString) }, { "coordinates", Coordinates } };
+    public SchemalessObject ToGeoJson()
+            => new() { { "type", nameof(LineString) }, { "coordinates", CoordinatesOnly() } };
+
+    internal decimal[][] CoordinatesOnly()
+        => Coordinates.Select(point => point.CoordinatesOnly()).ToArray();
 
     public static bool operator ==(LineString? left, LineString? right)
         => Equals(left, right);

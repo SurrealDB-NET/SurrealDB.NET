@@ -29,10 +29,10 @@ public readonly struct Point : IGeometry, IEquatable<Point>
         => (point.X, point.Y);
 
     public SchemalessObject ToGeoJson()
-        => new() { { "type", nameof(Point) }, { "coordinates", CoordinatesToString() } };
+        => new() { { "type", nameof(Point) }, { "coordinates", CoordinatesOnly() } };
 
-    internal string CoordinatesToString()
-        => $"[{X},{Y}]";
+    internal decimal[] CoordinatesOnly()
+        => new[] { X, Y };
 
     public bool Equals(Point value)
         => X == value.X && Y == value.Y;

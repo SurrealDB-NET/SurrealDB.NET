@@ -15,7 +15,10 @@ public class Polygon : IGeometry, IEquatable<Polygon>
         => Coordinates = lines.ToArray();
 
     public SchemalessObject ToGeoJson()
-        => new() { { "type", nameof(Polygon) }, { "coordinates", new Point[][] { Coordinates } } };
+        => new() { { "type", nameof(Polygon) }, { "coordinates", CoordinatesOnly() } };
+
+    internal decimal[][][] CoordinatesOnly()
+        => new[] { Coordinates.Select(point => point.CoordinatesOnly()).ToArray() };
 
     public bool Equals(Polygon? value)
         => value is not null && Coordinates.SequenceEqual(value.Coordinates);

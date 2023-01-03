@@ -14,7 +14,10 @@ public class MultiPolygon : IGeometry, IEquatable<MultiPolygon>
         => Coordinates = polygons.ToArray();
 
     public SchemalessObject ToGeoJson()
-        => new() { { "type", nameof(MultiPolygon) }, { "coordinates", Coordinates } };
+        => new() { { "type", nameof(MultiPolygon) }, { "coordinates", CoordinatesOnly() } };
+
+    internal decimal[][][][] CoordinatesOnly()
+        => Coordinates.Select(polygon => polygon.CoordinatesOnly()).ToArray();
 
     public bool Equals(MultiPolygon? value)
         => value is not null && Coordinates.SequenceEqual(value.Coordinates);
