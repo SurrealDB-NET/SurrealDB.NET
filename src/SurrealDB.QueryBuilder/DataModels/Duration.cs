@@ -14,73 +14,73 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// Gets the years component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The years component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Years { get; }
+    public ulong Years { get; }
 
     /// <summary>
     /// Gets the weeks component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The weeks component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Weeks { get; }
+    public ulong Weeks { get; }
 
     /// <summary>
     /// Gets the days component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The days component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Days { get; }
+    public ulong Days { get; }
 
     /// <summary>
     /// Gets the hours component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The hours component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Hours { get; }
+    public ulong Hours { get; }
 
     /// <summary>
     /// Gets the minutes component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The minutes component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Minutes { get; }
+    public ulong Minutes { get; }
 
     /// <summary>
     /// Gets the seconds component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The seconds component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Seconds { get; }
+    public ulong Seconds { get; }
 
     /// <summary>
     /// Gets the nanoseconds component of this <see cref="Duration"/> structure.
     /// </summary>
     /// <returns>The nanoseconds component of this <see cref="Duration"/> structure.</returns>
-    public readonly ulong Nanoseconds { get; }
+    public ulong Nanoseconds { get; }
 
     /// <summary>
     /// The total number of years in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
-    private readonly decimal TotalYears { get; }
+    private decimal TotalYears { get; }
 
     /// <summary>
     /// The total number of seconds in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
-    private readonly UInt128 TotalSeconds => Years * 31536000 + Weeks * 604800 + Days * 86400 + Hours * 3600 + Minutes * 60 + Seconds;
+    private UInt128 TotalSeconds => Years * 31536000 + Weeks * 604800 + Days * 86400 + Hours * 3600 + Minutes * 60 + Seconds;
 
     /// <summary>
     /// The total number of minutes in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
-    private readonly UInt128 TotalMinutes => Years * 525600 + Weeks * 10080 + Days * 1440 + Hours * 60 + Minutes;
+    private UInt128 TotalMinutes => Years * 525600 + Weeks * 10080 + Days * 1440 + Hours * 60 + Minutes;
 
     /// <summary>
     /// The total number of hours in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
-    private readonly UInt128 TotalHours => Years * 8760 + Weeks * 168 + Days * 24 + Hours;
+    private UInt128 TotalHours => Years * 8760 + Weeks * 168 + Days * 24 + Hours;
 
     /// <summary>
     /// The total number of days in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
-    private readonly UInt128 TotalDays => Years * 365 + Weeks * 7 + Days;
+    private UInt128 TotalDays => Years * 365 + Weeks * 7 + Days;
 
     /// <summary>
     /// The total number of weeks in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
     /// </summary>
-    private readonly UInt128 TotalWeeks => Years * 52 + Weeks;
+    private UInt128 TotalWeeks => Years * 52 + Weeks;
 
     /// <summary>
     /// The largest unit of time in this <see cref="Duration"/> structure. Utilized in division between <see cref="Duration"/> structures.
