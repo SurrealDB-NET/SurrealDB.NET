@@ -1,33 +1,31 @@
 namespace SurrealDB.QueryBuilder.Functions;
 
-using Translators;
-
 public static class ParseFunctions
 {
     public static class Email
     {
         public static Function Domain(string value)
-            => new($"parse::email::domain({PrimitiveTranslator.Translate(value)})");
+            => new("parse::email::domain({0})", value);
 
         public static Function User(string value)
-            => new($"parse::email::user({PrimitiveTranslator.Translate(value)})");
+            => new("parse::email::user({0})", value);
     }
 
     public static class Url
     {
         public static Function Domain(string value)
-            => new($"parse::url::domain({PrimitiveTranslator.Translate(value)})");
+            => new("parse::url::domain({0})", value);
 
         public static Function Fragment(string value)
-            => new($"parse::url::fragment({PrimitiveTranslator.Translate(value)})");
+            => new("parse::url::fragment({0})", value);
 
         public static Function Host(string value)
-            => new($"parse::url::host({PrimitiveTranslator.Translate(value)})");
+            => new("parse::url::host({0})", value);
 
         public static Function Path(string value)
-            => new($"parse::url::path({PrimitiveTranslator.Translate(value)})");
+            => new("parse::url::path({0})", value);
 
         public static Function Port(string value)
-            => new($"parse::url::port({PrimitiveTranslator.Translate(value)})");
+            => new("parse::url::port({0})", value);
     }
 }

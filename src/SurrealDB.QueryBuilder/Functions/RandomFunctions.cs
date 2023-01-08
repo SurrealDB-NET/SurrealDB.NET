@@ -1,7 +1,6 @@
 namespace SurrealDB.QueryBuilder.Functions;
 
 using System.Numerics;
-using Translators;
 
 public static class RandomFunctions
 {
@@ -12,7 +11,7 @@ public static class RandomFunctions
         => new("rand::bool()");
 
     public static Function Enum(params object[] values)
-        => new($"rand::enum({EnumerableTranslator.Translate(values)})");
+        => new("rand::enum({0})", values);
 
     public static Function Float()
         => new("rand::float()");
@@ -20,14 +19,14 @@ public static class RandomFunctions
     public static Function Float<TMin, TMax>(TMin min, TMax max)
         where TMin : INumber<TMin>
         where TMax : INumber<TMax>
-        => new($"rand::float({PrimitiveTranslator.Translate(min)}, {PrimitiveTranslator.Translate(max)})");
+        => new("rand::float({0}, {1})", min, max);
 
     public static Function Guid()
         => new("rand::guid()");
 
     public static Function Guid<TLength>(TLength length)
         where TLength : INumber<TLength>
-        => new($"rand::guid({PrimitiveTranslator.Translate(length)})");
+        => new("rand::guid({0})", length);
 
     public static Function Int()
         => new("rand::int()");
@@ -35,19 +34,19 @@ public static class RandomFunctions
     public static Function Int<TMin, TMax>(TMin min, TMax max)
         where TMin : INumber<TMin>
         where TMax : INumber<TMax>
-        => new($"rand::int({PrimitiveTranslator.Translate(min)}, {PrimitiveTranslator.Translate(max)})");
+        => new("rand::int({0}, {1})", min, max);
 
     public static Function String()
         => new("rand::string()");
 
     public static Function String<TLength>(TLength length)
         where TLength : INumber<TLength>
-        => new($"rand::string({PrimitiveTranslator.Translate(length)})");
+        => new("rand::string({0})", length);
 
     public static Function String<TMinLength, TMaxLength>(TMinLength minLength, TMaxLength maxLength)
         where TMinLength : INumber<TMinLength>
         where TMaxLength : INumber<TMaxLength>
-        => new($"rand::string({PrimitiveTranslator.Translate(minLength)}, {PrimitiveTranslator.Translate(maxLength)})");
+        => new("rand::string({0}, {1})", minLength, maxLength);
 
     public static Function Time()
         => new("rand::time()");
@@ -55,7 +54,7 @@ public static class RandomFunctions
     public static Function Time<TMinUnixTime, TMaxUnixTime>(TMinUnixTime minUnixTime, TMaxUnixTime maxUnixTime)
         where TMinUnixTime : INumber<TMinUnixTime>
         where TMaxUnixTime : INumber<TMaxUnixTime>
-        => new($"rand::time({PrimitiveTranslator.Translate(minUnixTime)}, {PrimitiveTranslator.Translate(maxUnixTime)})");
+        => new("rand::time({0}, {1})", minUnixTime, maxUnixTime);
 
     public static Function Uuid()
         => new("rand::uuid()");

@@ -1,45 +1,43 @@
 namespace SurrealDB.QueryBuilder.Functions;
 
-using Translators;
-
 public static class CryptoFunctions
 {
-    public static Function Md5(string value)
-        => new($"crypto::md5({PrimitiveTranslator.Translate(value)})");
+    public static Function Md5(object value)
+        => new("crypto::md5({0})", value);
 
-    public static Function Sha1(string value)
-        => new($"crypto::sha1({PrimitiveTranslator.Translate(value)})");
+    public static Function Sha1(object value)
+        => new("crypto::sha1({0})", value);
 
-    public static Function Sha256(string value)
-        => new($"crypto::sha256({PrimitiveTranslator.Translate(value)})");
+    public static Function Sha256(object value)
+        => new("crypto::sha256({0})", value);
 
-    public static Function Sha512(string value)
-        => new($"crypto::sha512({PrimitiveTranslator.Translate(value)})");
+    public static Function Sha512(object value)
+        => new("crypto::sha512({0})", value);
 
     public static class Argon2
     {
-        public static Function Compare(string hash, string plainText)
-            => new($"crypto::argon2::compare({PrimitiveTranslator.Translate(hash)}, {PrimitiveTranslator.Translate(plainText)})");
+        public static Function Compare(object hash, object plainText)
+            => new("crypto::argon2::compare({0}, {1})", hash, plainText);
 
-        public static Function Generate(string value)
-            => new($"crypto::argon2::generate({PrimitiveTranslator.Translate(value)})");
+        public static Function Generate(object value)
+            => new("crypto::argon2::generate({0})", value);
     }
 
     public static class Pbkdf2
     {
-        public static Function Compare(string hash, string plainText)
-            => new($"crypto::pbkdf2::compare({PrimitiveTranslator.Translate(hash)}, {PrimitiveTranslator.Translate(plainText)})");
+        public static Function Compare(object hash, object plainText)
+            => new("crypto::pbkdf2::compare({0}, {1})", hash, plainText);
 
-        public static Function Generate(string value)
-            => new($"crypto::pbkdf2::generate({PrimitiveTranslator.Translate(value)})");
+        public static Function Generate(object value)
+            => new("crypto::pbkdf2::generate({0})", value);
     }
 
     public static class Scrypt
     {
-        public static Function Compare(string hash, string plainText)
-            => new($"crypto::scrypt::compare({PrimitiveTranslator.Translate(hash)}, {PrimitiveTranslator.Translate(plainText)})");
+        public static Function Compare(object hash, object plainText)
+            => new("crypto::scrypt::compare({0}, {1})", hash, plainText);
 
-        public static Function Generate(string value)
-            => new($"crypto::scrypt::generate({PrimitiveTranslator.Translate(value)})");
+        public static Function Generate(object value)
+            => new("crypto::scrypt::generate({0})", value);
     }
 }
