@@ -4,8 +4,8 @@ using System.Collections;
 using System.Numerics;
 using System.Reflection;
 using DataModels;
+using DataModels.Geometry;
 using Functions;
-using SurrealDB.QueryBuilder.DataModels.Geometry;
 
 /// <summary>
 /// Translates an object to a SurrealQL object
@@ -27,18 +27,21 @@ public static class ObjectTranslator
             uint @uint => PrimitiveTranslator.Translate(@uint),
             long @long => PrimitiveTranslator.Translate(@long),
             ulong @ulong => PrimitiveTranslator.Translate(@ulong),
-            Half half => PrimitiveTranslator.Translate(half),
             float @float => PrimitiveTranslator.Translate(@float),
             double @double => PrimitiveTranslator.Translate(@double),
             decimal @decimal => PrimitiveTranslator.Translate(@decimal),
             nint nint => PrimitiveTranslator.Translate(nint),
             nuint nuint => PrimitiveTranslator.Translate(nuint),
             BigInteger bigInteger => PrimitiveTranslator.Translate(bigInteger),
+            DateTime dateTime => DateTimeTranslator.Translate(dateTime),
+            DateTimeOffset dateTimeOffset => DateTimeTranslator.Translate(dateTimeOffset),
+            Duration duration => DateTimeTranslator.Translate(duration),
+            Half half => PrimitiveTranslator.Translate(half),
             None none => PrimitiveTranslator.Translate(none),
             Function function => FunctionTranslator.Translate(function),
             SchemalessObject schemalessObject => $"{schemalessObject}",
             IEnumerable enumerable => EnumerableTranslator.Translate(enumerable),
-            IGeometry geometry => ObjectTranslator.Translate(geometry.ToGeoJson()),
+            IGeometry geometry => Translate(geometry.ToGeoJson()),
             _ => TranslateUnknownObject(@object)
         };
 
