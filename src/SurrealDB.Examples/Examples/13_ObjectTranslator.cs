@@ -22,7 +22,7 @@ public class ObjectTranslatorExample : IExample
 
         internal string? SSN { get; set; } = null!;
 
-        public Function CurrentTime { get; set; } = null!;
+        public DateTimeOffset CurrentTime { get; set; }
     }
 
     public async Task RunAsync(CancellationToken cancellationToken = default)

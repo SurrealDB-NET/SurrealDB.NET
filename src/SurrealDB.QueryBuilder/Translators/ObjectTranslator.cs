@@ -38,7 +38,6 @@ public static class ObjectTranslator
             Duration duration => DateTimeTranslator.Translate(duration),
             Half half => PrimitiveTranslator.Translate(half),
             None none => PrimitiveTranslator.Translate(none),
-            Function function => FunctionTranslator.Translate(function),
             SchemalessObject schemalessObject => $"{schemalessObject}",
             IEnumerable enumerable => EnumerableTranslator.Translate(enumerable),
             IGeometry geometry => Translate(geometry.ToGeoJson()),

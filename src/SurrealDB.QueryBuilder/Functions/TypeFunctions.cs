@@ -58,6 +58,6 @@ public static class TypeFunctions
         => throw new IllegalSurrealFunctionCallException();
 
     [SurrealFunction("type::thing({0})")]
-    public static TRecord Thing<TRecord>(object? table, object? id) where TRecord : SurrealRecord
+    public static TRecord Thing<TRecord>(object? table, object? id)
         => throw new IllegalSurrealFunctionCallException();
 }
