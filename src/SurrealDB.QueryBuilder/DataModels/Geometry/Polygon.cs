@@ -18,7 +18,7 @@ public class Polygon : IGeometry, IEquatable<Polygon>
     public SchemalessObject ToGeoJson()
         => new() { { "type", nameof(Polygon) }, { "coordinates", CoordinatesOnly() } };
 
-    internal decimal[][][] CoordinatesOnly()
+    internal double[][][] CoordinatesOnly()
         => new[] { Coordinates.Select(point => point.CoordinatesOnly()).ToArray() };
 
     public bool Equals(Polygon? value)

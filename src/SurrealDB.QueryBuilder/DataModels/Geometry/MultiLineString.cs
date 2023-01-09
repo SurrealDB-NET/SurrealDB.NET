@@ -18,7 +18,7 @@ public class MultiLineString : IGeometry, IEquatable<MultiLineString>
     public SchemalessObject ToGeoJson()
         => new() { { "type", nameof(MultiLineString) }, { "coordinates", CoordinatesOnly() } };
 
-    internal decimal[][][] CoordinatesOnly()
+    internal double[][][] CoordinatesOnly()
         => Coordinates.Select(line => line.CoordinatesOnly()).ToArray();
 
     public bool Equals(MultiLineString? value)

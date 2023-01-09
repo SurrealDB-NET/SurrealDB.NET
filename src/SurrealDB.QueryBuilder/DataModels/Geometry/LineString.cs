@@ -23,7 +23,7 @@ public class LineString : IGeometry, IEquatable<LineString>
     public override int GetHashCode()
         => HashCode.Combine(Coordinates);
 
-    internal decimal[][] CoordinatesOnly()
+    internal double[][] CoordinatesOnly()
         => Coordinates.Select(point => point.CoordinatesOnly()).ToArray();
 
     public static bool operator ==(LineString? left, LineString? right)

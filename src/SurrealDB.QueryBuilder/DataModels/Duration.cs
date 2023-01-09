@@ -219,7 +219,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// Converts the <see cref="string"/> representation of a duration to its <see cref="Duration"/> equivalent.
     /// </summary>
     /// <param name="durationString">A <see cref="string"/> containing a <see cref="Duration"/> to convert.</param>
-    /// <param name="provider"></param>
+    /// <param name="provider">The <paramref name="provider"/> is ignored.</param>
     /// <returns>A <see cref="Duration"/> equivalent to the duration contained in <paramref name="durationString"/>.</returns>
     /// <exception cref="FormatException">The <paramref name="durationString"/> parameter is not in a recognized format.</exception>
     public static Duration Parse(string durationString, IFormatProvider? provider = null)
@@ -229,7 +229,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// Converts the span of representation of a duration to its <see cref="Duration"/> equivalent.
     /// </summary>
     /// <param name="durationSpan">A span containing a <see cref="Duration"/> to convert.</param>
-    /// <param name="provider"></param>
+    /// <param name="provider">The <paramref name="provider"/> is ignored.</param>
     /// <returns>A <see cref="Duration"/> equivalent to the duration contained in <paramref name="durationSpan"/>.</returns>
     /// <exception cref="FormatException">The <paramref name="durationSpan"/> parameter is not in a recognized format.</exception>
     public static Duration Parse(ReadOnlySpan<char> durationSpan, IFormatProvider? provider = null)

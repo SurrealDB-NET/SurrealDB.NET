@@ -6,33 +6,33 @@ namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 /// </summary>
 public readonly struct Point : IGeometry, IEquatable<Point>
 {
-    public readonly decimal X { get; }
+    public readonly double X { get; }
 
-    public readonly decimal Y { get; }
+    public readonly double Y { get; }
 
-    public Point(decimal x, decimal y)
+    public Point(double x, double y)
     {
         X = x;
         Y = y;
     }
 
-    public void Deconstruct(out decimal x, out decimal y)
+    public void Deconstruct(out double x, out double y)
     {
         x = X;
         y = Y;
     }
 
-    public static implicit operator Point((decimal longitude, decimal latitude) coordinates)
+    public static implicit operator Point((double longitude, double latitude) coordinates)
         => new(coordinates.longitude, coordinates.latitude);
 
-    public static implicit operator (decimal x, decimal y)(Point point)
+    public static implicit operator (double x, double y)(Point point)
         => (point.X, point.Y);
 
     /// <inheritdoc/>
     public SchemalessObject ToGeoJson()
         => new() { { "type", nameof(Point) }, { "coordinates", CoordinatesOnly() } };
 
-    internal decimal[] CoordinatesOnly()
+    internal double[] CoordinatesOnly()
         => new[] { X, Y };
 
     public bool Equals(Point value)
