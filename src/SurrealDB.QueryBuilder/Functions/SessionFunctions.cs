@@ -1,22 +1,31 @@
+using SurrealDB.QueryBuilder.Attributes;
+using SurrealDB.QueryBuilder.Exceptions;
+
 namespace SurrealDB.QueryBuilder.Functions;
 
 public static class SessionFunctions
 {
-    public static Function Db()
-        => new("session::db()");
+    [SurrealFunction("session::db()")]
+    public static string Db()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Id()
-        => new("session::id()");
+    [SurrealFunction("session::id()")]
+    public static string Id()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Ip()
-        => new("session::ip()");
+    [SurrealFunction("session::ip()")]
+    public static string Ip()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Ns()
-        => new("session::ns()");
+    [SurrealFunction("session::ns()")]
+    public static string Ns()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Origin()
-        => new("session::origin()");
+    [SurrealFunction("session::origin()")]
+    public static string Origin()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Sc()
-        => new("session::sc()");
+    [SurrealFunction("session::sc()")]
+    public static string Sc()
+        => throw new IllegalSurrealFunctionCallException();
 }

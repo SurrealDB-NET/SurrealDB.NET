@@ -1,37 +1,51 @@
+using SurrealDB.QueryBuilder.Attributes;
+using SurrealDB.QueryBuilder.Exceptions;
+
 namespace SurrealDB.QueryBuilder.Functions;
 
 public static class ValidationFunctions
 {
-    public static Function IsAlpha(string value)
-        => new("is::alpha({0})", value);
+    [SurrealFunction("is::alpha({0})")]
+    public static bool IsAlpha(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function IsAlphaNum(string value)
-        => new("is::alphanum({0})", value);
+    [SurrealFunction("is::alphanum({0})")]
+    public static bool IsAlphaNum(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function IsAscii(string value)
-        => new("is::ascii({0})", value);
+    [SurrealFunction("is::ascii({0})")]
+    public static bool IsAscii(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function IsDomain(string value)
-        => new("is::domain({0})", value);
+    [SurrealFunction("is::domain({0})")]
+    public static bool IsDomain(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function IsEmail(string value)
-        => new("is::email({0})", value);
+    [SurrealFunction("is::email({0})")]
+    public static bool IsEmail(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function IsHexadecimal(string value)
-        => new("is::hexadecimal({0})", value);
+    [SurrealFunction("is::hexadecimal({0})")]
+    public static bool IsHexadecimal(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function IsLatitude(string value)
-        => new("is::latitude({0})", value);
+    [SurrealFunction("is::latitude({0})")]
+    public static bool IsLatitude(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function IsLongitude(string value)
-        => new("is::longitude({0})", value);
+    [SurrealFunction("is::longitude({0})")]
+    public static bool IsLongitude(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function IsNumeric(string value)
-        => new("is::numeric({0})", value);
+    [SurrealFunction("is::numeric({0})")]
+    public static bool IsNumeric(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function IsSemver(string value)
-        => new("is::semver({0})", value);
+    [SurrealFunction("is::semver({0})")]
+    public static bool IsSemver(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function IsUuid(string value)
-        => new("is::uuid({0})", value);
+    [SurrealFunction("is::url({0})")]
+    public static bool IsUuid(string value)
+        => throw new IllegalSurrealFunctionCallException();
 }

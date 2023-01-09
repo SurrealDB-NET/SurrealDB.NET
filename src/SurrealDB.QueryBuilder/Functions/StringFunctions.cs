@@ -1,49 +1,68 @@
+using SurrealDB.QueryBuilder.Attributes;
+using SurrealDB.QueryBuilder.Exceptions;
+using SurrealDB.QueryBuilder.Translators;
+
 namespace SurrealDB.QueryBuilder.Functions;
 
 public static class StringFunctions
 {
-    public static Function Concat(params string[] values)
-        => new("string::concat({0})", values);
+    [SurrealFunction("string::length({0})")]
+    public static ulong Length(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function EndsWith(string value, string suffix)
-        => new("string::endsWith({0}, {1})", value, suffix);
+    [SurrealFunction("string::startsWith({0},{1})")]
+    public static bool StartsWith(string value, string prefix)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Join(string delimiter, params string[] values)
-        => new("string::join({0}, {1})", delimiter, values);
+    [SurrealFunction("string::endsWith({0},{1})")]
+    public static bool EndsWith(string value, string suffix)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Length(string value)
-        => new("string::length({0})", value);
+    [SurrealFunction("string::lowercase({0})")]
+    public static string Lowercase(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Lowercase(string value)
-        => new("string::lowercase({0})", value);
+    [SurrealFunction("string::uppercase({0})")]
+    public static string Uppercase(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Repeat(string value, ulong count)
-        => new("string::repeat({0}, {1})", value, count);
+    [SurrealFunction("string::repeat({0},{1})")]
+    public static string Repeat(string value, ulong count)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Replace(string value, string search, string replace)
-        => new("string::replace({0}, {1}, {2})", value, search, replace);
+    [SurrealFunction("string::replace({0},{1},{2})")]
+    public static string Replace(string value, string search, string replace)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Reverse(string value)
-        => new("string::reverse({0})", value);
+    [SurrealFunction("string::reverse({0})")]
+    public static string Reverse(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Slice(string value, long start, long length)
-        => new("string::slice({0}, {1}, {2})", value, start, length);
+    [SurrealFunction("string::slice({0},{1},{2})")]
+    public static string Slice(string value, long start, long end)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Slug(string value)
-        => new("string::slug({0})", value);
+    [SurrealFunction("string::slug({0})")]
+    public static string Slug(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Split(string value, string delimiter)
-        => new("string::split({0}, {1})", value, delimiter);
+    [SurrealFunction("string::trim({0})")]
+    public static string Trim(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function StartsWith(string value, string prefix)
-        => new("string::startsWith({0}, {1})", value, prefix);
+    [SurrealFunction("string::concat({0})")]
+    public static string Concat(params string[] values)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Trim(string value)
-        => new("string::trim({0})", value);
+    [SurrealFunction("string::join({0},{1})")]
+    public static string Join(string delimiter, params string[] values)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Uppercase(string value)
-        => new("string::uppercase({0})", value);
+    [SurrealFunction("string::words({0})")]
+    public static IEnumerable<string> Words(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Words(string value)
-        => new("string::words({0})", value);
+    [SurrealFunction("string::split({0},{1})")]
+    public static IEnumerable<string> Split(string value, string delimiter)
+        => throw new IllegalSurrealFunctionCallException();
 }

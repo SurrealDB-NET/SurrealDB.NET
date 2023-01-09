@@ -1,51 +1,116 @@
+using SurrealDB.QueryBuilder.Attributes;
+using SurrealDB.QueryBuilder.DataModels;
+using SurrealDB.QueryBuilder.Enums;
+using SurrealDB.QueryBuilder.Exceptions;
+using SurrealDB.QueryBuilder.Translators;
+
 namespace SurrealDB.QueryBuilder.Functions;
 
 using Enums;
 
 public static class TimeFunctions
 {
-    public static Function Day(string dateTime)
-        => new("time::day({0})", dateTime);
+    [SurrealFunction("time::now()")]
+    public static DateTimeOffset Now()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Floor(string dateTime, string duration)
-        => new("time::floor({0}, {1})", dateTime, duration);
+    [SurrealFunction("time::floor({0},{1})")]
+    public static DateTimeOffset Floor(DateTimeOffset dateTime, Duration duration)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Group(string dateTime, TimeUnit timeUnit)
-        => new("time::group({0}, {1})", dateTime, timeUnit);
+    [SurrealFunction("time::round({0},{1})")]
+    public static DateTimeOffset Round(DateTimeOffset dateTime, Duration duration)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Hour(string dateTime)
-        => new("time::hour({0})", dateTime);
+    [SurrealFunction("time::group({0},{1})")]
+    public static DateTimeOffset Group(DateTimeOffset dateTime, TimeUnit timeUnit)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Mins(string dateTime)
-        => new("time::mins({0})", dateTime);
+    [SurrealFunction("time::unix()")]
+    public static ulong Unix()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Month(string dateTime)
-        => new("time::month({0})", dateTime);
+    [SurrealFunction("time::unix({0})")]
+    public static ulong Unix(DateTimeOffset dateTime)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Nano(string dateTime)
-        => new("time::nano({0})", dateTime);
+    [SurrealFunction("time::nano()")]
+    public static ulong Nano()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Now()
-        => new("time::now()");
+    [SurrealFunction("time::nano({0})")]
+    public static ulong Nano(DateTimeOffset dateTime)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Round(string dateTime, string duration)
-        => new("time::round({0}, {1})", dateTime, duration);
+    [SurrealFunction("time::secs()")]
+    public static DateTimeOffset Secs()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Secs(string dateTime)
-        => new("time::secs({0})", dateTime);
+    [SurrealFunction("time::secs({0})")]
+    public static DateTimeOffset Secs(DateTimeOffset dateTime)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Unix(string dateTime)
-        => new("time::unix({0})", dateTime);
+    [SurrealFunction("time::mins()")]
+    public static uint Mins()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function WDay(string dateTime)
-        => new("time::wday({0})", dateTime);
+    [SurrealFunction("time::mins({0})")]
+    public static uint Mins(DateTimeOffset dateTime)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Week(string dateTime)
-        => new("time::week({0})", dateTime);
+    [SurrealFunction("time::hour()")]
+    public static uint Hour()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function YDay(string dateTime)
-        => new("time::yday({0})", dateTime);
+    [SurrealFunction("time::hour({0})")]
+    public static uint Hour(DateTimeOffset dateTime)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Year(string dateTime)
-        => new("time::year({0})", dateTime);
+    [SurrealFunction("time::day()")]
+    public static uint Day()
+        => throw new IllegalSurrealFunctionCallException();
+
+    [SurrealFunction("time::day({0})")]
+    public static uint Day(DateTimeOffset dateTime)
+        => throw new IllegalSurrealFunctionCallException();
+
+    [SurrealFunction("time::wday()")]
+    public static uint WDay()
+        => throw new IllegalSurrealFunctionCallException();
+
+    [SurrealFunction("time::wday({0})")]
+    public static uint WDay(DateTimeOffset dateTime)
+        => throw new IllegalSurrealFunctionCallException();
+
+    [SurrealFunction("time::yday()")]
+    public static uint YDay()
+        => throw new IllegalSurrealFunctionCallException();
+
+    [SurrealFunction("time::yday({0})")]
+    public static uint YDay(DateTimeOffset dateTime)
+        => throw new IllegalSurrealFunctionCallException();
+
+    [SurrealFunction("time::week()")]
+    public static uint Week()
+        => throw new IllegalSurrealFunctionCallException();
+
+    [SurrealFunction("time::week({0})")]
+    public static uint Week(DateTimeOffset dateTime)
+        => throw new IllegalSurrealFunctionCallException();
+
+    [SurrealFunction("time::month()")]
+    public static uint Month()
+        => throw new IllegalSurrealFunctionCallException();
+
+    [SurrealFunction("time::month({0})")]
+    public static uint Month(DateTimeOffset dateTime)
+        => throw new IllegalSurrealFunctionCallException();
+
+    [SurrealFunction("time::year()")]
+    public static uint Year()
+        => throw new IllegalSurrealFunctionCallException();
+
+    [SurrealFunction("time::year({0})")]
+    public static uint Year(DateTimeOffset dateTime)
+        => throw new IllegalSurrealFunctionCallException();
 }

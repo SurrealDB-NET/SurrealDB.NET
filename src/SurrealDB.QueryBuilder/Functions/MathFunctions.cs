@@ -1,42 +1,58 @@
+using System.Numerics;
+using SurrealDB.QueryBuilder.Attributes;
+using SurrealDB.QueryBuilder.Exceptions;
+
 namespace SurrealDB.QueryBuilder.Functions;
 
 using System.Numerics;
 
 public static class MathFunctions
 {
-    public static Function Abs<TNumber>(TNumber number) where TNumber : INumber<TNumber>
-        => new("math::abs({0})", number);
+    [SurrealFunction("math::abs({0})")]
+    public static TNumber Abs<TNumber>(TNumber number) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Ceil<TNumber>(TNumber number) where TNumber : INumber<TNumber>
-        => new("math::ceil({0})", number);
+    [SurrealFunction("math::ceil({0})")]
+    public static TNumber Ceil<TNumber>(TNumber number) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Fixed<TNumber>(TNumber number, long precision) where TNumber : INumber<TNumber>
-        => new("math::fixed({0}, {1})", number, precision);
+    [SurrealFunction("math::fixed({0})")]
+    public static TNumber Fixed<TNumber>(TNumber number, long precision) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Floor<TNumber>(TNumber number) where TNumber : INumber<TNumber>
-        => new("math::floor({0})", number);
+    [SurrealFunction("math::floor({0})")]
+    public static TNumber Floor<TNumber>(TNumber number) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Max<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new("math::log({0})", numbers);
+    [SurrealFunction("math::max({0})")]
+    public static TNumber Max<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Mean<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new("math::mean({0})", numbers);
+    [SurrealFunction("math::mean({0})")]
+    public static TNumber Mean<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Median<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new("math::median({0})", numbers);
+    [SurrealFunction("math::median({0})")]
+    public static TNumber Median<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Min<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new("math::min({0})", numbers);
+    [SurrealFunction("math::min({0})")]
+    public static TNumber Min<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Product<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new("math::product({0})", numbers);
+    [SurrealFunction("math::product({0})")]
+    public static TNumber Product<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Round<TNumber>(TNumber number) where TNumber : INumber<TNumber>
-        => new("math::round({0})", number);
+    [SurrealFunction("math::round({0})")]
+    public static TNumber Round<TNumber>(TNumber number) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Sqrt<TNumber>(TNumber number) where TNumber : INumber<TNumber>
-        => new("math::sqrt({0})", number);
+    [SurrealFunction("math::sqrt({0})")]
+    public static TNumber Sqrt<TNumber>(TNumber number) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Sum<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new("math::sum({0})", numbers);
+    [SurrealFunction("math::sum({0})")]
+    public static TNumber Sum<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 }
