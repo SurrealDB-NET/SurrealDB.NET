@@ -34,8 +34,12 @@ public static class ObjectTranslator
             nint nint => PrimitiveTranslator.Translate(nint),
             nuint nuint => PrimitiveTranslator.Translate(nuint),
             BigInteger bigInteger => PrimitiveTranslator.Translate(bigInteger),
+            Duration duration => DateTimeTranslator.Translate(duration),
+            DateTime dateTime => DateTimeTranslator.Translate(dateTime),
+            DateTimeOffset dateTimeOffset => DateTimeTranslator.Translate(dateTimeOffset),
             None none => PrimitiveTranslator.Translate(none),
-            Function function => FunctionTranslator.Translate(function),
+            IFunction function => $"{function}",
+            IFuture future => $"{future}",
             SchemalessObject schemalessObject => $"{schemalessObject}",
             IEnumerable enumerable => EnumerableTranslator.Translate(enumerable),
             IGeometry geometry => Translate(geometry.ToGeoJson()),
@@ -49,18 +53,14 @@ public static class ObjectTranslator
         FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
         PropertyInfo[] properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-        SchemalessObject @object = new SchemalessObject();
+        SchemalessObject schemalessObject = new SchemalessObject();
 
         foreach (FieldInfo field in fields)
-        {
-            @object.Add(field.Name, field.GetValue(unknownObject));
-        }
+            schemalessObject[field.Name] = field.GetValue(unknownObject);
 
         foreach (PropertyInfo property in properties)
-        {
-            @object.Add(property.Name, property.GetValue(unknownObject));
-        }
+            schemalessObject[property.Name] = property.GetValue(unknownObject);
 
-        return @object.ToString();
+        return schemalessObject.ToString();
     }
 }

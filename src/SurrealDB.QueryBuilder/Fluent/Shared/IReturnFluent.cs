@@ -4,7 +4,7 @@ namespace SurrealDB.QueryBuilder.Fluent.Shared;
 
 public interface IReturnFluent : ITimeoutFluent
 {
-    ITimeoutFluent Return(ReturnResponse returnResponse);
+    ITimeoutFluent Return(ReturnClause returnResponse);
 
     ITimeoutFluent Return(params string[] projections);
 }

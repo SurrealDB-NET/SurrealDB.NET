@@ -1,0 +1,203 @@
+SELECT age, name, email FROM user;
+SurrealQL
+    .Select<User>(user => new
+    {
+        user.Age,
+        user.Name,
+        user.Email
+    })
+    .Build();
+
+SELECT age >= 18 AS adult FROM user;
+SurrealQL
+    .Select<User>(user => new
+    {
+        Adult = user.Age >= 18
+    })
+    .Build();
+
+SELECT *, tags.*.value AS tags FROM article;
+SurrealQL
+    .Select<Article>(article => new
+    {
+        article,
+        Tags = article.Tags.Select(tag => tag.Value)
+    })
+    .Build();
+
+SELECT addresses[WHERE active = true] FROM customer;
+SurrealQL
+    .Select<Customer>(customer => customer.Addresses
+        .Where(address => address.Active))
+    .Build();
+
+SELECT ->like->friend.name AS friends FROM person:tobie;
+SurrealQL
+    .Select<Person>(person => new
+    {
+        Friends = person.Likes.Select(like => like.Friend.Name)
+    }, "tobie")
+    .Build();
+
+SELECT { weekly: false, monthly: true } AS `marketing settings` FROM user;
+SurrealQL
+    .Select<User>(user => new
+    {
+        MarketingSettings = new
+        {
+            Weekly = false,
+            Monthly = true
+        }
+    })
+    .Build();
+
+SELECT * FROM person WHERE ->knows->person->(knows WHERE influencer = true) TIMEOUT 5s;
+SurrealQL
+    .Where<Person>(person => person.Knows.Person.Knows
+
+SELECT * FROM user:tobie FETCH account, account.users;
+SurrealQL
+    .Select<User>("tobie")
+    .Fetch(user => user.Account)
+    .Fetch(user => user.Account.Users)
+    .Build();
+
+SELECT * FROM user LIMIT 50 START 50;
+SurrealQL
+    .Select<User>(user => user)
+    .Limit(50)
+    .Start(50)
+    .Build();
+
+SELECT * FROM article ORDER BY title NUMERIC ASC;
+SurrealQL
+    .Select<Article>(article => article)
+    .OrderBy(article => article.Title, SortOrder.ASC, TextSortMethod.Numeric)
+    .Build();
+
+SELECT count() AS total, math::sum(age), gender, country FROM person GROUP BY gender, country;
+SurrealQL
+    .Select<Person>(person => new
+    {
+        Total = CountFunctions.Count(),
+        Sum = MathFunctions.Sum(person.Age),
+        person.Gender,
+        person.Country
+    })
+    .GroupBy(person => person.Gender)
+    .GroupBy(person => person.Country)
+    .Build();
+
+SELECT gender, country, city FROM person;
+SurrealQL
+    .Select<Person>(person => new
+    {
+        person.Gender,
+        person.Country,
+        person.City
+    })
+    .Build();
+
+SELECT ->purchased->product<-purchased<-person->purchased->product FROM person:tobie PARALLEL;
+SurrealQL
+    .Select<Person>(person => person.Purchased.Product.Purchased.Person.Purchased.Product, "tobie")
+    .Parallel()
+    .Build();
+
+SELECT <-purchased<-person->purchased->product FROM product:laptop;
+SurrealQL
+    .Select<Product>(product => product.Purchased.Person.Purchased.Product, "laptop")
+    .Build();
+
+SELECT *, ->sent->email->to->person FROM person WHERE count(->sent->email) > 5;
+SurrealQL
+    .Select<Person>(person => new
+    {
+        person,
+        SentEmails = person.Sent.Email.To.Person
+    })
+    .Where<Person>(person => CountFunctions.Count(person.Sent.Email) > 5)
+    .Build();
+
+SELECT *, (SELECT * FROM events WHERE type = 'activity' LIMIT 5) AS history FROM user;
+SurrealQL
+    .Select<User>(user => new
+    {
+        user,
+        History = SurrealQL
+            .Select<Event>(@event => @event)
+            .Where<Event>(@event => @event.Type == "activity")
+            .Limit(5)
+            .Build()
+    })
+    .Build();
+
+SELECT ( ( celsius * 2 ) + 30 ) AS fahrenheit FROM temperatue;
+SurrealQL
+    .Select<Temperature>(temperature => new
+    {
+        Fahrenheit = ( (temperature.Celsius * 2)  + 30 )
+    })
+    .Build();
+
+SELECT * FROM profile WHERE count(->experience->organisation) > 3;
+SurrealQL
+    .Select<Profile>(profile => profile)
+    .Where<Profile>(profile => CountFunctions.Count(profile.Experience.Organisation) > 3)
+    .Build();
+
+SELECT * FROM user WHERE (admin AND active) OR owner = true;
+var users = SurrealQL
+    .Select<User>(user => user)
+    .Where<User>(user => (user.Admin && user.Active) || user.Owner)
+    .Build();
+
+DELETE user WHERE age < 18 RETURN NONE;
+var deletedUsers = SurrealQL
+    .Delete<User>()
+    .Where<User>(user => user.Age < 18)
+    .Return(ReturnResponse.None)
+    .Build();
+
+UPDATE person:tobie SET name = 'Tobie', company = 'SurrealDB', skills = ['Rust', 'Go', 'JavaScript'];
+var updatedPerson = SurrealQL
+    .Update<Person>("tobie")
+    .Set<Person>(person => person.Name = "Tobie")
+    .Set<Person>(person => person.Company = "SurrealDB")
+    .Set<Person>(person => person.Skills = new[] { "Rust", "Go", "JavaScript" })
+    .Build();
+
+UPDATE person CONTENT {
+	name: 'Tobie',
+	company: 'SurrealDB',
+	skills: ['Rust', 'Go', 'JavaScript'],
+};
+var updatedPerson = SurrealQL
+    .Update<Person>()
+    .Content<Person>(person => new
+    {
+        person.Name = "Tobie",
+        person.Company = "SurrealDB",
+        person.Skills = new List<string> { "Rust", "Go", "JavaScript" }
+    })
+    .Build();
+
+SELECT *, (SELECT * FROM events WHERE host == user.id) AS self_hosted FROM user;
+SurrealQL
+    .Select<User>(user => new
+    {
+        user,
+        SelfHostedEvents = SurrealQL
+            .Select<Event>(@event => @event)
+            .Where<Event>(@event => @event.Host == user.Id)
+            .Build()
+    })
+    .Build();
+
+SELECT * FROM user, admin;
+SurrealQL
+    .Select<User>(user => user)
+    .Select<Admin>(admin => admin)
+    .Build();
+
+

@@ -3,7 +3,7 @@ using SurrealDB.QueryBuilder.DataModels;
 using SurrealDB.QueryBuilder.Fluent.Shared;
 using SurrealDB.QueryBuilder.Fluent.Shared.Implementation;
 
-namespace SurrealDB.QueryBuilder.Fluent.Select.Implementation;
+namespace SurrealDB.QueryBuilder.Fluent.Select;
 
 internal class FetchFluent : TimeoutFluent, IFetchFluent
 {

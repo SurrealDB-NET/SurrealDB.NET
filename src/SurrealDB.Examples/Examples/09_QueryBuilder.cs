@@ -28,5 +28,8 @@ public sealed class QueryBuilder : IExample
                 .Timeout("30s")
                 .Parallel()
                 .Build());
+
+        SurrealQL.Select<string>(x => x)
+        .Where(x => x == "Hello World");
     }
 }
