@@ -1,4 +1,5 @@
-using SurrealDB.QueryBuilder.Translators;
+using SurrealDB.QueryBuilder.Attributes;
+using SurrealDB.QueryBuilder.Exceptions;
 
 namespace SurrealDB.QueryBuilder.Functions;
 
@@ -6,28 +7,35 @@ public static class ParseFunctions
 {
     public static class Email
     {
-        public static Function Domain(string value)
-            => new($"parse::email::domain({PrimitiveTranslator.Translate(value)})");
+        [SurrealFunction("parse::email::domain({0})")]
+        public static string? Domain(string value)
+            => throw new IllegalSurrealFunctionCallException();
 
-        public static Function User(string value)
-            => new($"parse::email::user({PrimitiveTranslator.Translate(value)})");
+        [SurrealFunction("parse::email::local({0})")]
+        public static string? User(string value)
+            => throw new IllegalSurrealFunctionCallException();
     }
 
     public static class Url
     {
-        public static Function Domain(string value)
-            => new($"parse::url::domain({PrimitiveTranslator.Translate(value)})");
+        [SurrealFunction("parse::url::domain({0})")]
+        public static string? Domain(string value)
+            => throw new IllegalSurrealFunctionCallException();
 
-        public static Function Fragment(string value)
-            => new($"parse::url::fragment({PrimitiveTranslator.Translate(value)})");
+        [SurrealFunction("parse::url::fragment({0})")]
+        public static string? Fragment(string value)
+            => throw new IllegalSurrealFunctionCallException();
 
-        public static Function Host(string value)
-            => new($"parse::url::host({PrimitiveTranslator.Translate(value)})");
+        [SurrealFunction("parse::url::host({0})")]
+        public static string? Host(string value)
+            => throw new IllegalSurrealFunctionCallException();
 
-        public static Function Path(string value)
-            => new($"parse::url::path({PrimitiveTranslator.Translate(value)})");
+        [SurrealFunction("parse::url::path({0})")]
+        public static string? Path(string value)
+            => throw new IllegalSurrealFunctionCallException();
 
-        public static Function Port(string value)
-            => new($"parse::url::port({PrimitiveTranslator.Translate(value)})");
+        [SurrealFunction("parse::url::port({0})")]
+        public static string? Port(string value)
+            => throw new IllegalSurrealFunctionCallException();
     }
 }

@@ -1,63 +1,67 @@
-using System.Numerics;
-using SurrealDB.QueryBuilder.Translators;
+using SurrealDB.QueryBuilder.Attributes;
+using SurrealDB.QueryBuilder.Exceptions;
 
 namespace SurrealDB.QueryBuilder.Functions;
 
 public static class RandomFunctions
 {
-    public static Function Rand()
-        => new("rand()");
+    [SurrealFunction("rand()")]
+    public static double Rand()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Bool()
-        => new("rand::bool()");
+    [SurrealFunction("rand::bool()")]
+    public static bool Bool()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Enum(params object[] values)
-        => new($"rand::enum({EnumerableTranslator.Translate(values)})");
+    [SurrealFunction("rand::enum({0})")]
+    public static object? Enum(params object?[] values)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Float()
-        => new("rand::float()");
+    [SurrealFunction("rand::float()")]
+    public static double Float()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Float<TMin, TMax>(TMin min, TMax max)
-        where TMin : INumber<TMin>
-        where TMax : INumber<TMax>
-        => new($"rand::float({PrimitiveTranslator.Translate(min)}, {PrimitiveTranslator.Translate(max)})");
+    [SurrealFunction("rand::float({0},{1})")]
+    public static double Float(double min, double max)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Guid()
-        => new("rand::guid()");
+    [SurrealFunction("rand::guid()")]
+    public static string Guid()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Guid<TLength>(TLength length)
-        where TLength : INumber<TLength>
-        => new($"rand::guid({PrimitiveTranslator.Translate(length)})");
+    [SurrealFunction("rand::guid({0})")]
+    public static string Guid(double length)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Int()
-        => new("rand::int()");
+    [SurrealFunction("rand::int()")]
+    public static long Int()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Int<TMin, TMax>(TMin min, TMax max)
-        where TMin : INumber<TMin>
-        where TMax : INumber<TMax>
-        => new($"rand::int({PrimitiveTranslator.Translate(min)}, {PrimitiveTranslator.Translate(max)})");
+    [SurrealFunction("rand::int({0},{1})")]
+    public static long Int(long min, long max)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function String()
-        => new("rand::string()");
+    [SurrealFunction("rand::string()")]
+    public static string String()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function String<TLength>(TLength length)
-        where TLength : INumber<TLength>
-        => new($"rand::string({PrimitiveTranslator.Translate(length)})");
+    [SurrealFunction("rand::string({0})")]
+    public static string String(uint length)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function String<TMinLength, TMaxLength>(TMinLength minLength, TMaxLength maxLength)
-        where TMinLength : INumber<TMinLength>
-        where TMaxLength : INumber<TMaxLength>
-        => new($"rand::string({PrimitiveTranslator.Translate(minLength)}, {PrimitiveTranslator.Translate(maxLength)})");
+    [SurrealFunction("rand::string({0},{1})")]
+    public static string String(uint minLength, uint maxLength)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Time()
-        => new("rand::time()");
+    [SurrealFunction("rand::time()")]
+    public static DateTimeOffset Time()
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Time<TMinUnixTime, TMaxUnixTime>(TMinUnixTime minUnixTime, TMaxUnixTime maxUnixTime)
-        where TMinUnixTime : INumber<TMinUnixTime>
-        where TMaxUnixTime : INumber<TMaxUnixTime>
-        => new(
-            $"rand::time({PrimitiveTranslator.Translate(minUnixTime)}, {PrimitiveTranslator.Translate(maxUnixTime)})");
+    [SurrealFunction("rand::time({0},{1})")]
+    public static DateTimeOffset Time(ulong minUnixTimestamp, ulong maxUnixTimestamp)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Uuid()
-        => new("rand::uuid()");
+    [SurrealFunction("rand::uuid()")]
+    public static Guid Uuid()
+        => throw new IllegalSurrealFunctionCallException();
 }

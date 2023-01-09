@@ -1,54 +1,68 @@
+using SurrealDB.QueryBuilder.Attributes;
+using SurrealDB.QueryBuilder.Exceptions;
 using SurrealDB.QueryBuilder.Translators;
 
 namespace SurrealDB.QueryBuilder.Functions;
 
 public static class StringFunctions
 {
-    public static Function Concat(params string[] values)
-        => new($"string::concat({EnumerableTranslator.Translate(values.Select(PrimitiveTranslator.Translate))})");
+    [SurrealFunction("string::length({0})")]
+    public static ulong Length(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function EndsWith(string value, string suffix)
-        => new($"string::endsWith({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(suffix)})");
+    [SurrealFunction("string::startsWith({0},{1})")]
+    public static bool StartsWith(string value, string prefix)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Join(string delimiter, params string[] values)
-        => new(
-            $"string::join({PrimitiveTranslator.Translate(delimiter)}, {EnumerableTranslator.Translate(values.Select(PrimitiveTranslator.Translate))})");
+    [SurrealFunction("string::endsWith({0},{1})")]
+    public static bool EndsWith(string value, string suffix)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Length(string value)
-        => new($"string::length({PrimitiveTranslator.Translate(value)})");
+    [SurrealFunction("string::lowercase({0})")]
+    public static string Lowercase(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Lowercase(string value)
-        => new($"string::lowercase({PrimitiveTranslator.Translate(value)})");
+    [SurrealFunction("string::uppercase({0})")]
+    public static string Uppercase(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Repeat(string value, ulong count)
-        => new($"string::repeat({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(count)})");
+    [SurrealFunction("string::repeat({0},{1})")]
+    public static string Repeat(string value, ulong count)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Replace(string value, string search, string replace)
-        => new(
-            $"string::replace({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(search)}, {PrimitiveTranslator.Translate(replace)})");
+    [SurrealFunction("string::replace({0},{1},{2})")]
+    public static string Replace(string value, string search, string replace)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Reverse(string value)
-        => new($"string::reverse({PrimitiveTranslator.Translate(value)})");
+    [SurrealFunction("string::reverse({0})")]
+    public static string Reverse(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Slice(string value, long start, long length)
-        => new(
-            $"string::slice({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(start)}, {PrimitiveTranslator.Translate(length)})");
+    [SurrealFunction("string::slice({0},{1},{2})")]
+    public static string Slice(string value, long start, long end)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Slug(string value)
-        => new($"string::slug({PrimitiveTranslator.Translate(value)})");
+    [SurrealFunction("string::slug({0})")]
+    public static string Slug(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Split(string value, string delimiter)
-        => new($"string::split({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(delimiter)})");
+    [SurrealFunction("string::trim({0})")]
+    public static string Trim(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function StartsWith(string value, string prefix)
-        => new($"string::startsWith({PrimitiveTranslator.Translate(value)}, {PrimitiveTranslator.Translate(prefix)})");
+    [SurrealFunction("string::concat({0})")]
+    public static string Concat(params string[] values)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Trim(string value)
-        => new($"string::trim({PrimitiveTranslator.Translate(value)})");
+    [SurrealFunction("string::join({0},{1})")]
+    public static string Join(string delimiter, params string[] values)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Uppercase(string value)
-        => new($"string::uppercase({PrimitiveTranslator.Translate(value)})");
+    [SurrealFunction("string::words({0})")]
+    public static IEnumerable<string> Words(string value)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Words(string value)
-        => new($"string::words({PrimitiveTranslator.Translate(value)})");
+    [SurrealFunction("string::split({0},{1})")]
+    public static IEnumerable<string> Split(string value, string delimiter)
+        => throw new IllegalSurrealFunctionCallException();
 }

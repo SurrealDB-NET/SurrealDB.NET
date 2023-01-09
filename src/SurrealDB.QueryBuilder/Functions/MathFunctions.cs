@@ -1,43 +1,56 @@
 using System.Numerics;
-using SurrealDB.QueryBuilder.Translators;
+using SurrealDB.QueryBuilder.Attributes;
+using SurrealDB.QueryBuilder.Exceptions;
 
 namespace SurrealDB.QueryBuilder.Functions;
 
 public static class MathFunctions
 {
-    public static Function Abs<TNumber>(TNumber number) where TNumber : INumber<TNumber>
-        => new($"math::abs({PrimitiveTranslator.Translate(number)})");
+    [SurrealFunction("math::abs({0})")]
+    public static TNumber Abs<TNumber>(TNumber number) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Ceil<TNumber>(TNumber number) where TNumber : INumber<TNumber>
-        => new($"math::ceil({PrimitiveTranslator.Translate(number)})");
+    [SurrealFunction("math::ceil({0})")]
+    public static TNumber Ceil<TNumber>(TNumber number) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Fixed<TNumber>(TNumber number, long precision) where TNumber : INumber<TNumber>
-        => new($"math::fixed({PrimitiveTranslator.Translate(number)}, {PrimitiveTranslator.Translate(precision)})");
+    [SurrealFunction("math::fixed({0})")]
+    public static TNumber Fixed<TNumber>(TNumber number, long precision) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Floor<TNumber>(TNumber number) where TNumber : INumber<TNumber>
-        => new($"math::floor({PrimitiveTranslator.Translate(number)})");
+    [SurrealFunction("math::floor({0})")]
+    public static TNumber Floor<TNumber>(TNumber number) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Max<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new($"math::log({EnumerableTranslator.Translate(numbers)})");
+    [SurrealFunction("math::max({0})")]
+    public static TNumber Max<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Mean<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new($"math::mean({EnumerableTranslator.Translate(numbers)})");
+    [SurrealFunction("math::mean({0})")]
+    public static TNumber Mean<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Median<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new($"math::median({EnumerableTranslator.Translate(numbers)})");
+    [SurrealFunction("math::median({0})")]
+    public static TNumber Median<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Min<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new($"math::min({EnumerableTranslator.Translate(numbers)})");
+    [SurrealFunction("math::min({0})")]
+    public static TNumber Min<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Product<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new($"math::product({EnumerableTranslator.Translate(numbers)})");
+    [SurrealFunction("math::product({0})")]
+    public static TNumber Product<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Round<TNumber>(TNumber number) where TNumber : INumber<TNumber>
-        => new($"math::round({PrimitiveTranslator.Translate(number)})");
+    [SurrealFunction("math::round({0})")]
+    public static TNumber Round<TNumber>(TNumber number) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Sqrt<TNumber>(TNumber number) where TNumber : INumber<TNumber>
-        => new($"math::sqrt({PrimitiveTranslator.Translate(number)})");
+    [SurrealFunction("math::sqrt({0})")]
+    public static TNumber Sqrt<TNumber>(TNumber number) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Sum<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
-        => new($"math::sum({EnumerableTranslator.Translate(numbers)})");
+    [SurrealFunction("math::sum({0})")]
+    public static TNumber Sum<TNumber>(IEnumerable<TNumber> numbers) where TNumber : INumber<TNumber>
+        => throw new IllegalSurrealFunctionCallException();
 }

@@ -1,27 +1,39 @@
+using SurrealDB.QueryBuilder.Attributes;
 using SurrealDB.QueryBuilder.DataModels.Geometry;
+using SurrealDB.QueryBuilder.Exceptions;
 
 namespace SurrealDB.QueryBuilder.Functions;
 
 public static class GeoFunctions
 {
-    public static Function Area(IGeometry geometry)
-        => new($"geo::area({geometry})");
+    [SurrealFunction("geo::area({0})")]
+    public static decimal Area(IGeometry geometry)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Bearing(Point point1, Point point2)
-        => new($"geo::bearing({point1}, {point2})");
+    [SurrealFunction("geo::bearing({0},{1})")]
+    public static decimal Bearing(Point point1, Point point2)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Centroid(IGeometry geometry)
-        => new($"geo::centroid({geometry})");
+    [SurrealFunction("geo::centroid({0})")]
+    public static Point? Centroid(IGeometry geometry)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Distance(Point point1, Point point2)
-        => new($"geo::distance({point1}, {point2})");
+    [SurrealFunction("geo::distance({0},{1})")]
+    public static decimal Distance(Point point1, Point point2)
+        => throw new IllegalSurrealFunctionCallException();
 
     public static class Hash
     {
-        public static Function Decode(Point point)
-            => new($"geo::hash::decode({point})");
+        [SurrealFunction("geo::hash::decode({0})")]
+        public static string Decode(Point point)
+            => throw new IllegalSurrealFunctionCallException();
 
-        public static Function Encode(Point point)
-            => new($"geo::hash::encode({point})");
+        [SurrealFunction("geo::hash::encode({0},{1})")]
+        public static string Encode(Point point)
+            => throw new IllegalSurrealFunctionCallException();
+
+        [SurrealFunction("geo::hash::encode({0},{1})")]
+        public static string Encode(Point point, uint accuracy)
+            => throw new IllegalSurrealFunctionCallException();
     }
 }

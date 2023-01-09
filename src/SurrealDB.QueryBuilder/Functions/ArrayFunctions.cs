@@ -1,46 +1,57 @@
+using System.Collections;
+using SurrealDB.QueryBuilder.Attributes;
 using SurrealDB.QueryBuilder.Enums;
-using SurrealDB.QueryBuilder.Translators;
+using SurrealDB.QueryBuilder.Exceptions;
 
 namespace SurrealDB.QueryBuilder.Functions;
 
 public static class ArrayFunctions
 {
-    public static Function Combine(IEnumerable<object> array1, IEnumerable<object> array2)
-        => new($"array::combine({EnumerableTranslator.Translate(array1)}, {EnumerableTranslator.Translate(array2)})");
+    [SurrealFunction("array::combine({0}, {1})")]
+    public static IEnumerable Combine(IEnumerable array1, IEnumerable array2)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Concat(IEnumerable<object> array1, IEnumerable<object> array2)
-        => new($"array::concat({EnumerableTranslator.Translate(array1)}, {EnumerableTranslator.Translate(array2)})");
+    [SurrealFunction("array::concat({0},{1})")]
+    public static IEnumerable Concat(IEnumerable array1, IEnumerable array2)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Difference(IEnumerable<object> array1, IEnumerable<object> array2)
-        => new(
-            $"array::difference({EnumerableTranslator.Translate(array1)}, {EnumerableTranslator.Translate(array2)})");
+    [SurrealFunction("array::difference({0},{1})")]
+    public static IEnumerable Difference(IEnumerable array1, IEnumerable array2)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Distinct(IEnumerable<object> array)
-        => new($"array::distinct({EnumerableTranslator.Translate(array)})");
+    [SurrealFunction("array::distinct({0})")]
+    public static IEnumerable Distinct(IEnumerable array)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Intersect(IEnumerable<object> array1, IEnumerable<object> array2)
-        => new($"array::intersect({EnumerableTranslator.Translate(array1)}, {EnumerableTranslator.Translate(array2)})");
+    [SurrealFunction("array::intersect({0},{1})")]
+    public static IEnumerable Intersect(IEnumerable array1, IEnumerable array2)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Len(IEnumerable<object> array)
-        => new($"array::len({EnumerableTranslator.Translate(array)})");
+    [SurrealFunction("array::len({0})")]
+    public static long Len(IEnumerable array)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Sort(IEnumerable<object> array)
-        => new($"array::sort({EnumerableTranslator.Translate(array)})");
+    [SurrealFunction("array::sort({0})")]
+    public static IEnumerable Sort(IEnumerable array)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Sort(IEnumerable<object> array, bool isAscending)
-        => new(
-            $"array::sort({EnumerableTranslator.Translate(array)}, {PrimitiveTranslator.Translate(isAscending.ToString()).ToLower()})");
+    [SurrealFunction("array::sort({0},{1})")]
+    public static IEnumerable Sort(IEnumerable array, bool isAscending)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Sort(IEnumerable<object> array, SortOrder sortOrder)
-        => new(
-            $"array::sort({EnumerableTranslator.Translate(array)}, {PrimitiveTranslator.Translate(sortOrder.ToString()).ToLower()})");
+    [SurrealFunction("array::sort({0},{1})")]
+    public static IEnumerable Sort(IEnumerable array, SortOrder sortOrder)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function SortByAsc(IEnumerable<object> array)
-        => new($"array::sort::asc({EnumerableTranslator.Translate(array)})");
+    [SurrealFunction("array::sort::asc({0})")]
+    public static IEnumerable SortByAsc(IEnumerable array)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function SortByDesc(IEnumerable<object> array)
-        => new($"array::sort::desc({EnumerableTranslator.Translate(array)})");
+    [SurrealFunction("array::sort::desc({0})]")]
+    public static IEnumerable SortByDesc(IEnumerable array)
+        => throw new IllegalSurrealFunctionCallException();
 
-    public static Function Union(IEnumerable<object> array1, IEnumerable<object> array2)
-        => new($"array::union({EnumerableTranslator.Translate(array1)}, {EnumerableTranslator.Translate(array2)})");
+    [SurrealFunction("array::union({0},{1})")]
+    public static IEnumerable Union(IEnumerable array1, IEnumerable array2)
+        => throw new IllegalSurrealFunctionCallException();
 }
