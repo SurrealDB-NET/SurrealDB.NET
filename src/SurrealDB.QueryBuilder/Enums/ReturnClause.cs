@@ -1,6 +1,6 @@
 namespace SurrealDB.QueryBuilder.Enums;
 
-public enum ReturnResponse
+public enum ReturnClause
 {
     NONE,
     BEFORE,
