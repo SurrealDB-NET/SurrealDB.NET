@@ -11,7 +11,7 @@ public static class ParseFunctions
         public static string? Domain(string value)
             => throw new IllegalSurrealFunctionCallException();
 
-        [SurrealFunction("parse::email::local({0})")]
+        [SurrealFunction("parse::email::local")]
         public static string? User(string value)
             => throw new IllegalSurrealFunctionCallException();
     }
