@@ -9,55 +9,55 @@ namespace SurrealDB.QueryBuilder.Functions;
 
 public static class TypeFunctions
 {
-    [SurrealFunction("type::bool({0})")]
+    [SurrealFunction("type::bool")]
     public static bool Bool(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("type::int({0})")]
+    [SurrealFunction("type::int")]
     public static long Int(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("type::float({0})")]
+    [SurrealFunction("type::float")]
     public static double Float(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("type::string({0})")]
+    [SurrealFunction("type::string")]
     public static string String(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("type::number({0})")]
+    [SurrealFunction("type::number")]
     public static BigInteger Number(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("type::decimal({0})")]
+    [SurrealFunction("type::decimal")]
     public static decimal Decimal(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("type::duration({0})")]
+    [SurrealFunction("type::duration")]
     public static Duration Duration(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("type::datetime({0})")]
+    [SurrealFunction("type::datetime")]
     public static DateTime DateTime(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("type::point({0})")]
+    [SurrealFunction("type::point")]
     public static Point? Point(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("type::point({0},{1})")]
+    [SurrealFunction("type::point")]
     public static Point Point(double x, double y)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("type::regex({0})")]
+    [SurrealFunction("type::regex")]
     public static string? Regex(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("type::table({0})")]
+    [SurrealFunction("type::table")]
     public static IEnumerable Table(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("type::thing({0})")]
+    [SurrealFunction("type::thing")]
     public static TRecord Thing<TRecord>(object? table, object? id)
         => throw new IllegalSurrealFunctionCallException();
 }

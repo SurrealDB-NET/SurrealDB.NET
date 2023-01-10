@@ -34,22 +34,22 @@ public static class CryptoFunctions
 
     public static class Pbkdf2
     {
-        [SurrealFunction("crypto::pbkdf2::compare({0},{1})")]
+        [SurrealFunction("crypto::pbkdf2::compare")]
         public static bool Compare(object? hash, object? unhashed)
             => throw new IllegalSurrealFunctionCallException();
 
-        [SurrealFunction("crypto::pbkdf2::generate({0})")]
+        [SurrealFunction("crypto::pbkdf2::generate")]
         public static string Generate(object? value)
             => throw new IllegalSurrealFunctionCallException();
     }
 
     public static class Scrypt
     {
-        [SurrealFunction("crypto::scrypt::compare({0},{1})")]
+        [SurrealFunction("crypto::scrypt::compare")]
         public static bool Compare(object? hash, object? unhashed)
             => throw new IllegalSurrealFunctionCallException();
 
-        [SurrealFunction("crypto::scrypt::generate({0})")]
+        [SurrealFunction("crypto::scrypt::generate")]
         public static string Generate(object? value)
             => throw new IllegalSurrealFunctionCallException();
     }

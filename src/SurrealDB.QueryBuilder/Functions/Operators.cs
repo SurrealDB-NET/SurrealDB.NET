@@ -3,79 +3,79 @@ using SurrealDB.QueryBuilder.Attributes;
 using SurrealDB.QueryBuilder.DataModels.Geometry;
 using SurrealDB.QueryBuilder.Exceptions;
 
-namespace SurrealDB.QueryBuilder;
+namespace SurrealDB.QueryBuilder.Functions;
 
 public static class Operators
 {
-    [SurrealFunction("({0}?={1})")]
+    [SurrealOperator("?=")]
     public static bool Any(IEnumerable values, object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}*={1})")]
-    public static bool All(IEnumerable<object?> values, object? value)
+    [SurrealOperator("*=")]
+    public static bool All(IEnumerable values, object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}~{1})")]
+    [SurrealOperator("~")]
     public static bool FuzzyMatch(object? left, object? right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}!~{1})")]
+    [SurrealOperator("!~")]
     public static bool NotFuzzyMatch(object? left, object? right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}?~{1})")]
-    public static bool AnyFuzzyMatch(IEnumerable<object?> values, object? value)
+    [SurrealOperator("?~")]
+    public static bool AnyFuzzyMatch(IEnumerable values, object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}*~{1})")]
-    public static bool AllFuzzyMatch(IEnumerable<object?> values, object? value)
+    [SurrealOperator("*~")]
+    public static bool AllFuzzyMatch(IEnumerable values, object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}∋{1})")]
+    [SurrealOperator("∋")]
     public static bool Contains(object? left, object? right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}∌{1})")]
+    [SurrealOperator("∌")]
     public static bool NotContains(object? left, object? right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}⊇{1})")]
+    [SurrealOperator("⊇")]
     public static bool ContainsAll(object? left, object? right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}⊃{1})")]
+    [SurrealOperator("⊃")]
     public static bool ContainsAny(object? left, object? right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}⊅{1})")]
+    [SurrealOperator("⊅")]
     public static bool ContainsNone(object? left, object? right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}∈{1})")]
+    [SurrealOperator("∈")]
     public static bool Inside(object? left, object? right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}∉{1})")]
+    [SurrealOperator("∉")]
     public static bool NotInside(object? left, object? right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}⊆{1})")]
+    [SurrealOperator("⊆")]
     public static bool AllInside(object? left, object? right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}⊂{1})")]
+    [SurrealOperator("⊂")]
     public static bool AnyInside(object? left, object? right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}⊄{1})")]
+    [SurrealOperator("⊄")]
     public static bool NoneInside(object? left, object? right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}OUTSIDE{1})")]
+    [SurrealOperator("CONTAINS")]
     public static bool Outside(IGeometry left, IGeometry right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("({0}INTERSECTS{1})")]
+    [SurrealOperator("INTERSECTS")]
     public static bool Intersects(IGeometry left, IGeometry right)
         => throw new IllegalSurrealFunctionCallException();
 }

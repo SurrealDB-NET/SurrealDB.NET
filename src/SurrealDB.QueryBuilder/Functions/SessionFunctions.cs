@@ -5,27 +5,27 @@ namespace SurrealDB.QueryBuilder.Functions;
 
 public static class SessionFunctions
 {
-    [SurrealFunction("session::db()")]
+    [SurrealFunction("session::db")]
     public static string Db()
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("session::id()")]
+    [SurrealFunction("session::id")]
     public static string Id()
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("session::ip()")]
+    [SurrealFunction("session::ip")]
     public static string Ip()
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("session::ns()")]
+    [SurrealFunction("session::ns")]
     public static string Ns()
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("session::origin()")]
+    [SurrealFunction("session::origin")]
     public static string Origin()
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("session::sc()")]
+    [SurrealFunction("session::sc")]
     public static string Sc()
         => throw new IllegalSurrealFunctionCallException();
 }

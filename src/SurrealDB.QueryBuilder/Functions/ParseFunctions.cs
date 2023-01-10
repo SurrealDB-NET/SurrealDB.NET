@@ -7,7 +7,7 @@ public static class ParseFunctions
 {
     public static class Email
     {
-        [SurrealFunction("parse::email::domain({0})")]
+        [SurrealFunction("parse::email::domain")]
         public static string? Domain(string value)
             => throw new IllegalSurrealFunctionCallException();
 
@@ -18,23 +18,23 @@ public static class ParseFunctions
 
     public static class Url
     {
-        [SurrealFunction("parse::url::domain({0})")]
+        [SurrealFunction("parse::url::domain")]
         public static string? Domain(string value)
             => throw new IllegalSurrealFunctionCallException();
 
-        [SurrealFunction("parse::url::fragment({0})")]
+        [SurrealFunction("parse::url::fragment")]
         public static string? Fragment(string value)
             => throw new IllegalSurrealFunctionCallException();
 
-        [SurrealFunction("parse::url::host({0})")]
+        [SurrealFunction("parse::url::host")]
         public static string? Host(string value)
             => throw new IllegalSurrealFunctionCallException();
 
-        [SurrealFunction("parse::url::path({0})")]
+        [SurrealFunction("parse::url::path")]
         public static string? Path(string value)
             => throw new IllegalSurrealFunctionCallException();
 
-        [SurrealFunction("parse::url::port({0})")]
+        [SurrealFunction("parse::url::port")]
         public static string? Port(string value)
             => throw new IllegalSurrealFunctionCallException();
     }
