@@ -41,8 +41,4 @@ public static class CastFunctions
     [SurrealFunction("<future>")]
     public static Future<TResult> ToFuture<TResult>(TResult value)
         => new(value);
-
-    [SurrealFunction("<future>")]
-    public static Future<TResult> ToFuture<TResult>(string script)
-        => new(script);
 }

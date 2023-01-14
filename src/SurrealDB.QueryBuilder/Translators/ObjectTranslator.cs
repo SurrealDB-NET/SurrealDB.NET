@@ -5,7 +5,6 @@ using System.Numerics;
 using System.Reflection;
 using DataModels;
 using DataModels.Geometry;
-using Functions;
 
 /// <summary>
 /// Translates an object to a SurrealQL object
