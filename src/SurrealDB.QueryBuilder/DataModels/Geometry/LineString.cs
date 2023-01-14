@@ -1,5 +1,9 @@
 namespace SurrealDB.QueryBuilder.DataModels.Geometry;
 
+/// <summary>
+/// Represents a GEOJson LineString value for storing a geometric path. It is equivalent to SurrealDB's LineString data type. <br/>
+/// <see href="https://surrealdb.com/docs/surrealql/datamodel/geometries#line"/>
+/// </summary>
 public class LineString : IGeometry, IEquatable<LineString>
 {
     public Point[] Coordinates { get; }
@@ -23,7 +27,7 @@ public class LineString : IGeometry, IEquatable<LineString>
     public override int GetHashCode()
         => HashCode.Combine(Coordinates);
 
-    internal decimal[][] CoordinatesOnly()
+    internal double[][] CoordinatesOnly()
         => Coordinates.Select(point => point.CoordinatesOnly()).ToArray();
 
     public static bool operator ==(LineString? left, LineString? right)

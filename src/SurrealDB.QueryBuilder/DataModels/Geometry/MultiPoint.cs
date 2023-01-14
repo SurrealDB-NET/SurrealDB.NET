@@ -18,7 +18,7 @@ public class MultiPoint : IGeometry, IEquatable<MultiPoint>
     public SchemalessObject ToGeoJson()
         => new() { { "type", nameof(MultiPoint) }, { "coordinates", CoordinatesOnly() } };
 
-    internal decimal[][] CoordinatesOnly()
+    internal double[][] CoordinatesOnly()
         => Coordinates.Select(point => point.CoordinatesOnly()).ToArray();
 
     public bool Equals(MultiPoint? value)
