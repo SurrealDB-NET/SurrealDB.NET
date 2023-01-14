@@ -8,7 +8,7 @@ using System.Text;
 /// Represents a duration of time with year to nanosecond precision. It is equivalent to SurrealDB's Duration data type. <br/>
 /// <see href="https://surrealdb.com/docs/surrealql/datamodel/datetimes"/>
 /// </summary>
-public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable<Duration>, ISpanParsable<Duration>
+public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable<Duration>, IParsable<Duration>, ISpanParsable<Duration>
 {
     /// <summary>
     /// Gets the years component of this <see cref="Duration"/> structure.
@@ -159,7 +159,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <exception cref="FormatException">The <paramref name="duration"/> parameter is not in a recognized format.</exception>
     public static implicit operator Duration(string duration)
     {
-        ulong years = 0, weeks = 0, days = 0, hours = 0, minutes = 0, seconds = 0, milliseconds = 0, microseconds = 0, nanoseconds = 0;
+        ulong years = 0UL, weeks = 0UL, days = 0UL, hours = 0UL, minutes = 0UL, seconds = 0UL, milliseconds = 0UL, microseconds = 0UL, nanoseconds = 0UL;
 
         HashSet<string> units = new() { "y", "w", "d", "h", "m", "s", "ms", "µs", "ns" };
 
@@ -320,19 +320,19 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <param name="value">A <see cref="Duration"/> to compare to this instance.</param>
     /// <returns><see langword="true"/> if <paramref name="value"/> has the same total time as this instance; otherwise, <see langword="false"/>.</returns>
     public bool Equals(Duration value)
-        => Years == value.Years &&
-           Weeks == value.Weeks &&
-           Days == value.Days &&
-           Hours == value.Hours &&
-           Minutes == value.Minutes &&
-           Seconds == value.Seconds &&
-           Nanoseconds == value.Nanoseconds;
+        => Years == value.Years
+        && Weeks == value.Weeks
+        && Days == value.Days
+        && Hours == value.Hours
+        && Minutes == value.Minutes
+        && Seconds == value.Seconds
+        && Nanoseconds == value.Nanoseconds;
 
     /// <summary>
     /// Returns a value indicating whether this instance is equal to a specified object.
     /// </summary>
     /// <param name="value">An object to compare to this instance.</param>
-    /// <returns><see langword="true"/> if <paramref name="value"/> is <see cref="Duration"/> that has the same total time as this instance; otherwise, <see langword="false"/>.</returns>
+    /// <returns><see langword="true"/> if <paramref name="value"/> is a <see cref="Duration"/> that has the same total time as this instance; otherwise, <see langword="false"/>.</returns>
     public override bool Equals([NotNullWhen(true)] object? value)
         => value is Duration duration && Equals(duration);
 
@@ -463,20 +463,20 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
         => !Equals(d1, d2);
 
     /// <summary>
-    /// Returns a value indicating whether this instance is less than a specified <see cref="Duration"/>. The comparison is done by comparing the total time of each 
+    /// Returns a value indicating whether this instance is less than a specified <see cref="Duration"/>. The comparison is done by comparing the total time of each
     /// <see cref="Duration"/>.
     /// </summary>
     /// <param name="d1">The first <see cref="Duration"/> to compare.</param>
     /// <param name="d2">The second <see cref="Duration"/> to compare.</param>
     /// <returns><see langword="true"/> if <paramref name="d1"/> is shorter than <paramref name="d2"/>; otherwise, <see langword="false"/>.</returns>
     public static bool operator <(Duration d1, Duration d2)
-        => d1.Years < d2.Years ||
-           d1.Weeks < d2.Weeks ||
-           d1.Days < d2.Days ||
-           d1.Hours < d2.Hours ||
-           d1.Minutes < d2.Minutes ||
-           d1.Seconds < d2.Seconds ||
-           d1.Nanoseconds < d2.Nanoseconds;
+        => d1.Years < d2.Years
+        || d1.Weeks < d2.Weeks
+        || d1.Days < d2.Days
+        || d1.Hours < d2.Hours
+        || d1.Minutes < d2.Minutes
+        || d1.Seconds < d2.Seconds
+        || d1.Nanoseconds < d2.Nanoseconds;
 
     /// <summary>
     /// Returns a value indicating whether this instance is greater than a specified <see cref="Duration"/>. The comparison is done by comparing the total time of each
@@ -486,13 +486,13 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <param name="d2">The second <see cref="Duration"/> to compare.</param>
     /// <returns><see langword="true"/> if <paramref name="d1"/> is longer than <paramref name="d2"/>; otherwise, <see langword="false"/>.</returns>
     public static bool operator >(Duration d1, Duration d2)
-        => d1.Years > d2.Years ||
-           d1.Weeks > d2.Weeks ||
-           d1.Days > d2.Days ||
-           d1.Hours > d2.Hours ||
-           d1.Minutes > d2.Minutes ||
-           d1.Seconds > d2.Seconds ||
-           d1.Nanoseconds > d2.Nanoseconds;
+        => d1.Years > d2.Years
+        || d1.Weeks > d2.Weeks
+        || d1.Days > d2.Days
+        || d1.Hours > d2.Hours
+        || d1.Minutes > d2.Minutes
+        || d1.Seconds > d2.Seconds
+        || d1.Nanoseconds > d2.Nanoseconds;
 
     /// <summary>
     /// Returns a value indicating whether this instance is less than or equal to a specified <see cref="Duration"/>. The comparison is done by comparing the total time of each
@@ -502,13 +502,13 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <param name="d2">The second <see cref="Duration"/> to compare.</param>
     /// <returns><see langword="true"/> if <paramref name="d1"/> is shorter than or equal to <paramref name="d2"/>; otherwise, <see langword="false"/>.</returns>
     public static bool operator <=(Duration d1, Duration d2)
-        => d1.Years <= d2.Years ||
-           d1.Weeks <= d2.Weeks ||
-           d1.Days <= d2.Days ||
-           d1.Hours <= d2.Hours ||
-           d1.Minutes <= d2.Minutes ||
-           d1.Seconds <= d2.Seconds ||
-           d1.Nanoseconds <= d2.Nanoseconds;
+        => d1.Years <= d2.Years
+        || d1.Weeks <= d2.Weeks
+        || d1.Days <= d2.Days
+        || d1.Hours <= d2.Hours
+        || d1.Minutes <= d2.Minutes
+        || d1.Seconds <= d2.Seconds
+        || d1.Nanoseconds <= d2.Nanoseconds;
 
     /// <summary>
     /// Returns a value indicating whether this instance is greater than or equal to a specified <see cref="Duration"/>. The comparison is done by comparing the total time of each
@@ -518,13 +518,13 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// <param name="d2">The second <see cref="Duration"/> to compare.</param>
     /// <returns><see langword="true"/> if <paramref name="d1"/> is longer than or equal to <paramref name="d2"/>; otherwise, <see langword="false"/>.</returns>
     public static bool operator >=(Duration d1, Duration d2)
-        => d1.Years >= d2.Years ||
-           d1.Weeks >= d2.Weeks ||
-           d1.Days >= d2.Days ||
-           d1.Hours >= d2.Hours ||
-           d1.Minutes >= d2.Minutes ||
-           d1.Seconds >= d2.Seconds ||
-           d1.Nanoseconds >= d2.Nanoseconds;
+        => d1.Years >= d2.Years
+        || d1.Weeks >= d2.Weeks
+        || d1.Days >= d2.Days
+        || d1.Hours >= d2.Hours
+        || d1.Minutes >= d2.Minutes
+        || d1.Seconds >= d2.Seconds
+        || d1.Nanoseconds >= d2.Nanoseconds;
 
     /// <summary>
     /// Adds a <see cref="Duration"/> to a <see cref="DateTime"/> and returns the <see cref="DateTime"/> instance with the total time of the <see cref="Duration"/> added to it.
