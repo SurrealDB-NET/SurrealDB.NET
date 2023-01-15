@@ -329,17 +329,17 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
         && Nanoseconds == value.Nanoseconds;
 
     /// <summary>
-    /// Returns a value indicating whether this instance is equal to a specified object.
+    /// Returns a value indicating whether this instance is equal to a specified <see cref="object"/>.
     /// </summary>
-    /// <param name="value">An object to compare to this instance.</param>
+    /// <param name="value">An <see cref="object"/> to compare to this instance.</param>
     /// <returns><see langword="true"/> if <paramref name="value"/> is a <see cref="Duration"/> that has the same total time as this instance; otherwise, <see langword="false"/>.</returns>
     public override bool Equals([NotNullWhen(true)] object? value)
         => value is Duration duration && Equals(duration);
 
     /// <summary>
-    /// Returns the hash code for this instance.
+    /// Returns the hash code for this <see cref="Duration"/>.
     /// </summary>
-    /// <returns>A 32-bit signed integer hash code.</returns>
+    /// <returns>A 32-bit signed integer hash code by combining the hashcodes of all available time units in this <see cref="Duration"/>.</returns>
     public override int GetHashCode()
         => HashCode.Combine(Years, Weeks, Days, Hours, Minutes, Seconds, Nanoseconds);
 
@@ -445,7 +445,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     }
 
     /// <summary>
-    /// Returns a value indicating whether this instance is equal to a specified <see cref="Duration"/>.
+    /// Returns a value indicating whether two specified <see cref="Duration"/> instances are equal.
     /// </summary>
     /// <param name="d1">A <see cref="Duration"/> to compare.</param>
     /// <param name="d2">A <see cref="Duration"/> to compare.</param>
@@ -454,7 +454,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
         => Equals(d1, d2);
 
     /// <summary>
-    /// Returns a value indicating whether this instance is not equal to a specified <see cref="Duration"/>.
+    /// Returns a value indicating whether two specified <see cref="Duration"/> instances are not equal.
     /// </summary>
     /// <param name="d1">A <see cref="Duration"/> to compare.</param>
     /// <param name="d2">A <see cref="Duration"/> to compare.</param>

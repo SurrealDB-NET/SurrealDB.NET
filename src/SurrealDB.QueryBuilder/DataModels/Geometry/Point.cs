@@ -68,28 +68,28 @@ public readonly struct Point : IGeometry, IEquatable<Point>
     /// <summary>
     /// Returns a value that indicates whether this instance is equal to a specified <see cref="Point"/>.
     /// </summary>
-    /// <param name="value">The <see cref="Point"/> to compare to this instance.</param>
+    /// <param name="value">A <see cref="Point"/> to compare to this instance.</param>
     /// <returns><see langword="true"/> if <paramref name="value"/> has the same <see cref="X"/> and <see cref="Y"/> as this instance; otherwise, <see langword="false"/>.</returns>
     public bool Equals(Point value)
         => X == value.X && Y == value.Y;
 
     /// <summary>
-    /// Returns a value that indicates whether this instance is equal to a specified object.
+    /// Returns a value that indicates whether this instance is equal to a specified <see cref="object"/>.
     /// </summary>
-    /// <param name="value">The object to compare to this instance.</param>
+    /// <param name="value">An <see cref="object"/> to compare to this instance.</param>
     /// <returns><see langword="true"/> if <paramref name="value"/> is a <see cref="Point"/> that has the same <see cref="X"/> and <see cref="Y"/> as this instance; otherwise, <see langword="false"/>.</returns>
     public override bool Equals(object? value)
         => value is Point point && Equals(point);
 
     /// <summary>
-    /// Returns the hash code for this instance.
+    /// Returns the hash code for this <see cref="Point"/>.
     /// </summary>
-    /// <returns>A 32-bit signed integer hash code.</returns>
+    /// <returns>A 32-bit signed integer hash code by combining the <see cref="X"/> and <see cref="Y"/> hash codes.</returns>
     public override int GetHashCode()
         => HashCode.Combine(X, Y);
 
     /// <summary>
-    /// Returns a value indicating wether this instance is equal to a specified <see cref="Point"/>.
+    /// Returns a value indicating wether two specified <see cref="Point"/> instances are equal.
     /// </summary>
     /// <param name="left"><see cref="Point"/> to compare.</param>
     /// <param name="right"><see cref="Point"/> to compare.</param>
@@ -98,7 +98,7 @@ public readonly struct Point : IGeometry, IEquatable<Point>
         => Equals(left, right);
 
     /// <summary>
-    /// Returns a value indicating wether this instance is not equal to a specified <see cref="Point"/>.
+    /// Returns a value indicating wether two specified <see cref="Point"/> instances are not equal.
     /// </summary>
     /// <param name="left"><see cref="Point"/> to compare.</param>
     /// <param name="right"><see cref="Point"/> to compare.</param>
