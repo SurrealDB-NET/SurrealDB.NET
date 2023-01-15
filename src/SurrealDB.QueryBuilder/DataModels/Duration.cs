@@ -88,7 +88,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     private readonly Unit _largestUnit;
 
     /// <summary>
-    /// Initializes a new structure of the <see cref="Duration"/> structure with the specified components.
+    /// Initializes a new instance of the <see cref="Duration"/> structure with the specified components.
     /// </summary>
     /// <param name="years">Number of years.</param>
     /// <param name="weeks">Number of weeks.</param>
@@ -212,14 +212,14 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
             }
         }
 
-        return new Duration(years, weeks, days, hours, minutes, seconds, milliseconds, microseconds, nanoseconds);
+        return new(years, weeks, days, hours, minutes, seconds, milliseconds, microseconds, nanoseconds);
     }
 
     /// <summary>
     /// Converts the <see cref="string"/> representation of a duration to its <see cref="Duration"/> equivalent.
     /// </summary>
     /// <param name="durationString">A <see cref="string"/> containing a <see cref="Duration"/> to convert.</param>
-    /// <param name="provider"></param>
+    /// <param name="provider">The <paramref name="provider"/> is ignored.</param>
     /// <returns>A <see cref="Duration"/> equivalent to the duration contained in <paramref name="durationString"/>.</returns>
     /// <exception cref="FormatException">The <paramref name="durationString"/> parameter is not in a recognized format.</exception>
     public static Duration Parse(string durationString, IFormatProvider? provider = null)
@@ -229,7 +229,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
     /// Converts the span of representation of a duration to its <see cref="Duration"/> equivalent.
     /// </summary>
     /// <param name="durationSpan">A span containing a <see cref="Duration"/> to convert.</param>
-    /// <param name="provider"></param>
+    /// <param name="provider">The <paramref name="provider"/> is ignored.</param>
     /// <returns>A <see cref="Duration"/> equivalent to the duration contained in <paramref name="durationSpan"/>.</returns>
     /// <exception cref="FormatException">The <paramref name="durationSpan"/> parameter is not in a recognized format.</exception>
     public static Duration Parse(ReadOnlySpan<char> durationSpan, IFormatProvider? provider = null)
@@ -398,7 +398,7 @@ public readonly struct Duration : IComparable, IComparable<Duration>, IEquatable
         if (d2 > d1)
             throw new ArithmeticException($"{nameof(d2)} cannot be longer than {nameof(d1)}, {nameof(Duration)} cannot be negative");
 
-        return new Duration(
+        return new(
             d1.Years - d2.Years,
             d1.Weeks - d2.Weeks,
             d1.Days - d2.Days,
