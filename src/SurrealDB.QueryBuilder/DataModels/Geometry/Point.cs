@@ -59,13 +59,6 @@ public readonly struct Point : IGeometry, IEquatable<Point>
         => new() { { "type", nameof(Point) }, { "coordinates", CoordinatesOnly() } };
 
     /// <summary>
-    /// Returns an array containing the <see cref="X"/> and <see cref="Y"/> coordinates of this <see cref="Point"/>.
-    /// </summary>
-    /// <returns>An array containing the <see cref="X"/> and <see cref="Y"/> coordinates of this <see cref="Point"/>.</returns>
-    internal double[] CoordinatesOnly()
-        => new[] { X, Y };
-
-    /// <summary>
     /// Returns a value that indicates whether this instance is equal to a specified <see cref="Point"/>.
     /// </summary>
     /// <param name="value">A <see cref="Point"/> to compare to this instance.</param>
@@ -87,6 +80,13 @@ public readonly struct Point : IGeometry, IEquatable<Point>
     /// <returns>A 32-bit signed integer hash code by combining the <see cref="X"/> and <see cref="Y"/> hash codes.</returns>
     public override int GetHashCode()
         => HashCode.Combine(X, Y);
+
+    /// <summary>
+    /// Returns an array containing the <see cref="X"/> and <see cref="Y"/> coordinates of this <see cref="Point"/>.
+    /// </summary>
+    /// <returns>An array containing the <see cref="X"/> and <see cref="Y"/> coordinates of this <see cref="Point"/>.</returns>
+    internal double[] CoordinatesOnly()
+        => new[] { X, Y };
 
     /// <summary>
     /// Returns a value indicating wether two specified <see cref="Point"/> instances are equal.
