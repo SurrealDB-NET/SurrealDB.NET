@@ -8,9 +8,6 @@ using DataModels;
 /// </summary>
 internal static class PrimitiveTranslator
 {
-    internal static string Translate(None none)
-        => $"{none}";
-
     internal static string Translate(bool @bool)
         => @bool ? "true" : "false";
 

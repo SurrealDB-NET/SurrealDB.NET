@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using System.Text;
+using SurrealDB.QueryBuilder.DataModels;
 
 namespace SurrealDB.QueryBuilder.Linq.Translators;
 
@@ -58,6 +59,9 @@ internal static class NewExpressionTranslator
 
     internal static string TranslateSubObject(NewExpression newExpression)
     {
+        if (newExpression.Type.IsGenericType && newExpression.Type.GetGenericTypeDefinition() == typeof(None<>))
+            return "none";
+
         var @object = new StringBuilder("{");
 
         for (var i = 0; i < newExpression.Arguments.Count; ++i)
