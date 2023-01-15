@@ -10,15 +10,15 @@ public class SchemalessObject : Dictionary<string, object?>
 {
     public override string ToString()
     {
-        var output = new List<string>();
+        var props = new List<string>();
 
         foreach (var (key, value) in this)
         {
             var translatedValue = ObjectTranslator.Translate(value);
 
-            output.Add($"{key}:{translatedValue}");
+            props.Add($"{key}:{translatedValue}");
         }
 
-        return $"{{{string.Join(",", output)}}}";
+        return $"{{{string.Join(",", props)}}}";
     }
 }
