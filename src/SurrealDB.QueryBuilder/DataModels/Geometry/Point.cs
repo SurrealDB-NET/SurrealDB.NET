@@ -41,11 +41,11 @@ public readonly struct Point : IGeometry, IEquatable<Point>
     }
 
     /// <summary>
-    /// Implicitly converts a tuple containg a longitude and latitude value to a <see cref="Point"/> structure.
+    /// Implicitly converts a tuple containg a <see cref="X"/> and <see cref="Y"/> value to a <see cref="Point"/> structure.
     /// </summary>
     /// <param name="coordinates">The tuple containing the longitude and latitude values respectively.</param>
-    public static implicit operator Point((double longitude, double latitude) coordinates)
-        => new(coordinates.longitude, coordinates.latitude);
+    public static implicit operator Point((double x, double y) coordinates)
+        => new(coordinates.x, coordinates.y);
 
     /// <summary>
     /// Implicitly converts a <see cref="Point"/> structure to a tuple containing a longitude and latitude value.
