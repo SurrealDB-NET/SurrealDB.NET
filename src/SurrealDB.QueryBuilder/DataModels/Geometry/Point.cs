@@ -24,10 +24,7 @@ public readonly struct Point : IGeometry, IEquatable<Point>
     /// <param name="x">The X coordinate (longitude).</param>
     /// <param name="y">The Y coordinate (latitude).</param>
     public Point(double x, double y)
-    {
-        X = x;
-        Y = y;
-    }
+        => (X, Y) = (x, y);
 
     /// <summary>
     /// Deconstructs this <see cref="Point"/> into its <see cref="X"/> and <see cref="Y"/> components.
@@ -35,10 +32,7 @@ public readonly struct Point : IGeometry, IEquatable<Point>
     /// <param name="x">The X coordinate (longitude).</param>
     /// <param name="y">The Y coordinate (latitude).</param>
     public void Deconstruct(out double x, out double y)
-    {
-        x = X;
-        y = Y;
-    }
+        => (x, y) = (X, Y);
 
     /// <summary>
     /// Implicitly converts a tuple containg a <see cref="X"/> and <see cref="Y"/> value to a <see cref="Point"/> structure.
