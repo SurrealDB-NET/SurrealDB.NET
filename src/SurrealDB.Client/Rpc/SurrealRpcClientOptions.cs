@@ -15,7 +15,7 @@ internal class SurrealRpcClientOptions
 
     public string Password { get; set; }
 
-    public TimeSpan Timeout { get; set; }
+    public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(30);
 
     public string Username { get; set; }
 #pragma warning restore CS8618
