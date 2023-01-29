@@ -24,7 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurrealDB.Client.WebSocket"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurrealDB.Client.Examples", "src\SurrealDB.Client.Examples\SurrealDB.Client.Examples.csproj", "{87DD477F-0848-4BF8-8536-63C75318FA59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurrealDB.QueryBuilder.Examples", "SurrealDB.QueryBuilder.Examples\SurrealDB.QueryBuilder.Examples.csproj", "{E36D8B56-2ED0-4779-8D38-09159314B91F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurrealDB.QueryBuilder.Examples", "src\SurrealDB.QueryBuilder.Examples\SurrealDB.QueryBuilder.Examples.csproj", "{E36D8B56-2ED0-4779-8D38-09159314B91F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
