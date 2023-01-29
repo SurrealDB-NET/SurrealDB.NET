@@ -1,8 +1,8 @@
-using System.Collections;
-using SurrealDB.QueryBuilder.Attributes;
-using SurrealDB.QueryBuilder.Exceptions;
-
 namespace SurrealDB.QueryBuilder.Functions;
+
+using System.Collections;
+using Attributes;
+using Exceptions;
 
 public static class CountFunctions
 {

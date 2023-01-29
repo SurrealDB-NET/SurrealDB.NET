@@ -1,7 +1,6 @@
-using System.Text;
-
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using System.Text;
 using IFluent;
 
 internal class LimitByFluent : StartAtFluent, ILimitByFluent
@@ -11,7 +10,7 @@ internal class LimitByFluent : StartAtFluent, ILimitByFluent
 
     public IStartAtFluent StartAt(uint startAt)
     {
-        query.Append($" START {startAt}");
-        return new StartAtFluent(query);
+        Query.Append($" START {startAt}");
+        return new StartAtFluent(Query);
     }
 }

@@ -1,8 +1,7 @@
-using System.Text;
-using SurrealDB.QueryBuilder.Enums;
-
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using System.Text;
+using Enums;
 using IFluent;
 
 internal class GroupByFluent : OrderByFluent, IGroupByFluent
@@ -12,17 +11,17 @@ internal class GroupByFluent : OrderByFluent, IGroupByFluent
 
     public IOrderByFluent OrderByRandom()
     {
-        query.Append(" ORDER RAND()");
-        return new OrderByFluent(query);
+        Query.Append(" ORDER RAND()");
+        return new OrderByFluent(Query);
     }
 
-    public IOrderByFluent OrderBy(string field, SortOrder sortOrder = SortOrder.ASC, TextSortMethod textSortMethod = TextSortMethod.None)
+    public IOrderByFluent OrderBy(string field, SortOrder sortOrder = SortOrder.Asc, TextSortMethod textSortMethod = TextSortMethod.None)
     {
-        query.Append(" ORDER ");
-        query.Append(field);
+        Query.Append(" ORDER ");
+        Query.Append(field);
         if (textSortMethod is not TextSortMethod.None)
-            query.Append($" {textSortMethod.ToString().ToUpper()}");
-        query.Append($" {sortOrder.ToString().ToUpper()}");
-        return new OrderByFluent(query);
+            Query.Append($" {textSortMethod.ToString().ToUpper()}");
+        Query.Append($" {sortOrder.ToString().ToUpper()}");
+        return new OrderByFluent(Query);
     }
 }

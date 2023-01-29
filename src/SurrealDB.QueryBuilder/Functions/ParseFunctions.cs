@@ -1,7 +1,7 @@
-using SurrealDB.QueryBuilder.Attributes;
-using SurrealDB.QueryBuilder.Exceptions;
-
 namespace SurrealDB.QueryBuilder.Functions;
+
+using Attributes;
+using Exceptions;
 
 public static class ParseFunctions
 {

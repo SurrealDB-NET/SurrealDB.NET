@@ -1,7 +1,7 @@
 namespace SurrealDB.Client.Examples.Rpc;
 
 using System.Net.WebSockets;
-using SurrealDB.Client.Rpc;
+using Client.Rpc;
 using SurrealDB.Examples;
 
 public class ExecuteSurrealQL : IExample

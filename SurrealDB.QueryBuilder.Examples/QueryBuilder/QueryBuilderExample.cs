@@ -2,7 +2,6 @@ namespace SurrealDB.QueryBuilder.Examples.QueryBuilder;
 
 using Enums;
 using SurrealDB.Examples;
-using SurrealDB.QueryBuilder;
 
 public sealed class QueryBuilder : IExample
 {
@@ -16,13 +15,13 @@ public sealed class QueryBuilder : IExample
         Console.WriteLine(
             SurrealQL
                 .Select("id", "name")
-                .From(source: "pokemon",
-                      alias: "Pokemon")
+                .From("pokemon",
+                      "Pokemon")
                 .Where("primaryType.name == \"Fire\"")
                 .GroupBy("secondaryType.name")
-                .OrderBy(field: "name",
+                .OrderBy("name",
                          textSortMethod: TextSortMethod.Collate,
-                         sortOrder: SortOrder.DESC)
+                         sortOrder: SortOrder.Desc)
                 .LimitBy(10)
                 .StartAt(5)
                 .Fetch("moveset", "evolution")

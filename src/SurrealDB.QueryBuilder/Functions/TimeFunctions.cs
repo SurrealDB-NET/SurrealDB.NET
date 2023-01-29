@@ -1,8 +1,9 @@
-using SurrealDB.QueryBuilder.Attributes;
-using SurrealDB.QueryBuilder.DataModels;
-using SurrealDB.QueryBuilder.Exceptions;
+namespace SurrealDB.QueryBuilder.Functions;
 
-namespace SurrealDB.QueryBuilder.Functions;using Enums;
+using Attributes;
+using DataModels;
+using Enums;
+using Exceptions;
 
 public static class TimeFunctions
 {

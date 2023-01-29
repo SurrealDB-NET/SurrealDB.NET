@@ -1,7 +1,8 @@
-using SurrealDB.QueryBuilder.Attributes;
-using SurrealDB.QueryBuilder.Exceptions;
+namespace SurrealDB.QueryBuilder.Functions;
 
-namespace SurrealDB.QueryBuilder.Functions;using DataModels.Geometry;
+using Attributes;
+using DataModels.Geometry;
+using Exceptions;
 
 public static class GeoFunctions
 {

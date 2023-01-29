@@ -9,11 +9,11 @@ using WebSocket.Events;
 
 public class SurrealRpcClient : ISurrealRpcClient, IDisposable
 {
-    private Lazy<Task<IWebSocketClient>>? _lazyWebSocketClient;
-
     private readonly SurrealRpcClientOptions _options;
 
     private readonly Dictionary<string, Action<string>> _responseHandlers = new();
+
+    private Lazy<Task<IWebSocketClient>>? _lazyWebSocketClient;
 
     public SurrealRpcClient(ClientWebSocket socket, Action<SurrealRpcClientOptionsBuilder> optionsBuilder)
     {

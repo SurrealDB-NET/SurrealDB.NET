@@ -1,16 +1,15 @@
-using System.Text;
-
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using System.Text;
 using IFluent;
 
 public class BuildFluent : IBuildFluent
 {
-    protected readonly StringBuilder query;
+    protected readonly StringBuilder Query;
 
     internal BuildFluent(StringBuilder currentQuery)
-        => query = currentQuery;
+        => Query = currentQuery;
 
     public string Build()
-        => query.Append(';').ToString();
+        => Query.Append(';').ToString();
 }

@@ -1,16 +1,12 @@
 namespace SurrealDB.QueryBuilder.Translators;
 
 using System.Numerics;
-using DataModels;
 
 /// <summary>
-/// Translates a value to a string that matches the SurrealQL syntax.
+///     Translates a value to a string that matches the SurrealQL syntax.
 /// </summary>
 internal static class PrimitiveTranslator
 {
-    internal static string Translate(None none)
-        => $"{none}";
-
     internal static string Translate(bool @bool)
         => @bool ? "true" : "false";
 

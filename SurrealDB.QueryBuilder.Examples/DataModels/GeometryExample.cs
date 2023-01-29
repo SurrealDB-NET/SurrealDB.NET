@@ -11,55 +11,62 @@ public class GeometryDataModels : IExample
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
-        Console.WriteLine(new Point(1, 2).ToGeoJson());
+        Console.WriteLine(new Point(-0.118092, 51.509865).ToGeoJson());
 
-        Console.WriteLine(new LineString((1, 2), (3, 4)).ToGeoJson());
+        Console.WriteLine(new LineString((10, 11.2), (10.5, 11.9)).ToGeoJson());
 
-        Console.WriteLine(new Polygon((1, 2), (3, 4), (5, 6), (7, 8), (9, 10), (1, 2)).ToGeoJson());
+        Console.WriteLine(new Polygon(
+                                  (-0.38314819, 51.37692386), (0.1785278, 51.37692386),
+                                  (0.1785278, 51.61460570), (-0.38314819, 51.61460570),
+                                  (-0.38314819, 51.37692386))
+                              .ToGeoJson()
+        );
 
-        Console.WriteLine(new MultiPoint((1, 2), (3, 4)).ToGeoJson());
+        Console.WriteLine(new MultiPoint((10, 11.2), (10.5, 11.9)).ToGeoJson());
 
         Console.WriteLine(
             new MultiLineString(
-                new((1, 2), (3, 4)),
-                new((5, 6), (7, 8))
+                new LineString((10, 11.2), (10.5, 11.9)),
+                new LineString((11, 12.2), (11.5, 12.9), (12, 13))
             ).ToGeoJson()
         );
 
         Console.WriteLine(
             new MultiPolygon(
-                new Polygon((1, 2), (3, 4), (5, 6), (7, 8), (9, 10), (1, 2)),
-                new Polygon((11, 12), (13, 14), (15, 16), (17, 18), (19, 20), (11, 12))
+                new Polygon((10, 11.2), (10.5, 11.9), (10.8, 12), (10, 11.2)),
+                new Polygon((9, 11.2), (10.5, 11.9), (10.3, 13), (9, 11.2))
             ).ToGeoJson()
         );
 
         Console.WriteLine(
             new GeometryCollection(
-                new Point(1, 2),
-                new LineString((1, 2), (3, 4)),
-                new Polygon((1, 2), (3, 4), (5, 6), (1, 2)),
-                new MultiPoint((1, 2), (3, 4)),
-                new MultiLineString(
-                    new((1, 2), (3, 4)),
-                    new((5, 6), (7, 8))
+                new MultiPoint((10, 11.2), (10.5, 11.9)),
+                new Polygon(
+                    (-0.38314819, 51.37692386), (0.1785278, 51.37692386),
+                    (0.1785278, 51.61460570), (-0.38314819, 51.61460570),
+                    (-0.38314819, 51.37692386)
                 ),
                 new MultiPolygon(
-                    new((1, 2), (3, 4), (5, 6), (1, 2)),
-                    new((11, 12), (13, 14), (15, 16), (11, 12))
-                ),
-                new MultiPoint((1, 2), (3, 4)),
-                new MultiLineString(
-                    new((1, 2), (3, 4)),
-                    new((5, 6), (7, 8))
-                ),
-                new MultiPolygon(
-                    new((1, 2), (3, 4), (5, 6), (7, 8), (1, 2)),
-                    new((11, 12), (13, 14), (15, 16), (11, 12))
+                    new Polygon((10, 11.2), (10.5, 11.9), (10.8, 12), (10, 11.2)),
+                    new Polygon((9, 11.2), (10.5, 11.9), (10.3, 13), (9, 11.2))
                 ),
                 new GeometryCollection(
-                    new Point(1, 2),
-                    new LineString((1, 2), (3, 4)),
-                    new Polygon((1, 2), (3, 4), (5, 6), (7, 8))
+                    new Point(-0.118092, 51.509865),
+                    new LineString((10, 11.2), (10.5, 11.9)),
+                    new Polygon(
+                        (-0.38314819, 51.37692386), (0.1785278, 51.37692386),
+                        (0.1785278, 51.61460570), (-0.38314819, 51.61460570),
+                        (-0.38314819, 51.37692386)
+                    ),
+                    new MultiPoint((10, 11.2), (10.5, 11.9)),
+                    new MultiLineString(
+                        new LineString((10, 11.2), (10.5, 11.9)),
+                        new LineString((11, 12.2), (11.5, 12.9), (12, 13))
+                    ),
+                    new MultiPolygon(
+                        new Polygon((10, 11.2), (10.5, 11.9), (10.8, 12), (10, 11.2)),
+                        new Polygon((9, 11.2), (10.5, 11.9), (10.3, 13), (9, 11.2))
+                    )
                 )
             ).ToGeoJson()
         );

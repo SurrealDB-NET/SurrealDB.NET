@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\SurrealDB.Examples\SurrealDB.Examples.csproj" />
-      <ProjectReference Include="..\src\SurrealDB.QueryBuilder\SurrealDB.QueryBuilder.csproj" />
+        <ProjectReference Include="..\src\SurrealDB.Examples\SurrealDB.Examples.csproj"/>
+        <ProjectReference Include="..\src\SurrealDB.QueryBuilder\SurrealDB.QueryBuilder.csproj"/>
     </ItemGroup>
 
 </Project>

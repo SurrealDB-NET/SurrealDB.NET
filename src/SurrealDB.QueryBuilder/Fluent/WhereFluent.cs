@@ -1,7 +1,6 @@
-using System.Text;
-
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using System.Text;
 using IFluent;
 
 internal class WhereFluent : SplitAtFluent, IWhereFluent
@@ -11,7 +10,7 @@ internal class WhereFluent : SplitAtFluent, IWhereFluent
 
     public ISplitAtFluent SplitAt(params string[] fields)
     {
-        query.Append($" SPLIT {string.Join(", ", fields)}");
-        return new SplitAtFluent(query);
+        Query.Append($" SPLIT {string.Join(", ", fields)}");
+        return new SplitAtFluent(Query);
     }
 }

@@ -1,7 +1,6 @@
-using System.Text;
-
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using System.Text;
 using IFluent;
 
 internal class SelectFluent : ISelectFluent

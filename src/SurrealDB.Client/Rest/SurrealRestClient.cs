@@ -22,9 +22,7 @@ public class SurrealRestClient : ISurrealRestClient
 
     public async Task<IEnumerable<TResult>> CreateRecordAsync<TResult>(string tableName, string content, CancellationToken cancellationToken = default)
         where TResult : class
-    {
-        return await SendRequestAsync<TResult>(HttpMethod.Post, $"key/{tableName}", content, cancellationToken);
-    }
+        => await SendRequestAsync<TResult>(HttpMethod.Post, $"key/{tableName}", content, cancellationToken);
 
     public async Task<TResult> CreateRecordAsync<TResult>(string tableName, string id, string content, CancellationToken cancellationToken = default)
         where TResult : class
@@ -46,15 +44,11 @@ public class SurrealRestClient : ISurrealRestClient
 
     public async Task<IEnumerable<TResult>> ExecuteQueryAsync<TResult>(string query, CancellationToken cancellationToken = default)
         where TResult : class
-    {
-        return await SendRequestAsync<TResult>(HttpMethod.Post, "sql", query, cancellationToken);
-    }
+        => await SendRequestAsync<TResult>(HttpMethod.Post, "sql", query, cancellationToken);
 
     public async Task<IEnumerable<TResult>> GetAllRecordsAsync<TResult>(string tableName, CancellationToken cancellationToken = default)
         where TResult : class
-    {
-        return await SendRequestAsync<TResult>(HttpMethod.Get, $"key/{tableName}", cancellationToken);
-    }
+        => await SendRequestAsync<TResult>(HttpMethod.Get, $"key/{tableName}", cancellationToken);
 
     public async Task<TResult?> GetRecordByIdAsync<TResult>(string tableName, string id, CancellationToken cancellationToken = default)
         where TResult : class

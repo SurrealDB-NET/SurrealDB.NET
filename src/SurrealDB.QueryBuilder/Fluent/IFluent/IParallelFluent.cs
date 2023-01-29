@@ -1,5 +1,3 @@
 namespace SurrealDB.QueryBuilder.Fluent.IFluent;
 
-public interface IParallelFluent : IBuildFluent
-{
-}
+public interface IParallelFluent : IBuildFluent { }

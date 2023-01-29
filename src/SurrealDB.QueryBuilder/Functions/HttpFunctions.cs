@@ -1,43 +1,55 @@
-using SurrealDB.QueryBuilder.Exceptions;
-using SurrealDB.QueryBuilder.Translators;
-
 namespace SurrealDB.QueryBuilder.Functions;
+
+using Attributes;
+using Exceptions;
 
 public static class HttpFunctions
 {
-    public static object? Head(string url)
+    [SurrealFunction("http::head")]
+    public static object Head(string url)
         => throw new IllegalSurrealFunctionCallException();
 
-    // public static Function<object?> Head(string url, object headers)
-    //     => new($"http::head({PrimitiveTranslator.Translate(url)}, {ObjectTranslator.Translate(headers)})");
+    [SurrealFunction("http::head")]
+    public static object Head(string url, object headers)
+        => throw new IllegalSurrealFunctionCallException();
 
-    // public static Function Get(string url)
-    //     => new($"http::get({PrimitiveTranslator.Translate(url)})");
+    [SurrealFunction("http::get")]
+    public static object Get(string url)
+        => throw new IllegalSurrealFunctionCallException();
 
-    // public static Function Get(string url, object headers)
-    //     => new($"http::get({PrimitiveTranslator.Translate(url)}, {ObjectTranslator.Translate(headers)})");
+    [SurrealFunction("http::get")]
+    public static object Get(string url, object headers)
+        => throw new IllegalSurrealFunctionCallException();
 
-    // public static Function Put(string url)
-    //     => new($"http::put({PrimitiveTranslator.Translate(url)})");
+    [SurrealFunction("http::put")]
+    public static object Put(string url)
+        => throw new IllegalSurrealFunctionCallException();
 
-    // public static Function Put(string url, object headers)
-    //     => new($"http::put({PrimitiveTranslator.Translate(url)}, {ObjectTranslator.Translate(headers)})");
+    [SurrealFunction("http::put")]
+    public static object Put(string url, object headers)
+        => throw new IllegalSurrealFunctionCallException();
 
-    // public static Function Post(string url)
-    //     => new($"http::post({PrimitiveTranslator.Translate(url)})");
+    [SurrealFunction("http::post")]
+    public static object Post(string url)
+        => throw new IllegalSurrealFunctionCallException();
 
-    // public static Function Post(string url, object headers)
-    //     => new($"http::post({PrimitiveTranslator.Translate(url)}, {ObjectTranslator.Translate(headers)})");
+    [SurrealFunction("http::post")]
+    public static object Post(string url, object headers)
+        => throw new IllegalSurrealFunctionCallException();
 
-    // public static Function Patch(string url)
-    //     => new($"http::patch({PrimitiveTranslator.Translate(url)})");
+    [SurrealFunction("http::patch")]
+    public static object Patch(string url)
+        => throw new IllegalSurrealFunctionCallException();
 
-    // public static Function Patch(string url, object headers)
-    //     => new($"http::patch({PrimitiveTranslator.Translate(url)}, {ObjectTranslator.Translate(headers)})");
+    [SurrealFunction("http::patch")]
+    public static object Patch(string url, object headers)
+        => throw new IllegalSurrealFunctionCallException();
 
-    // public static Function Delete(string url)
-    //     => new($"http::delete({PrimitiveTranslator.Translate(url)})");
+    [SurrealFunction("http::delete")]
+    public static object Delete(string url)
+        => throw new IllegalSurrealFunctionCallException();
 
-    // public static Function Delete(string url, object headers)
-    //     => new($"http::delete({PrimitiveTranslator.Translate(url)}, {ObjectTranslator.Translate(headers)})");
+    [SurrealFunction("http::delete")]
+    public static object Delete(string url, object headers)
+        => throw new IllegalSurrealFunctionCallException();
 }

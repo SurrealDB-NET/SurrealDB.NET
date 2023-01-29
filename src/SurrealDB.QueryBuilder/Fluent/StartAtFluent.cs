@@ -1,7 +1,6 @@
-using System.Text;
-
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using System.Text;
 using IFluent;
 
 internal class StartAtFluent : FetchFluent, IStartAtFluent
@@ -11,8 +10,8 @@ internal class StartAtFluent : FetchFluent, IStartAtFluent
 
     public IFetchFluent Fetch(params string[] fields)
     {
-        query.Append(" FETCH ");
-        query.Append(string.Join(", ", fields));
-        return new FetchFluent(query);
+        Query.Append(" FETCH ");
+        Query.Append(string.Join(", ", fields));
+        return new FetchFluent(Query);
     }
 }

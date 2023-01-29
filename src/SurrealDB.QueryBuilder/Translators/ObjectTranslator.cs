@@ -5,10 +5,9 @@ using System.Numerics;
 using System.Reflection;
 using DataModels;
 using DataModels.Geometry;
-using Functions;
 
 /// <summary>
-/// Translates an object to a SurrealQL object
+///     Translates an object to a SurrealQL object
 /// </summary>
 public static class ObjectTranslator
 {
@@ -37,7 +36,6 @@ public static class ObjectTranslator
             DateTimeOffset dateTimeOffset => DateTimeTranslator.Translate(dateTimeOffset),
             Duration duration => DateTimeTranslator.Translate(duration),
             Half half => PrimitiveTranslator.Translate(half),
-            None none => PrimitiveTranslator.Translate(none),
             SchemalessObject schemalessObject => $"{schemalessObject}",
             IEnumerable enumerable => EnumerableTranslator.Translate(enumerable),
             IGeometry geometry => Translate(geometry.ToGeoJson()),

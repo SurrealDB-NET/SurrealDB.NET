@@ -1,9 +1,9 @@
-using System.Collections;
-using SurrealDB.QueryBuilder.Attributes;
-using SurrealDB.QueryBuilder.DataModels.Geometry;
-using SurrealDB.QueryBuilder.Exceptions;
-
 namespace SurrealDB.QueryBuilder.Functions;
+
+using System.Collections;
+using Attributes;
+using DataModels.Geometry;
+using Exceptions;
 
 public static class Operators
 {
@@ -71,7 +71,7 @@ public static class Operators
     public static bool NoneInside(object? left, object? right)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealOperator("CONTAINS")]
+    [SurrealOperator("OUTSIDE")]
     public static bool Outside(IGeometry left, IGeometry right)
         => throw new IllegalSurrealFunctionCallException();
 

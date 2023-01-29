@@ -11,7 +11,7 @@ public sealed class DurationExample : IExample
 
     public Task RunAsync(CancellationToken cancellationToken = default)
     {
-        var durationFromConstructor = new Duration(years: 4, weeks: 20, minutes: 78, nanoseconds: 1000000000); // specify the units you want to use
+        var durationFromConstructor = new Duration(4, 20, minutes: 78, nanoseconds: 1000000000); // specify the units you want to use
 
         Duration durationFromString = "1s2y10w10w2y78m"; // order doesn't matter, as long as the unit is specified (y, w, d, h, m, s, ms, µs, ns)
 

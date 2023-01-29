@@ -12,7 +12,7 @@ internal class WebSocketClientOptions
     /// </summary>
     /// <remarks>
     ///     The default value is <see cref="System.Text.Encoding.UTF8" />.
-    ///  </remarks>
+    /// </remarks>
     internal Encoding Encoding { get; set; } = Encoding.UTF8;
 
     /// <summary>

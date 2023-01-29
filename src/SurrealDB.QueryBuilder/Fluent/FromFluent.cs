@@ -1,7 +1,6 @@
-using System.Text;
-
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using System.Text;
 using IFluent;
 
 internal class FromFluent : WhereFluent, IFromFluent
@@ -11,7 +10,7 @@ internal class FromFluent : WhereFluent, IFromFluent
 
     public IWhereFluent Where(string predicate)
     {
-        query.Append($" WHERE {predicate}");
-        return new WhereFluent(query);
+        Query.Append($" WHERE {predicate}");
+        return new WhereFluent(Query);
     }
 }

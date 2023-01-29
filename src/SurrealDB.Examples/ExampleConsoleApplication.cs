@@ -5,19 +5,24 @@ using System.Reflection;
 
 public static class ExampleConsoleApplication
 {
-    // ReSharper disable once MemberCanBePrivate.Global
-    public static readonly ImmutableArray<IExample> Examples = Assembly
-        .GetExecutingAssembly()
-        .GetTypes()
-        .Where(type => type.GetInterfaces().Any(@interface => @interface == typeof(IExample)))
-        .Select(exampleType => (IExample)Activator.CreateInstance(exampleType)!)
-        .ToImmutableArray();
-
     public static async Task RunAsync()
     {
-        for (var i = 0; i < Examples.Length; i++)
+        var assembly = Assembly.GetEntryAssembly();
+        
+        if (assembly is null)
         {
-            Console.WriteLine($"{i + 1}. {Examples[i].Name}: {Examples[i].Description}");
+            throw new InvalidOperationException("Could not find entry assembly.");
+        }
+        
+        var examples = assembly
+            .GetTypes()
+            .Where(type => type.GetInterfaces().Any(@interface => @interface == typeof(IExample)))
+            .Select(exampleType => (IExample)Activator.CreateInstance(exampleType)!)
+            .ToImmutableArray();
+
+        for (var i = 0; i < examples.Length; i++)
+        {
+            Console.WriteLine($"{i + 1}. {examples[i].Name}: {examples[i].Description}");
         }
 
         Console.WriteLine();
@@ -34,14 +39,14 @@ public static class ExampleConsoleApplication
 
             var isInteger = int.TryParse(input, out var exampleNumber);
 
-            if (!isInteger || exampleNumber < 1 || exampleNumber > Examples.Length)
+            if (!isInteger || exampleNumber < 1 || exampleNumber > examples.Length)
             {
-                Console.WriteLine($"Invalid input. Please enter a number between 1 and {Examples.Length}.");
+                Console.WriteLine($"Invalid input. Please enter a number between 1 and {examples.Length}.");
 
                 continue;
             }
 
-            var exampleToRun = Examples[exampleNumber - 1];
+            var exampleToRun = examples[exampleNumber - 1];
 
             Console.WriteLine();
             Console.WriteLine($"Running example {exampleNumber}: {exampleToRun.Name}");

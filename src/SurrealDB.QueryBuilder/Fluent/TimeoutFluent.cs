@@ -1,7 +1,6 @@
-using System.Text;
-
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using System.Text;
 using IFluent;
 
 internal class TimeoutFluent : ParallelFluent, ITimeoutFluent
@@ -11,7 +10,7 @@ internal class TimeoutFluent : ParallelFluent, ITimeoutFluent
 
     public IParallelFluent Parallel()
     {
-        query.Append(" PARALLEL");
-        return new ParallelFluent(query);
+        Query.Append(" PARALLEL");
+        return new ParallelFluent(Query);
     }
 }

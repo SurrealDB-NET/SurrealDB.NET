@@ -1,11 +1,11 @@
+namespace SurrealDB.QueryBuilder.Functions;
+
 using System.Collections;
 using System.Numerics;
-using SurrealDB.QueryBuilder.Attributes;
-using SurrealDB.QueryBuilder.DataModels;
-using SurrealDB.QueryBuilder.DataModels.Geometry;
-using SurrealDB.QueryBuilder.Exceptions;
-
-namespace SurrealDB.QueryBuilder.Functions;
+using Attributes;
+using DataModels;
+using DataModels.Geometry;
+using Exceptions;
 
 public static class TypeFunctions
 {

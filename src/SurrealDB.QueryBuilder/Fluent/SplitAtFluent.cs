@@ -1,7 +1,6 @@
-using System.Text;
-
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using System.Text;
 using IFluent;
 
 internal class SplitAtFluent : GroupByFluent, ISplitAtFluent
@@ -11,7 +10,7 @@ internal class SplitAtFluent : GroupByFluent, ISplitAtFluent
 
     public IGroupByFluent GroupBy(params string[] fields)
     {
-        query.Append($" GROUP {string.Join(", ", fields)}");
-        return new GroupByFluent(query);
+        Query.Append($" GROUP {string.Join(", ", fields)}");
+        return new GroupByFluent(Query);
     }
 }

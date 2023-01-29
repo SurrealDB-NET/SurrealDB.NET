@@ -1,7 +1,6 @@
-using System.Text;
-
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using System.Text;
 using IFluent;
 
 internal class OrderByFluent : LimitByFluent, IOrderByFluent
@@ -11,7 +10,7 @@ internal class OrderByFluent : LimitByFluent, IOrderByFluent
 
     public ILimitByFluent LimitBy(uint limit)
     {
-        query.Append($" LIMIT {limit}");
-        return new LimitByFluent(query);
+        Query.Append($" LIMIT {limit}");
+        return new LimitByFluent(Query);
     }
 }

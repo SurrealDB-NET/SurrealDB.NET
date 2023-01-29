@@ -1,10 +1,10 @@
 namespace SurrealDB.QueryBuilder.Attributes;
 
-[AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-public sealed class SurrealFunctionAttribute : Attribute
+[AttributeUsage(AttributeTargets.Method, Inherited = false)]
+internal sealed class SurrealFunctionAttribute : Attribute
 {
-    public string Translated { get; }
+    public string Function { get; }
 
-    public SurrealFunctionAttribute(string translatedFunction)
-        => Translated = translatedFunction;
+    public SurrealFunctionAttribute(string surrealFunction)
+        => Function = surrealFunction;
 }

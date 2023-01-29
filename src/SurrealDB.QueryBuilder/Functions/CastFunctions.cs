@@ -1,8 +1,8 @@
-using SurrealDB.QueryBuilder.Attributes;
-using SurrealDB.QueryBuilder.DataModels;
-using SurrealDB.QueryBuilder.Exceptions;
-
 namespace SurrealDB.QueryBuilder.Functions;
+
+using Attributes;
+using DataModels;
+using Exceptions;
 
 public static class CastFunctions
 {
@@ -41,8 +41,4 @@ public static class CastFunctions
     [SurrealFunction("<future>")]
     public static Future<TResult> ToFuture<TResult>(TResult value)
         => new(value);
-
-    [SurrealFunction("<future>")]
-    public static Future<TResult> ToFuture<TResult>(string script)
-        => new(script);
 }

@@ -1,8 +1,7 @@
-using System.Text;
-using SurrealDB.QueryBuilder.DataModels;
-
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using System.Text;
+using DataModels;
 using IFluent;
 
 internal class FetchFluent : TimeoutFluent, IFetchFluent
@@ -12,7 +11,7 @@ internal class FetchFluent : TimeoutFluent, IFetchFluent
 
     public ITimeoutFluent Timeout(Duration timeout)
     {
-        query.Append($" TIMEOUT {timeout}");
-        return new TimeoutFluent(query);
+        Query.Append($" TIMEOUT {timeout}");
+        return new TimeoutFluent(Query);
     }
 }

@@ -1,11 +1,9 @@
-using System.Collections;
-using SurrealDB.QueryBuilder.Attributes;
-using SurrealDB.QueryBuilder.Enums;
-using SurrealDB.QueryBuilder.Exceptions;
-
 namespace SurrealDB.QueryBuilder.Functions;
 
+using System.Collections;
+using Attributes;
 using Enums;
+using Exceptions;
 
 public static class ArrayFunctions
 {

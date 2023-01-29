@@ -1,6 +1,6 @@
 ﻿namespace SurrealDB.Client.Examples.Rest;
 
-using SurrealDB.Client.Rest;
+using Client.Rest;
 using SurrealDB.Examples;
 
 public sealed class ExecuteSurrealQL : IExample

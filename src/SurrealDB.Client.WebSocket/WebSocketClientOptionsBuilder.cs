@@ -20,7 +20,7 @@ public sealed class WebSocketClientOptionsBuilder
     /// </summary>
     /// <remarks>
     ///     The default value is <see cref="System.Text.Encoding.UTF8" />.
-    ///  </remarks>
+    /// </remarks>
     public WebSocketClientOptionsBuilder WithEncoding(Encoding encoding)
     {
         Options.Encoding = encoding;
