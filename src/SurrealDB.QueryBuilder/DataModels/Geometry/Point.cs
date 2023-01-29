@@ -11,13 +11,13 @@ public readonly struct Point : IGeometry, IEquatable<Point>
     ///     Gets the X coordinate of this <see cref="Point" /> structure, representing the longitude.
     /// </summary>
     /// <returns>The X coordinate of this <see cref="Point" /> structure, representing the longitude.</returns>
-    public readonly double X { get; }
+    public double X { get; }
 
     /// <summary>
     ///     Gers the Y coordinate of this <see cref="Point" /> structure, representing the latitude.
     /// </summary>
     /// <returns>The Y coordinate of this <see cref="Point" /> structure, representing the latitude.</returns>
-    public readonly double Y { get; }
+    public double Y { get; }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="Point" /> structure with the specified coordinates.
