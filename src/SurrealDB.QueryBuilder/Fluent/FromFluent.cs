@@ -2,6 +2,8 @@ using System.Text;
 
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using IFluent;
+
 internal class FromFluent : WhereFluent, IFromFluent
 {
     internal FromFluent(StringBuilder currentQuery)

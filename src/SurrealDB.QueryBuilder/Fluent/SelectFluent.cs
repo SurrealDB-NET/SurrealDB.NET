@@ -2,6 +2,8 @@ using System.Text;
 
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using IFluent;
+
 internal class SelectFluent : ISelectFluent
 {
     private readonly StringBuilder _query;

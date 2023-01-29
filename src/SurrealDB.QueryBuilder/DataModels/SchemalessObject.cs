@@ -1,6 +1,6 @@
 namespace SurrealDB.QueryBuilder.DataModels;
 
-using SurrealDB.QueryBuilder.Translators;
+using Translators;
 
 /// <summary>
 /// Represents an object containing key value pairs where the value can be of any type. It is equivalent to SurrealDB's Object data type. <br/>

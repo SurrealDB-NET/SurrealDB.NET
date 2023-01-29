@@ -3,6 +3,8 @@ using SurrealDB.QueryBuilder.Fluent;
 
 namespace SurrealDB.QueryBuilder;
 
+using Fluent.IFluent;
+
 public static class SurrealQL
 {
     public static ISelectFluent Select()

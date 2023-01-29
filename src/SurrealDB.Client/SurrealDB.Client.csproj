@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SurrealDB.Client.WebSocket\SurrealDB.Client.WebSocket.csproj" />
+  </ItemGroup>
+
 </Project>

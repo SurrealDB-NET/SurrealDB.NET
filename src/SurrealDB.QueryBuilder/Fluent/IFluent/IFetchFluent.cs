@@ -1,6 +1,6 @@
-using SurrealDB.QueryBuilder.DataModels;
+namespace SurrealDB.QueryBuilder.Fluent.IFluent;
 
-namespace SurrealDB.QueryBuilder.Fluent;
+using DataModels;
 
 public interface IFetchFluent
     : ITimeoutFluent,

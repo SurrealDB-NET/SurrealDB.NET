@@ -3,6 +3,8 @@ using SurrealDB.QueryBuilder.Enums;
 
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using IFluent;
+
 internal class GroupByFluent : OrderByFluent, IGroupByFluent
 {
     internal GroupByFluent(StringBuilder currentQuery)

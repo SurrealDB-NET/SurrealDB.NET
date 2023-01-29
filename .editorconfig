@@ -3,7 +3,6 @@
 
 # Microsoft .NET properties
 csharp_new_line_before_members_in_object_initializers = false
-csharp_preferred_modifier_order = internal, public, private, override, file, new, sealed, abstract, virtual, static, protected, readonly, extern, unsafe, volatile, async, required:suggestion
 csharp_space_after_cast = false
 
 # ReSharper properties

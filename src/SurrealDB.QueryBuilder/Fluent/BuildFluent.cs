@@ -2,6 +2,8 @@ using System.Text;
 
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using IFluent;
+
 public class BuildFluent : IBuildFluent
 {
     protected readonly StringBuilder query;

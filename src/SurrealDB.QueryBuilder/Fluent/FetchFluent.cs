@@ -3,6 +3,8 @@ using SurrealDB.QueryBuilder.DataModels;
 
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using IFluent;
+
 internal class FetchFluent : TimeoutFluent, IFetchFluent
 {
     internal FetchFluent(StringBuilder currentQuery)

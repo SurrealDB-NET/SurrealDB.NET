@@ -1,109 +1,88 @@
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.Text;
-using SurrealDB.Client.Rest.Enums;
-using SurrealDB.Client.Rest.Responses;
-
 namespace SurrealDB.Client.Rest;
 
-public class SurrealRestClient : ISurrealClient
+using System.Net.Http.Headers;
+using System.Text;
+using Enums;
+using Exceptions;
+using Responses;
+
+public class SurrealRestClient : ISurrealRestClient
 {
     private readonly HttpClient _httpClient;
 
-    public SurrealRestClient(HttpClient httpClient, Action<SurrealClientOptionsBuilder> optionsBuilder)
+    private readonly SurrealRestClientOptions _options;
+
+    public SurrealRestClient(HttpClient httpClient, Action<SurrealRestClientOptionsBuilder> optionsBuilder)
     {
-        _httpClient = ConfigureHttpClient(httpClient, optionsBuilder);
+        var options = SurrealRestClientOptions.From(optionsBuilder);
+
+        _httpClient = ConfigureHttpClient(httpClient, options);
+        _options = options;
     }
 
-    public async Task<TRecord> CreateRecordAsync<TRecord>(string tableName, string content, CancellationToken cancellationToken = default)
-        where TRecord : class
+    public async Task<IEnumerable<TResult>> CreateRecordAsync<TResult>(string tableName, string content, CancellationToken cancellationToken = default)
+        where TResult : class
     {
-        var results = await ExecuteSqlAsync<TRecord[]>($"CREATE type::table('{tableName}') CONTENT {content};", cancellationToken);
-
-        return results.Single();
+        return await SendRequestAsync<TResult>(HttpMethod.Post, $"key/{tableName}", content, cancellationToken);
     }
 
-    public async Task<TRecord> CreateRecordAsync<TRecord>(string tableName, string id, string content, CancellationToken cancellationToken = default)
-        where TRecord : class
+    public async Task<TResult> CreateRecordAsync<TResult>(string tableName, string id, string content, CancellationToken cancellationToken = default)
+        where TResult : class
     {
-        var results = await ExecuteSqlAsync<TRecord[]>($"CREATE type::thing('{tableName}', '{id}') CONTENT {content};", cancellationToken);
+        var results = await SendRequestAsync<TResult>(HttpMethod.Post, $"key/{tableName}/{id}", content, cancellationToken);
 
         return results.Single();
     }
 
     public async Task DeleteAllRecordsAsync(string tableName, CancellationToken cancellationToken = default)
     {
-        await ExecuteSqlAsync<object[]>($"DELETE FROM type::table('{tableName}');", cancellationToken);
+        await SendRequestAsync(HttpMethod.Delete, $"key/{tableName}", cancellationToken);
     }
 
     public async Task DeleteRecordByIdAsync(string tableName, string id, CancellationToken cancellationToken = default)
     {
-        await ExecuteSqlAsync<object[]>($"DELETE FROM type::thing('{tableName}', '{id}');", cancellationToken);
+        await SendRequestAsync(HttpMethod.Delete, $"key/{tableName}/{id}", cancellationToken);
     }
 
-    public async Task<TResult> ExecuteSqlAsync<TResult>(string sql, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TResult>> ExecuteQueryAsync<TResult>(string query, CancellationToken cancellationToken = default)
         where TResult : class
     {
-        var payload = new StringContent(sql);
-
-        var response = await _httpClient.PostAsync("sql", payload, cancellationToken);
-
-        var results = await ParseResponseAsync<ExecuteSqlResponse<TResult>[]>(response, cancellationToken);
-
-        return results
-            .Select(result => result.Status switch
-            {
-                ExecuteSqlStatusCode.Ok => result.Result,
-                ExecuteSqlStatusCode.Error => throw new Exception(result.Detail),
-                _ => throw new Exception($"Unexpected status code: {result.Status}")
-            })
-            .Single();
+        return await SendRequestAsync<TResult>(HttpMethod.Post, "sql", query, cancellationToken);
     }
 
-    public async Task<IEnumerable<TRecord>> GetAllRecordsAsync<TRecord>(string tableName, CancellationToken cancellationToken = default)
-        where TRecord : class
+    public async Task<IEnumerable<TResult>> GetAllRecordsAsync<TResult>(string tableName, CancellationToken cancellationToken = default)
+        where TResult : class
     {
-        return await ExecuteSqlAsync<IEnumerable<TRecord>>($"SELECT * FROM type::table('{tableName}');", cancellationToken);
+        return await SendRequestAsync<TResult>(HttpMethod.Get, $"key/{tableName}", cancellationToken);
     }
 
-    public async Task<TRecord?> GetRecordByIdAsync<TRecord>(string tableName, string id, CancellationToken cancellationToken = default)
-        where TRecord : class
+    public async Task<TResult?> GetRecordByIdAsync<TResult>(string tableName, string id, CancellationToken cancellationToken = default)
+        where TResult : class
     {
-        var results = await ExecuteSqlAsync<TRecord[]>($"SELECT * FROM type::thing('{tableName}', '{id}');", cancellationToken);
+        var results = await SendRequestAsync<TResult>(HttpMethod.Get, $"key/{tableName}/{id}", cancellationToken);
 
         return results.FirstOrDefault();
     }
 
-    public async Task<TRecord> ModifyRecordAsync<TRecord>(string tableName, string id, string content, CancellationToken cancellationToken = default)
-        where TRecord : class
+    public async Task<TResult> ModifyRecordAsync<TResult>(string tableName, string id, string content, CancellationToken cancellationToken = default)
+        where TResult : class
     {
-        var results = await ExecuteSqlAsync<TRecord[]>($"UPDATE type::thing('{tableName}', '{id}') MERGE {content};", cancellationToken);
+        var results = await SendRequestAsync<TResult>(HttpMethod.Patch, $"key/{tableName}/{id}", content, cancellationToken);
 
         return results.Single();
     }
 
-    public async Task<TRecord> UpsertRecordAsync<TRecord>(string tableName, string id, string content, CancellationToken cancellationToken = default)
-        where TRecord : class
+    public async Task<TResult> UpsertRecordAsync<TResult>(string tableName, string id, string content, CancellationToken cancellationToken = default)
+        where TResult : class
     {
-        var results = await ExecuteSqlAsync<TRecord[]>($"UPDATE type::thing('{tableName}', '{id}') CONTENT {content};", cancellationToken);
+        var results = await SendRequestAsync<TResult>(HttpMethod.Put, $"key/{tableName}/{id}", content, cancellationToken);
 
         return results.Single();
     }
 
-    private static ISurrealClientOptions BuildOptions(Action<SurrealClientOptionsBuilder> optionsBuilder)
+    private static HttpClient ConfigureHttpClient(HttpClient httpClient, SurrealRestClientOptions options)
     {
-        var builder = new SurrealClientOptionsBuilder();
-
-        optionsBuilder(builder);
-
-        return builder.Build();
-    }
-
-    private static HttpClient ConfigureHttpClient(HttpClient httpClient, Action<SurrealClientOptionsBuilder> optionsBuilder)
-    {
-        var options = BuildOptions(optionsBuilder);
-
-        httpClient.BaseAddress = new Uri(options.BaseAddress);
+        httpClient.BaseAddress = new Uri(options.Address);
 
         httpClient.DefaultRequestHeaders.Accept.Clear();
         httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -124,29 +103,64 @@ public class SurrealRestClient : ISurrealClient
         return new AuthenticationHeaderValue("Basic", base64);
     }
 
-    private static async Task<TResult> DeserializeContentAsync<TResult>(HttpContent content, CancellationToken cancellationToken = default)
+    private async Task<IEnumerable<TResult>> ParseResponseAsync<TResult>(HttpResponseMessage response, CancellationToken cancellationToken = default)
         where TResult : class
     {
-        var data = await content.ReadFromJsonAsync<TResult>(cancellationToken: cancellationToken);
+        var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
 
-        if (data is null)
+        var errorResponse = await _options.JsonProvider.DeserializeAsync<SurrealRestErrorResponse>(stream, cancellationToken);
+
+        if (errorResponse is not null)
         {
-            throw new Exception("Failed to deserialize response");
+            throw new Exception($"({errorResponse.Code}) {errorResponse.Information}. {errorResponse.Description}");
         }
 
-        return data;
+        var queryResponse = await _options.JsonProvider.DeserializeAsync<ExecuteQueryResponse<TResult>[]>(stream, cancellationToken);
+
+        if (queryResponse is null)
+        {
+            throw new SurrealDeserializationException<string, ExecuteQueryResponse<TResult>[]>();
+        }
+
+        var queryError = queryResponse.FirstOrDefault(result => result.Status == ExecuteQueryStatusCode.Error);
+
+        if (queryError is not null)
+        {
+            throw new SurrealQueryException(queryError.Detail);
+        }
+
+        return queryResponse.Select(result => result.Result);
     }
 
-    private static async Task<TResult> ParseResponseAsync<TResult>(HttpResponseMessage response, CancellationToken cancellationToken = default)
+    private async Task SendRequestAsync(HttpMethod method, string endpoint, CancellationToken cancellationToken = default)
+    {
+        var request = new HttpRequestMessage(method, endpoint);
+
+        var response = await _httpClient.SendAsync(request, cancellationToken);
+
+        await ParseResponseAsync<object>(response, cancellationToken);
+    }
+
+    private async Task<IEnumerable<TResult>> SendRequestAsync<TResult>(HttpMethod method, string endpoint, CancellationToken cancellationToken = default)
         where TResult : class
     {
-        if (response.IsSuccessStatusCode)
+        var request = new HttpRequestMessage(method, endpoint);
+
+        var response = await _httpClient.SendAsync(request, cancellationToken);
+
+        return await ParseResponseAsync<TResult>(response, cancellationToken);
+    }
+
+    private async Task<IEnumerable<TResult>> SendRequestAsync<TResult>(HttpMethod method, string endpoint, string content, CancellationToken cancellationToken = default)
+        where TResult : class
+    {
+        var request = new HttpRequestMessage(method, endpoint)
         {
-            return await DeserializeContentAsync<TResult>(response.Content, cancellationToken);
-        }
+            Content = new StringContent(content)
+        };
 
-        var fatalError = await DeserializeContentAsync<FatalErrorResponse>(response.Content, cancellationToken);
+        var response = await _httpClient.SendAsync(request, cancellationToken);
 
-        throw new Exception($"({fatalError.Code}) {fatalError.Information}. {fatalError.Description}");
+        return await ParseResponseAsync<TResult>(response, cancellationToken);
     }
 }

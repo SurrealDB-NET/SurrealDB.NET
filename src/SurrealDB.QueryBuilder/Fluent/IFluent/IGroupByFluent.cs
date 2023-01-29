@@ -1,6 +1,6 @@
-using SurrealDB.QueryBuilder.Enums;
+namespace SurrealDB.QueryBuilder.Fluent.IFluent;
 
-namespace SurrealDB.QueryBuilder.Fluent;
+using Enums;
 
 public interface IGroupByFluent
     : IOrderByFluent,

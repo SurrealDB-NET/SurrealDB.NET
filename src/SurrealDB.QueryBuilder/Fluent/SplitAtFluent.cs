@@ -2,6 +2,8 @@ using System.Text;
 
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using IFluent;
+
 internal class SplitAtFluent : GroupByFluent, ISplitAtFluent
 {
     internal SplitAtFluent(StringBuilder currentQuery)

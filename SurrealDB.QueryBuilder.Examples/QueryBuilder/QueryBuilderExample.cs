@@ -1,0 +1,33 @@
+namespace SurrealDB.QueryBuilder.Examples.QueryBuilder;
+
+using Enums;
+using SurrealDB.Examples;
+using SurrealDB.QueryBuilder;
+
+public sealed class QueryBuilder : IExample
+{
+    public string Name => "SurrealQL builder";
+
+    public string Description => "Build a SurrealQL query using the SurrealQL builder";
+
+    public async Task RunAsync(CancellationToken cancellationToken = default)
+    {
+        await Task.CompletedTask;
+        Console.WriteLine(
+            SurrealQL
+                .Select("id", "name")
+                .From(source: "pokemon",
+                      alias: "Pokemon")
+                .Where("primaryType.name == \"Fire\"")
+                .GroupBy("secondaryType.name")
+                .OrderBy(field: "name",
+                         textSortMethod: TextSortMethod.Collate,
+                         sortOrder: SortOrder.DESC)
+                .LimitBy(10)
+                .StartAt(5)
+                .Fetch("moveset", "evolution")
+                .Timeout("30s")
+                .Parallel()
+                .Build());
+    }
+}

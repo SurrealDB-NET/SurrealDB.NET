@@ -2,6 +2,8 @@ using System.Text;
 
 namespace SurrealDB.QueryBuilder.Fluent;
 
+using IFluent;
+
 internal class OrderByFluent : LimitByFluent, IOrderByFluent
 {
     internal OrderByFluent(StringBuilder currentQuery)
