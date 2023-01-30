@@ -1,7 +1,8 @@
-namespace SurrealDB.QueryBuilder.Examples.QueryBuilder;
+namespace SurrealDB.Examples.QueryBuilder;
 
-using Enums;
 using SurrealDB.Examples;
+using SurrealDB.QueryBuilder;
+using SurrealDB.QueryBuilder.Enums;
 
 public sealed class QueryBuilder : IExample
 {

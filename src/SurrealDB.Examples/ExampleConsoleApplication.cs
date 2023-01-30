@@ -8,12 +8,12 @@ public static class ExampleConsoleApplication
     public static async Task RunAsync()
     {
         var assembly = Assembly.GetEntryAssembly();
-        
+
         if (assembly is null)
         {
             throw new InvalidOperationException("Could not find entry assembly.");
         }
-        
+
         var examples = assembly
             .GetTypes()
             .Where(type => type.GetInterfaces().Any(@interface => @interface == typeof(IExample)))

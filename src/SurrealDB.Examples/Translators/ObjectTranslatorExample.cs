@@ -1,8 +1,8 @@
-namespace SurrealDB.QueryBuilder.Examples.Translators;
+namespace SurrealDB.Examples.Translators;
 
-using Functions;
 using SurrealDB.Examples;
 using SurrealDB.QueryBuilder.DataModels.Geometry;
+using SurrealDB.QueryBuilder.Functions;
 using SurrealDB.QueryBuilder.Translators;
 
 public class ObjectTranslatorExample : IExample

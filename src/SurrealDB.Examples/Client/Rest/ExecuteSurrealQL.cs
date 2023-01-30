@@ -1,23 +1,22 @@
-namespace SurrealDB.Client.Examples.Rpc;
+﻿namespace SurrealDB.Examples.Client.Rest;
 
-using System.Net.WebSockets;
-using Client.Rpc;
+using SurrealDB.Client.Rest;
 using SurrealDB.Examples;
 
-public class ExecuteSurrealQL : IExample
+public sealed class ExecuteSurrealQL : IExample
 {
-    public string Name => "Execute query with RPC client";
+    public string Name => "Execute SurrealQL using the REST Client";
 
-    public string Description => "Execute query with RPC client";
+    public string Description => "This method maps directly to the POST /sql endpoint.";
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
-        var clientWebSocket = new ClientWebSocket();
+        var httpClient = new HttpClient();
 
-        var client = new SurrealRpcClient(clientWebSocket, options =>
+        var client = new SurrealRestClient(httpClient, options =>
         {
             options
-                .WithAddress("ws://localhost:8000/rpc")
+                .WithAddress("http://localhost:8000")
                 .WithDatabase("test")
                 .WithNamespace("test")
                 .WithUsername("root")

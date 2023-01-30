@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\SurrealDB.Client\SurrealDB.Client.csproj"/>
+        <ProjectReference Include="..\SurrealDB.QueryBuilder\SurrealDB.QueryBuilder.csproj"/>
+    </ItemGroup>
+
 </Project>

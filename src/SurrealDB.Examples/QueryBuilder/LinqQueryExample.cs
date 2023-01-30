@@ -1,11 +1,12 @@
-namespace SurrealDB.QueryBuilder.Examples.QueryBuilder;
+namespace SurrealDB.Examples.QueryBuilder;
 
 using System.Text;
-using Enums;
 using SurrealDB.Examples;
-using static Functions.CountFunctions;
-using static Functions.MathFunctions;
-using static Functions.Operators;
+using SurrealDB.QueryBuilder;
+using SurrealDB.QueryBuilder.Enums;
+using static SurrealDB.QueryBuilder.Functions.CountFunctions;
+using static SurrealDB.QueryBuilder.Functions.MathFunctions;
+using static SurrealDB.QueryBuilder.Functions.Operators;
 
 public class LinqQueryExample : IExample
 {

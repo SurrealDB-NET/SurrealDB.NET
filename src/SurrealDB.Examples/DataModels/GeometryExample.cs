@@ -1,4 +1,4 @@
-namespace SurrealDB.QueryBuilder.Examples.DataModels;
+namespace SurrealDB.Examples.DataModels;
 
 using SurrealDB.Examples;
 using SurrealDB.QueryBuilder.DataModels.Geometry;

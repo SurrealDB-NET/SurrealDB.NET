@@ -1,6 +1,6 @@
-namespace SurrealDB.Client.Examples.Rest;
+namespace SurrealDB.Examples.Client.Rest;
 
-using Client.Rest;
+using SurrealDB.Client.Rest;
 using SurrealDB.Examples;
 
 public sealed class DeleteRecordById : IExample
