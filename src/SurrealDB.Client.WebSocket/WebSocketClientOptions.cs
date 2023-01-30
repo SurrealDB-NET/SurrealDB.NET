@@ -26,5 +26,5 @@ internal class WebSocketClientOptions
     /// <summary>
     ///     The URI to connect to.
     /// </summary>
-    internal Uri Uri { get; set; }
+    internal Uri Uri { get; set; } = default!;
 }

@@ -4,19 +4,17 @@ using JsonProviders;
 
 internal class SurrealRestClientOptions
 {
-#pragma warning disable CS8618 Non-nullable field is uninitialized. Consider declaring as nullable.
-    public string Address { get; set; }
+    public string Address { get; set; } = string.Empty;
 
-    public string Database { get; set; }
+    public string Database { get; set; } = string.Empty;
 
     public IJsonProvider JsonProvider { get; set; } = new DefaultJsonProvider();
 
-    public string Namespace { get; set; }
+    public string Namespace { get; set; } = string.Empty;
 
-    public string Password { get; set; }
+    public string Password { get; set; } = string.Empty;
 
-    public string Username { get; set; }
-#pragma warning restore CS8618
+    public string Username { get; set; } = string.Empty;
 
     public static SurrealRestClientOptions From(Action<SurrealRestClientOptionsBuilder> builder)
     {
