@@ -4,7 +4,7 @@ using Attributes;
 using DataModels;
 using Exceptions;
 
-public static class CastFunctions
+public static class CastOperators
 {
     [SurrealFunction("<bool>")]
     public static bool ToBool(object? value)

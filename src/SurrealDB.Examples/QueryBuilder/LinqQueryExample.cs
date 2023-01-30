@@ -4,9 +4,9 @@ using System.Text;
 using SurrealDB.Examples;
 using SurrealDB.QueryBuilder;
 using SurrealDB.QueryBuilder.Enums;
+using static SurrealDB.QueryBuilder.Functions.BinaryOperators;
 using static SurrealDB.QueryBuilder.Functions.CountFunctions;
 using static SurrealDB.QueryBuilder.Functions.MathFunctions;
-using static SurrealDB.QueryBuilder.Functions.Operators;
 
 public class LinqQueryExample : IExample
 {

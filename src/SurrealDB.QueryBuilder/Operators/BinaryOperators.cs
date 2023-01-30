@@ -5,7 +5,7 @@ using Attributes;
 using DataModels.Geometry;
 using Exceptions;
 
-public static class Operators
+public static class BinaryOperators
 {
     [SurrealOperator("?=")]
     public static bool Any(IEnumerable values, object? value)
