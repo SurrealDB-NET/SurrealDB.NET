@@ -6,39 +6,39 @@ using Exceptions;
 
 public static class CastOperators
 {
-    [SurrealFunction("<bool>")]
+    [SurrealOperator("<bool>")]
     public static bool ToBool(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("<int>")]
+    [SurrealOperator("<int>")]
     public static long ToInt(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("<float>")]
+    [SurrealOperator("<float>")]
     public static double ToFloat(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("<string>")]
+    [SurrealOperator("<string>")]
     public static string ToString(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("<number>")]
+    [SurrealOperator("<number>")]
     public static decimal ToNumber(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("<decimal>")]
+    [SurrealOperator("<decimal>")]
     public static decimal ToDecimal(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("<datetime>")]
+    [SurrealOperator("<datetime>")]
     public static DateTimeOffset ToDateTime(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("<duration>")]
+    [SurrealOperator("<duration>")]
     public static Duration ToDuration(object? value)
         => throw new IllegalSurrealFunctionCallException();
 
-    [SurrealFunction("<future>")]
+    [SurrealOperator("<future>")]
     public static Future<TResult> ToFuture<TResult>(TResult value)
         => new(value);
 }
