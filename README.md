@@ -1,3 +1,3 @@
-# SurrealDB.NET
+![SurrealDB.NET](SurrealDB.NETLogo.png)
 
-SurrealDB.NET is a .NET library for the [SurrealDB](https://surrealdb.com/) database.
+SurrealDB.NET is a .NET library for [SurrealDB](https://surrealdb.com/).
