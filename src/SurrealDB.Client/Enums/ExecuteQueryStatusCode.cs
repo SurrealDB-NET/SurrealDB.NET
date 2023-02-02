@@ -1,9 +1,8 @@
 namespace SurrealDB.Client.Enums;
 
-internal static class ExecuteQueryStatusCode
+internal enum ExecuteQueryStatusCode
 {
-    public const string Error = "ERR";
+    OK,
 
-    // ReSharper disable once UnusedMember.Global
-    public const string Ok = "OK";
+    ERR
 }
