@@ -2,9 +2,9 @@ namespace SurrealDB.Examples;
 
 public interface IExample
 {
-    public string Name { get; }
+	public string Name { get; }
 
-    public string Description { get; }
+	public string Description { get; }
 
-    public Task RunAsync(CancellationToken cancellationToken = default);
+	public Task RunAsync(CancellationToken cancellationToken = default);
 }

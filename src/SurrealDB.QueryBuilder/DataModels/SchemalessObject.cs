@@ -1,6 +1,6 @@
-namespace SurrealDB.QueryBuilder.DataModels;
+using SurrealDB.QueryBuilder.Translators;
 
-using Translators;
+namespace SurrealDB.QueryBuilder.DataModels;
 
 /// <summary>
 ///     Represents an object containing key value pairs where the value can be of any type. It is equivalent to SurrealDB's
@@ -9,17 +9,17 @@ using Translators;
 /// </summary>
 public class SchemalessObject : Dictionary<string, object?>
 {
-    public override string ToString()
-    {
-        var props = new List<string>();
+	public override string ToString()
+	{
+		var props = new List<string>();
 
-        foreach (var (key, value) in this)
-        {
-            var translatedValue = ObjectTranslator.Translate(value);
+		foreach ((string key, object? value) in this)
+		{
+			string translatedValue = ObjectTranslator.Translate(value);
 
-            props.Add($"{key}:{translatedValue}");
-        }
+			props.Add($"{key}:{translatedValue}");
+		}
 
-        return $"{{{string.Join(",", props)}}}";
-    }
+		return $"{{{string.Join(",", props)}}}";
+	}
 }

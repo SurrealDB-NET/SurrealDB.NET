@@ -1,57 +1,57 @@
-namespace SurrealDB.Client.Rpc;
+using SurrealDB.Client.JsonProviders;
 
-using JsonProviders;
+namespace SurrealDB.Client.Rpc;
 
 public class SurrealRpcClientOptionsBuilder
 {
-    internal SurrealRpcClientOptions Options { get; } = new();
+	internal SurrealRpcClientOptions Options { get; } = new();
 
-    public SurrealRpcClientOptionsBuilder WithAddress(string baseAddress)
-    {
-        Options.Address = baseAddress;
+	public SurrealRpcClientOptionsBuilder WithAddress(string baseAddress)
+	{
+		Options.Address = baseAddress;
 
-        return this;
-    }
+		return this;
+	}
 
-    public SurrealRpcClientOptionsBuilder WithDatabase(string database)
-    {
-        Options.Database = database;
+	public SurrealRpcClientOptionsBuilder WithDatabase(string database)
+	{
+		Options.Database = database;
 
-        return this;
-    }
+		return this;
+	}
 
-    public SurrealRpcClientOptionsBuilder WithJsonProvider(IJsonProvider jsonProvider)
-    {
-        Options.JsonProvider = jsonProvider;
+	public SurrealRpcClientOptionsBuilder WithJsonProvider(IJsonProvider jsonProvider)
+	{
+		Options.JsonProvider = jsonProvider;
 
-        return this;
-    }
+		return this;
+	}
 
-    public SurrealRpcClientOptionsBuilder WithNamespace(string @namespace)
-    {
-        Options.Namespace = @namespace;
+	public SurrealRpcClientOptionsBuilder WithNamespace(string @namespace)
+	{
+		Options.Namespace = @namespace;
 
-        return this;
-    }
+		return this;
+	}
 
-    public SurrealRpcClientOptionsBuilder WithPassword(string password)
-    {
-        Options.Password = password;
+	public SurrealRpcClientOptionsBuilder WithPassword(string password)
+	{
+		Options.Password = password;
 
-        return this;
-    }
+		return this;
+	}
 
-    public SurrealRpcClientOptionsBuilder WithTimeout(uint timeoutSeconds)
-    {
-        Options.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
+	public SurrealRpcClientOptionsBuilder WithTimeout(uint timeoutSeconds)
+	{
+		Options.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
 
-        return this;
-    }
+		return this;
+	}
 
-    public SurrealRpcClientOptionsBuilder WithUsername(string username)
-    {
-        Options.Username = username;
+	public SurrealRpcClientOptionsBuilder WithUsername(string username)
+	{
+		Options.Username = username;
 
-        return this;
-    }
+		return this;
+	}
 }

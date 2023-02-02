@@ -1,14 +1,14 @@
-namespace SurrealDB.QueryBuilder.DataModels;
+using SurrealDB.QueryBuilder.Translators;
 
-using Translators;
+namespace SurrealDB.QueryBuilder.DataModels;
 
 public sealed class Future<TResult> : IFuture
 {
-    private string Translated { get; }
+	private string Translated { get; }
 
-    internal Future(TResult value)
-        => Translated = $"{{{ObjectTranslator.Translate(value)}}}";
+	internal Future(TResult value)
+		=> Translated = $"{{{ObjectTranslator.Translate(value)}}}";
 
-    public override string ToString()
-        => $"{Translated}";
+	public override string ToString()
+		=> $"{Translated}";
 }

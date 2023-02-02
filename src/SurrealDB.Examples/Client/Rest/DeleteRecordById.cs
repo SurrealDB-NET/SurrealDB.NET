@@ -1,30 +1,31 @@
-namespace SurrealDB.Examples.Client.Rest;
-
 using SurrealDB.Client.Rest;
-using SurrealDB.Examples;
+
+namespace SurrealDB.Examples.Client.Rest;
 
 public sealed class DeleteRecordById : IExample
 {
-    public string Name => "Delete a specific record by its ID using the REST client";
+	public string Name => "Delete a specific record by its ID using the REST client";
 
-    public string Description => "This method maps directly to the DELETE /key/:table/:id endpoint";
+	public string Description => "This method maps directly to the DELETE /key/:table/:id endpoint";
 
-    public async Task RunAsync(CancellationToken cancellationToken = default)
-    {
-        var httpClient = new HttpClient();
+	public async Task RunAsync(CancellationToken cancellationToken = default)
+	{
+		var httpClient = new HttpClient();
 
-        var client = new SurrealRestClient(httpClient, options =>
-        {
-            options
-                .WithAddress("http://localhost:8000")
-                .WithDatabase("test")
-                .WithNamespace("test")
-                .WithUsername("root")
-                .WithPassword("root");
-        });
+		var client = new SurrealRestClient(
+			httpClient, options =>
+			{
+				options
+				   .WithAddress("http://localhost:8000")
+				   .WithDatabase("test")
+				   .WithNamespace("test")
+				   .WithUsername("root")
+				   .WithPassword("root");
+			}
+		);
 
-        await client.DeleteRecordByIdAsync("test", "test_id", cancellationToken);
+		await client.DeleteRecordByIdAsync("test", "test_id", cancellationToken);
 
-        Console.WriteLine("OK");
-    }
+		Console.WriteLine("OK");
+	}
 }

@@ -7,9 +7,9 @@ namespace SurrealDB.QueryBuilder.DataModels;
 /// </summary>
 public readonly struct None<T>
 {
-    public static implicit operator T?(None<T> _)
-        => default;
+	public static implicit operator T?(None<T> _)
+		=> default;
 
-    public override string ToString()
-        => "none";
+	public override string ToString()
+		=> "none";
 }

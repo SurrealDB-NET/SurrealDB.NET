@@ -1,169 +1,165 @@
-﻿namespace SurrealDB.Client.WebSocket;
+﻿using System.Net.WebSockets;
+using SurrealDB.Client.WebSocket.Events;
 
-using System.Net.WebSockets;
-using Events;
+namespace SurrealDB.Client.WebSocket;
 
 public class WebSocketClient : IWebSocketClient
 {
-    private readonly CancellationTokenSource _cancellationTokenSource = new();
-    private readonly WebSocketClientOptions _options;
-    private readonly ClientWebSocket _socket;
+	private readonly CancellationTokenSource _cancellationTokenSource = new();
 
-    public WebSocketClient(ClientWebSocket socket, Action<WebSocketClientOptionsBuilder> optionsBuilder)
-    {
-        _options = BuildOptions(optionsBuilder);
-        _socket = socket;
-    }
+	private readonly WebSocketClientOptions _options;
 
-    public void Dispose()
-    {
-        Dispose(true);
+	private readonly ClientWebSocket _socket;
 
-        GC.SuppressFinalize(this);
-    }
+	public WebSocketClient(ClientWebSocket socket, Action<WebSocketClientOptionsBuilder> optionsBuilder)
+	{
+		_options = BuildOptions(optionsBuilder);
+		_socket = socket;
+	}
 
-    public bool IsSocketOpened => _socket.State == WebSocketState.Open;
+	public void Dispose()
+	{
+		Dispose(true);
 
-    public event MessagedReceivedHandler<byte[]>? OnBinaryMessageReceived;
+		GC.SuppressFinalize(this);
+	}
 
-    public event MessagedReceivedHandler<string>? OnTextMessageReceived;
+	public bool IsSocketOpened => _socket.State == WebSocketState.Open;
 
-    public async Task CloseAsync()
-    {
-        await CloseAsync(_cancellationTokenSource.Token);
-    }
+	public event MessagedReceivedHandler<byte[]>? OnBinaryMessageReceived;
 
-    public async Task CloseAsync(CancellationToken cancellationToken)
-    {
-        if (IsSocketOpened)
-        {
-            await _socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, cancellationToken);
+	public event MessagedReceivedHandler<string>? OnTextMessageReceived;
 
-            _cancellationTokenSource.Cancel();
-        }
-    }
+	public async Task CloseAsync() => await CloseAsync(_cancellationTokenSource.Token);
 
-    public async Task OpenAsync()
-    {
-        if (IsSocketOpened)
-        {
-            return;
-        }
+	public async Task CloseAsync(CancellationToken cancellationToken)
+	{
+		if (IsSocketOpened)
+		{
+			await _socket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, cancellationToken);
 
-        await _socket.ConnectAsync(_options.Uri, _cancellationTokenSource.Token);
+			_cancellationTokenSource.Cancel();
+		}
+	}
 
-        _ = Task.Run(async () =>
-        {
-            try
-            {
-                await ListenForMessagesAsync(_socket, _options.ReceiveBufferSize, _cancellationTokenSource.Token);
-            }
-            catch (OperationCanceledException)
-            {
-                // Ignore as this should only occur when CloseAsync is called (which cancels the CancellationTokenSource) 
-            }
-        }, _cancellationTokenSource.Token);
-    }
+	public async Task OpenAsync()
+	{
+		if (IsSocketOpened)
+			return;
 
-    public async Task SendAsync(string message)
-    {
-        await SendAsync(message, _cancellationTokenSource.Token);
-    }
+		await _socket.ConnectAsync(_options.Uri, _cancellationTokenSource.Token);
 
-    public async Task SendAsync(string message, CancellationToken cancellationToken)
-    {
-        if (cancellationToken.IsCancellationRequested)
-        {
-            return;
-        }
+		_ = Task.Run(
+			async () =>
+			{
+				try
+				{
+					await ListenForMessagesAsync(_socket, _options.ReceiveBufferSize, _cancellationTokenSource.Token);
+				}
+				catch (OperationCanceledException)
+				{
+					// Ignore as this should only occur when CloseAsync is called (which cancels the CancellationTokenSource)
+				}
+			}, _cancellationTokenSource.Token
+		);
+	}
 
-        var bytes = _options.Encoding.GetBytes(message);
-        var buffer = new ArraySegment<byte>(bytes);
+	public async Task SendAsync(string message) => await SendAsync(message, _cancellationTokenSource.Token);
 
-        await _socket.SendAsync(buffer, WebSocketMessageType.Text, true, cancellationToken);
-    }
+	public async Task SendAsync(string message, CancellationToken cancellationToken)
+	{
+		if (cancellationToken.IsCancellationRequested)
+			return;
 
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!disposing)
-        {
-            return;
-        }
+		byte[] bytes = _options.Encoding.GetBytes(message);
+		var buffer = new ArraySegment<byte>(bytes);
 
-        _cancellationTokenSource.Dispose();
+		await _socket.SendAsync(buffer, WebSocketMessageType.Text, true, cancellationToken);
+	}
 
-        _socket.Abort();
-        _socket.Dispose();
-    }
+	protected virtual void Dispose(bool disposing)
+	{
+		if (!disposing)
+			return;
 
-    private static WebSocketClientOptions BuildOptions(Action<WebSocketClientOptionsBuilder> optionsBuilder)
-    {
-        var builder = new WebSocketClientOptionsBuilder();
+		_cancellationTokenSource.Dispose();
 
-        optionsBuilder(builder);
+		_socket.Abort();
+		_socket.Dispose();
+	}
 
-        return builder.Options;
-    }
+	private static WebSocketClientOptions BuildOptions(Action<WebSocketClientOptionsBuilder> optionsBuilder)
+	{
+		var builder = new WebSocketClientOptionsBuilder();
 
-    private async Task ListenForMessagesAsync(WebSocket socket, int bufferSize, CancellationToken cancellationToken = default)
-    {
-        var buffer = new ArraySegment<byte>(new byte[bufferSize]);
+		optionsBuilder(builder);
 
-        while (IsSocketOpened && !cancellationToken.IsCancellationRequested)
-        {
-            WebSocketReceiveResult received;
+		return builder.Options;
+	}
 
-            await using var messageStream = new MemoryStream();
+	private async Task ListenForMessagesAsync(
+		System.Net.WebSockets.WebSocket socket, int bufferSize, CancellationToken cancellationToken = default
+	)
+	{
+		var buffer = new ArraySegment<byte>(new byte[bufferSize]);
 
-            while (true)
-            {
-                received = await socket.ReceiveAsync(buffer, cancellationToken);
+		while (IsSocketOpened && !cancellationToken.IsCancellationRequested)
+		{
+			WebSocketReceiveResult received;
 
-                var chunk = buffer.Array.AsMemory(buffer.Offset, received.Count);
+			await using var messageStream = new MemoryStream();
 
-                await messageStream.WriteAsync(chunk, cancellationToken);
+			while (true)
+			{
+				received = await socket.ReceiveAsync(buffer, cancellationToken);
 
-                if (received.EndOfMessage)
-                {
-                    break;
-                }
-            }
+				Memory<byte> chunk = buffer.Array.AsMemory(buffer.Offset, received.Count);
 
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return;
-            }
+				await messageStream.WriteAsync(chunk, cancellationToken);
 
-            messageStream.Seek(0, SeekOrigin.Begin);
+				if (received.EndOfMessage)
+					break;
+			}
 
-            switch (received.MessageType)
-            {
-                case WebSocketMessageType.Close:
-                    await _socket.CloseOutputAsync(WebSocketCloseStatus.Empty, string.Empty, cancellationToken);
-                    return;
-                case WebSocketMessageType.Text:
-                    HandleTextMessage(messageStream, cancellationToken);
-                    break;
-                case WebSocketMessageType.Binary:
-                    HandleBinaryMessage(messageStream, cancellationToken);
-                    break;
-                default:
-                    throw new InvalidOperationException($"Received unknown message type: {received.MessageType}");
-            }
-        }
-    }
+			if (cancellationToken.IsCancellationRequested)
+				return;
 
-    private void HandleBinaryMessage(MemoryStream stream, CancellationToken cancellationToken = default)
-    {
-        var message = stream.ToArray();
+			messageStream.Seek(0, SeekOrigin.Begin);
 
-        OnBinaryMessageReceived?.Invoke(this, new MessageReceivedEvent<byte[]>(message), cancellationToken);
-    }
+			switch (received.MessageType)
+			{
+				case WebSocketMessageType.Close:
+					await _socket.CloseOutputAsync(WebSocketCloseStatus.Empty, string.Empty, cancellationToken);
 
-    private void HandleTextMessage(MemoryStream stream, CancellationToken cancellationToken = default)
-    {
-        var message = _options.Encoding.GetString(stream.ToArray());
+					return;
 
-        OnTextMessageReceived?.Invoke(this, new MessageReceivedEvent<string>(message), cancellationToken);
-    }
+				case WebSocketMessageType.Text:
+					HandleTextMessage(messageStream, cancellationToken);
+
+					break;
+
+				case WebSocketMessageType.Binary:
+					HandleBinaryMessage(messageStream, cancellationToken);
+
+					break;
+
+				default:
+					throw new InvalidOperationException($"Received unknown message type: {received.MessageType}");
+			}
+		}
+	}
+
+	private void HandleBinaryMessage(MemoryStream stream, CancellationToken cancellationToken = default)
+	{
+		byte[] message = stream.ToArray();
+
+		OnBinaryMessageReceived?.Invoke(this, new MessageReceivedEvent<byte[]>(message), cancellationToken);
+	}
+
+	private void HandleTextMessage(MemoryStream stream, CancellationToken cancellationToken = default)
+	{
+		string message = _options.Encoding.GetString(stream.ToArray());
+
+		OnTextMessageReceived?.Invoke(this, new MessageReceivedEvent<string>(message), cancellationToken);
+	}
 }

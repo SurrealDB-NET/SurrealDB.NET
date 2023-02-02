@@ -1,16 +1,17 @@
-namespace SurrealDB.QueryBuilder.Fluent;
-
 using System.Text;
-using IFluent;
+using SurrealDB.QueryBuilder.Fluent.IFluent;
+
+namespace SurrealDB.QueryBuilder.Fluent;
 
 internal class SplitAtFluent : GroupByFluent, ISplitAtFluent
 {
-    internal SplitAtFluent(StringBuilder currentQuery)
-        : base(currentQuery) { }
+	internal SplitAtFluent(StringBuilder currentQuery)
+		: base(currentQuery) { }
 
-    public IGroupByFluent GroupBy(params string[] fields)
-    {
-        Query.Append($" GROUP {string.Join(", ", fields)}");
-        return new GroupByFluent(Query);
-    }
+	public IGroupByFluent GroupBy(params string[] fields)
+	{
+		Query.Append($" GROUP {string.Join(", ", fields)}");
+
+		return new GroupByFluent(Query);
+	}
 }

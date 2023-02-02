@@ -1,66 +1,76 @@
-namespace SurrealDB.QueryBuilder.Linq.Translators;
-
 using System.Collections;
 using System.Linq.Expressions;
 using System.Reflection;
-using Attributes;
-using QueryBuilder.Translators;
+using SurrealDB.QueryBuilder.Attributes;
+using SurrealDB.QueryBuilder.Translators;
+
+namespace SurrealDB.QueryBuilder.Linq.Translators;
 
 internal static class MethodCallExpressionTranslator
 {
-    internal static string Translate(MethodCallExpression methodCallExpression)
-    {
-        var surrealFunction = methodCallExpression.Method.GetCustomAttribute<SurrealFunctionAttribute>();
-        if (surrealFunction is not null)
-            return $"{surrealFunction.Function}({string.Join(", ", methodCallExpression.Arguments.Select(ExpressionTranslator.Translate))})";
+	internal static string Translate(MethodCallExpression methodCallExpression)
+	{
+		SurrealFunctionAttribute? surrealFunction =
+			methodCallExpression.Method.GetCustomAttribute<SurrealFunctionAttribute>();
 
-        var surrealOperator = methodCallExpression.Method.GetCustomAttribute<SurrealOperatorAttribute>();
+		if (surrealFunction is not null)
+			return
+				$"{surrealFunction.Function}({string.Join(", ", methodCallExpression.Arguments.Select(ExpressionTranslator.Translate))})";
 
-        if (surrealOperator is not null)
-        {
-            var left = ExpressionTranslator.Translate(methodCallExpression.Arguments[0]);
-            var right = ExpressionTranslator.Translate(methodCallExpression.Arguments[1]);
-            return $"({left} {surrealOperator.Operator} {right})";
-        }
+		SurrealOperatorAttribute? surrealOperator =
+			methodCallExpression.Method.GetCustomAttribute<SurrealOperatorAttribute>();
 
-        var isFromEnumerable = methodCallExpression.Method.DeclaringType == typeof(Enumerable) ||
-                               (methodCallExpression.Method.DeclaringType?.GetInterfaces().Any(i => i == typeof(IEnumerable)) ?? false);
-        if (isFromEnumerable)
-            return TranslateEnumerableMethod(methodCallExpression);
+		if (surrealOperator is not null)
+		{
+			string left = ExpressionTranslator.Translate(methodCallExpression.Arguments[0]);
+			string right = ExpressionTranslator.Translate(methodCallExpression.Arguments[1]);
 
-        var result = Expression.Lambda(methodCallExpression).Compile().DynamicInvoke();
+			return $"({left} {surrealOperator.Operator} {right})";
+		}
 
-        return ObjectTranslator.Translate(result);
-    }
+		bool isFromEnumerable = methodCallExpression.Method.DeclaringType == typeof(Enumerable)
+		 || (methodCallExpression.Method.DeclaringType?.GetInterfaces().Any(i => i == typeof(IEnumerable)) ?? false);
 
-    private static string TranslateEnumerableMethod(MethodCallExpression methodCallExpression)
-    {
-        var enumerable = ExpressionTranslator.Translate(methodCallExpression.Arguments[0]);
+		if (isFromEnumerable)
+			return TranslateEnumerableMethod(methodCallExpression);
 
-        var methodName = methodCallExpression.Method.Name;
+		object? result = Expression.Lambda(methodCallExpression).Compile().DynamicInvoke();
 
-        switch (methodName)
-        {
-            case "Select":
-                return $"{enumerable}.{ExpressionTranslator.Translate((methodCallExpression.Arguments[1] as LambdaExpression)!.Body)}";
+		return ObjectTranslator.Translate(result);
+	}
 
-            case "Where":
-                return $"{enumerable}[WHERE {ExpressionTranslator.Translate((methodCallExpression.Arguments[1] as LambdaExpression)!.Body)}]";
+	private static string TranslateEnumerableMethod(MethodCallExpression methodCallExpression)
+	{
+		string enumerable = ExpressionTranslator.Translate(methodCallExpression.Arguments[0]);
 
-            case "Append":
-            case "Concat":
-                return $"{enumerable} += {ExpressionTranslator.Translate(methodCallExpression.Arguments[1])}";
+		string methodName = methodCallExpression.Method.Name;
 
-            case "Remove":
-                return $"{enumerable} -= {ExpressionTranslator.Translate(methodCallExpression.Arguments[0])}";
-            case "RemoveAll":
-                return $"{enumerable} -= {ExpressionTranslator.Translate((methodCallExpression.Arguments[0] as LambdaExpression)!.Body)}";
+		switch (methodName)
+		{
+			case "Select":
+				return
+					$"{enumerable}.{ExpressionTranslator.Translate((methodCallExpression.Arguments[1] as LambdaExpression)!.Body)}";
 
-            case "First":
-                return $"{enumerable}";
+			case "Where":
+				return
+					$"{enumerable}[WHERE {ExpressionTranslator.Translate((methodCallExpression.Arguments[1] as LambdaExpression)!.Body)}]";
 
-            default:
-                throw new NotSupportedException($"Method {methodName} is not supported.");
-        }
-    }
+			case "Append":
+			case "Concat":
+				return $"{enumerable} += {ExpressionTranslator.Translate(methodCallExpression.Arguments[1])}";
+
+			case "Remove":
+				return $"{enumerable} -= {ExpressionTranslator.Translate(methodCallExpression.Arguments[0])}";
+
+			case "RemoveAll":
+				return
+					$"{enumerable} -= {ExpressionTranslator.Translate((methodCallExpression.Arguments[0] as LambdaExpression)!.Body)}";
+
+			case "First":
+				return $"{enumerable}";
+
+			default:
+				throw new NotSupportedException($"Method {methodName} is not supported.");
+		}
+	}
 }

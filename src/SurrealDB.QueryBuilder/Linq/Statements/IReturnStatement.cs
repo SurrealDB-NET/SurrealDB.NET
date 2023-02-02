@@ -1,11 +1,11 @@
-namespace SurrealDB.QueryBuilder.Linq.Statements;
-
 using System.Linq.Expressions;
-using Enums;
+using SurrealDB.QueryBuilder.Enums;
+
+namespace SurrealDB.QueryBuilder.Linq.Statements;
 
 public interface IReturnStatement<TRecord> : ITimeoutStatement
 {
-    public ITimeoutStatement Return(ReturnClause returnClause);
+	public ITimeoutStatement Return(ReturnClause returnClause);
 
-    public ITimeoutStatement Return(Expression<Func<TRecord, object>> projection);
+	public ITimeoutStatement Return(Expression<Func<TRecord, object>> projection);
 }

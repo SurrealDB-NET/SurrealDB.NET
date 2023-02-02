@@ -1,8 +1,8 @@
-namespace SurrealDB.QueryBuilder.Linq.Statements;
+using SurrealDB.QueryBuilder.DataModels;
 
-using DataModels;
+namespace SurrealDB.QueryBuilder.Linq.Statements;
 
 public interface ITimeoutStatement : IParallelStatement
 {
-    IParallelStatement Timeout(Duration timeoutDuration);
+	IParallelStatement Timeout(Duration timeoutDuration);
 }

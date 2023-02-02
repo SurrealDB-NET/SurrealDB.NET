@@ -1,50 +1,50 @@
-namespace SurrealDB.Client.Rest;
+using SurrealDB.Client.JsonProviders;
 
-using JsonProviders;
+namespace SurrealDB.Client.Rest;
 
 public class SurrealRestClientOptionsBuilder
 {
-    internal SurrealRestClientOptions Options { get; } = new();
+	internal SurrealRestClientOptions Options { get; } = new();
 
-    public SurrealRestClientOptionsBuilder WithAddress(string baseAddress)
-    {
-        Options.Address = baseAddress;
+	public SurrealRestClientOptionsBuilder WithAddress(string baseAddress)
+	{
+		Options.Address = baseAddress;
 
-        return this;
-    }
+		return this;
+	}
 
-    public SurrealRestClientOptionsBuilder WithDatabase(string database)
-    {
-        Options.Database = database;
+	public SurrealRestClientOptionsBuilder WithDatabase(string database)
+	{
+		Options.Database = database;
 
-        return this;
-    }
+		return this;
+	}
 
-    public SurrealRestClientOptionsBuilder WithJsonProvider(IJsonProvider jsonProvider)
-    {
-        Options.JsonProvider = jsonProvider;
+	public SurrealRestClientOptionsBuilder WithJsonProvider(IJsonProvider jsonProvider)
+	{
+		Options.JsonProvider = jsonProvider;
 
-        return this;
-    }
+		return this;
+	}
 
-    public SurrealRestClientOptionsBuilder WithNamespace(string @namespace)
-    {
-        Options.Namespace = @namespace;
+	public SurrealRestClientOptionsBuilder WithNamespace(string @namespace)
+	{
+		Options.Namespace = @namespace;
 
-        return this;
-    }
+		return this;
+	}
 
-    public SurrealRestClientOptionsBuilder WithPassword(string password)
-    {
-        Options.Password = password;
+	public SurrealRestClientOptionsBuilder WithPassword(string password)
+	{
+		Options.Password = password;
 
-        return this;
-    }
+		return this;
+	}
 
-    public SurrealRestClientOptionsBuilder WithUsername(string username)
-    {
-        Options.Username = username;
+	public SurrealRestClientOptionsBuilder WithUsername(string username)
+	{
+		Options.Username = username;
 
-        return this;
-    }
+		return this;
+	}
 }
