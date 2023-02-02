@@ -2,7 +2,7 @@ namespace SurrealDB.Client.Enums;
 
 internal enum ExecuteQueryStatusCode
 {
-    OK,
+	OK,
 
-    ERR
+	ERR
 }
