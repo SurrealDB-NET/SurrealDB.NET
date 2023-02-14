@@ -8,7 +8,9 @@ internal class SelectFluent : ISelectFluent
 	private readonly StringBuilder _query;
 
 	internal SelectFluent(StringBuilder currentQuery)
-		=> _query = currentQuery;
+	{
+		_query = currentQuery;
+	}
 
 	public IFromFluent From(string source)
 	{

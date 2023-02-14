@@ -5,5 +5,7 @@ namespace SurrealDB.QueryBuilder.Linq.Translators;
 internal static class ParameterExpressionTranslator
 {
 	internal static string Translate(ParameterExpression parameterExpression)
-		=> parameterExpression.ToString();
+	{
+		return parameterExpression.ToString();
+	}
 }

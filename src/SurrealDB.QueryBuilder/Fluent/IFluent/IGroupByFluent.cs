@@ -13,7 +13,5 @@ public interface IGroupByFluent
 {
 	IOrderByFluent OrderByRandom();
 
-	IOrderByFluent OrderBy(
-		string field, SortOrder sortOrder = SortOrder.Asc, TextSortMethod textSortMethod = TextSortMethod.None
-	);
+	IOrderByFluent OrderBy(string field, SortOrder sortOrder = SortOrder.Asc, TextSortMethod textSortMethod = TextSortMethod.None);
 }

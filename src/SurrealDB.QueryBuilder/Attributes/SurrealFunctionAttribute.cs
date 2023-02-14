@@ -6,5 +6,7 @@ internal sealed class SurrealFunctionAttribute : Attribute
 	public string Function { get; }
 
 	public SurrealFunctionAttribute(string surrealFunction)
-		=> Function = surrealFunction;
+	{
+		Function = surrealFunction;
+	}
 }

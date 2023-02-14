@@ -16,14 +16,16 @@ internal class GroupByFluent : OrderByFluent, IGroupByFluent
 		return new OrderByFluent(Query);
 	}
 
-	public IOrderByFluent OrderBy(
-		string field, SortOrder sortOrder = SortOrder.Asc, TextSortMethod textSortMethod = TextSortMethod.None
-	)
+	public IOrderByFluent OrderBy(string field, SortOrder sortOrder = SortOrder.Asc, TextSortMethod textSortMethod = TextSortMethod.None)
 	{
 		Query.Append(" ORDER ");
 		Query.Append(field);
+
 		if (textSortMethod is not TextSortMethod.None)
+		{
 			Query.Append($" {textSortMethod.ToString().ToUpper()}");
+		}
+
 		Query.Append($" {sortOrder.ToString().ToUpper()}");
 
 		return new OrderByFluent(Query);

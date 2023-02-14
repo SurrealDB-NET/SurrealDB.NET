@@ -13,9 +13,8 @@ public interface ISurrealRestClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<IEnumerable<TResult>> CreateRecordAsync<TResult>(
-		string tableName, string content, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<IEnumerable<TResult>> CreateRecordAsync<TResult>(string tableName, string content, CancellationToken cancellationToken = default)
+		where TResult : class;
 
 	/// <summary>
 	///     Creates a record in a specific table in the database. It is equivalent to the POST /key/:table/:id endpoint.
@@ -29,9 +28,8 @@ public interface ISurrealRestClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<TResult> CreateRecordAsync<TResult>(
-		string tableName, string id, string content, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<TResult> CreateRecordAsync<TResult>(string tableName, string id, string content, CancellationToken cancellationToken = default)
+		where TResult : class;
 
 	/// <summary>
 	///     Deletes all records from the specified table in the database. It is equivalent to the DELETE /key/:table endpoint.
@@ -66,9 +64,8 @@ public interface ISurrealRestClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<IEnumerable<TResult>> ExecuteQueryAsync<TResult>(
-		string query, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<IEnumerable<TResult>> ExecuteQueryAsync<TResult>(string query, CancellationToken cancellationToken = default)
+		where TResult : class;
 
 	/// <summary>
 	///     Selects all records in a specific table in the database. It is equivalent to the GET /key/:table endpoint.
@@ -80,9 +77,8 @@ public interface ISurrealRestClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<IEnumerable<TResult>> GetAllRecordsAsync<TResult>(
-		string tableName, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<IEnumerable<TResult>> GetAllRecordsAsync<TResult>(string tableName, CancellationToken cancellationToken = default)
+		where TResult : class;
 
 	/// <summary>
 	///     Select a specific record from the database by its ID. It is equivalent to the GET /key/:table/:id endpoint.
@@ -95,9 +91,8 @@ public interface ISurrealRestClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<TResult?> GetRecordByIdAsync<TResult>(
-		string tableName, string id, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<TResult?> GetRecordByIdAsync<TResult>(string tableName, string id, CancellationToken cancellationToken = default)
+		where TResult : class;
 
 	/// <summary>
 	///     Creates or updates a single specific record in the database by its ID. If the record already exists, then only the
@@ -113,9 +108,8 @@ public interface ISurrealRestClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<TResult> ModifyRecordAsync<TResult>(
-		string tableName, string id, string content, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<TResult> ModifyRecordAsync<TResult>(string tableName, string id, string content, CancellationToken cancellationToken = default)
+		where TResult : class;
 
 	/// <summary>
 	///     Creates or updates a single specific record in the database by its ID. It is equivalent to the PUT /key/:table/:id
@@ -130,7 +124,6 @@ public interface ISurrealRestClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<TResult> UpsertRecordAsync<TResult>(
-		string tableName, string id, string content, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<TResult> UpsertRecordAsync<TResult>(string tableName, string id, string content, CancellationToken cancellationToken = default)
+		where TResult : class;
 }

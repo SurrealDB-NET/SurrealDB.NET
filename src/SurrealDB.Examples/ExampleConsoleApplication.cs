@@ -10,16 +10,20 @@ public static class ExampleConsoleApplication
 		var assembly = Assembly.GetEntryAssembly();
 
 		if (assembly is null)
+		{
 			throw new InvalidOperationException("Could not find entry assembly.");
+		}
 
 		var examples = assembly
-		   .GetTypes()
-		   .Where(type => type.GetInterfaces().Any(@interface => @interface == typeof(IExample)))
-		   .Select(exampleType => (IExample)Activator.CreateInstance(exampleType)!)
-		   .ToImmutableArray();
+		               .GetTypes()
+		               .Where(type => type.GetInterfaces().Any(@interface => @interface == typeof(IExample)))
+		               .Select(exampleType => (IExample)Activator.CreateInstance(exampleType)!)
+		               .ToImmutableArray();
 
 		for (var i = 0; i < examples.Length; i++)
+		{
 			Console.WriteLine($"{i + 1}. {examples[i].Name}: {examples[i].Description}");
+		}
 
 		Console.WriteLine();
 		Console.Write("Enter the number of the example you want to run: ");
@@ -29,7 +33,9 @@ public static class ExampleConsoleApplication
 			string? input = Console.ReadLine();
 
 			if (input is null)
+			{
 				break;
+			}
 
 			bool isInteger = int.TryParse(input, out int exampleNumber);
 

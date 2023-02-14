@@ -8,9 +8,7 @@ namespace SurrealDB.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-	public static IServiceCollection AddSurrealRestClient(
-		this IServiceCollection services, HttpClient httpClient, Action<SurrealRestClientOptionsBuilder> optionsBuilder
-	)
+	public static IServiceCollection AddSurrealRestClient(this IServiceCollection services, HttpClient httpClient, Action<SurrealRestClientOptionsBuilder> optionsBuilder)
 	{
 		var client = new SurrealRestClient(httpClient, optionsBuilder);
 
@@ -19,9 +17,7 @@ public static class ServiceCollectionExtensions
 		return services;
 	}
 
-	public static IServiceCollection AddSurrealRpcClient(
-		this IServiceCollection services, ClientWebSocket socket, Action<SurrealRpcClientOptionsBuilder> optionsBuilder
-	)
+	public static IServiceCollection AddSurrealRpcClient(this IServiceCollection services, ClientWebSocket socket, Action<SurrealRpcClientOptionsBuilder> optionsBuilder)
 	{
 		var client = new SurrealRpcClient(socket, optionsBuilder);
 

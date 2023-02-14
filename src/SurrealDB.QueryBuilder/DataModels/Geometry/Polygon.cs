@@ -18,11 +18,15 @@ public class Polygon : IGeometry, IEquatable<Polygon>
 	/// </summary>
 	/// <param name="points">The collection of <see cref="Point" /> that define the perimeter of this <see cref="Polygon" />.</param>
 	public Polygon(params Point[] points)
-		=> Coordinates = points;
+	{
+		Coordinates = points;
+	}
 
 	/// <inheritdoc cref="Polygon(Point[])" />
 	public Polygon(IEnumerable<Point> points)
-		=> Coordinates = points.ToArray();
+	{
+		Coordinates = points.ToArray();
+	}
 
 	/// <summary>
 	///     Returns a value indicating wether this instance is equal to a specified <see cref="Polygon" />.
@@ -33,11 +37,19 @@ public class Polygon : IGeometry, IEquatable<Polygon>
 	///     otherwise, <see langword="false" />.
 	/// </returns>
 	public bool Equals(Polygon? value)
-		=> value is not null && Coordinates.SequenceEqual(value.Coordinates);
+	{
+		return value is not null && Coordinates.SequenceEqual(value.Coordinates);
+	}
 
 	/// <inheritdoc />
 	public SchemalessObject ToGeoJson()
-		=> new() { { "type", nameof(Polygon) }, { "coordinates", CoordinatesOnly() } };
+	{
+		return new SchemalessObject
+		{
+			{ "type", nameof(Polygon) },
+			{ "coordinates", CoordinatesOnly() }
+		};
+	}
 
 	/// <summary>
 	///     Returns a value indicating wether this instance is equal to a specified <see cref="object" />.
@@ -48,14 +60,18 @@ public class Polygon : IGeometry, IEquatable<Polygon>
 	///     sequence as this instance; otherwise, <see langword="false" />.
 	/// </returns>
 	public override bool Equals(object? value)
-		=> Equals(value as Polygon);
+	{
+		return Equals(value as Polygon);
+	}
 
 	/// <summary>
 	///     Returns the hash code for this <see cref="Polygon" />.
 	/// </summary>
 	/// <returns>A 32-bit signed integer hash code by combining the hash codes of the <see cref="Coordinates" />.</returns>
 	public override int GetHashCode()
-		=> HashCode.Combine(Coordinates);
+	{
+		return HashCode.Combine(Coordinates);
+	}
 
 	/// <summary>
 	///     Returns the coordinates of this <see cref="Polygon" /> as a 3D <see cref="double" /> array. Utilized by
@@ -63,7 +79,9 @@ public class Polygon : IGeometry, IEquatable<Polygon>
 	/// </summary>
 	/// <returns>The coordinates of this <see cref="Polygon" /> as a 3D <see cref="double" /> array.</returns>
 	internal double[][][] CoordinatesOnly()
-		=> new[] { Coordinates.Select(point => point.CoordinatesOnly()).ToArray() };
+	{
+		return new[] { Coordinates.Select(point => point.CoordinatesOnly()).ToArray() };
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether two <see cref="Polygon" /> instances are equal.
@@ -74,7 +92,9 @@ public class Polygon : IGeometry, IEquatable<Polygon>
 	///         coordinates sequence; otherwise, <see langword="false" />.
 	///     </returns>
 	public static bool operator ==(Polygon? left, Polygon? right)
-		=> Equals(left, right);
+	{
+		return Equals(left, right);
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether two <see cref="Polygon" /> instances are not equal.
@@ -86,5 +106,7 @@ public class Polygon : IGeometry, IEquatable<Polygon>
 	///     coordinates sequence; otherwise, <see langword="false" />.
 	/// </returns>
 	public static bool operator !=(Polygon? left, Polygon? right)
-		=> !Equals(left, right);
+	{
+		return !Equals(left, right);
+	}
 }

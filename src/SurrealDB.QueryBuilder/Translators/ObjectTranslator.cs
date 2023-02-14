@@ -12,35 +12,37 @@ namespace SurrealDB.QueryBuilder.Translators;
 public static class ObjectTranslator
 {
 	public static string Translate(object? @object)
-		=> @object switch
+	{
+		return @object switch
 		{
-			null                              => "null",
-			char @char                        => PrimitiveTranslator.Translate(@char),
-			string @string                    => PrimitiveTranslator.Translate(@string),
-			bool @bool                        => PrimitiveTranslator.Translate(@bool),
-			sbyte @sbyte                      => PrimitiveTranslator.Translate(@sbyte),
-			byte @byte                        => PrimitiveTranslator.Translate(@byte),
-			short @short                      => PrimitiveTranslator.Translate(@short),
-			ushort @ushort                    => PrimitiveTranslator.Translate(@ushort),
-			int @int                          => PrimitiveTranslator.Translate(@int),
-			uint @uint                        => PrimitiveTranslator.Translate(@uint),
-			long @long                        => PrimitiveTranslator.Translate(@long),
-			ulong @ulong                      => PrimitiveTranslator.Translate(@ulong),
-			float @float                      => PrimitiveTranslator.Translate(@float),
-			double @double                    => PrimitiveTranslator.Translate(@double),
-			decimal @decimal                  => PrimitiveTranslator.Translate(@decimal),
-			nint nint                         => PrimitiveTranslator.Translate(nint),
-			nuint nuint                       => PrimitiveTranslator.Translate(nuint),
-			BigInteger bigInteger             => PrimitiveTranslator.Translate(bigInteger),
-			DateTime dateTime                 => DateTimeTranslator.Translate(dateTime),
-			DateTimeOffset dateTimeOffset     => DateTimeTranslator.Translate(dateTimeOffset),
-			Duration duration                 => DateTimeTranslator.Translate(duration),
-			Half half                         => PrimitiveTranslator.Translate(half),
+			null => "null",
+			char @char => PrimitiveTranslator.Translate(@char),
+			string @string => PrimitiveTranslator.Translate(@string),
+			bool @bool => PrimitiveTranslator.Translate(@bool),
+			sbyte @sbyte => PrimitiveTranslator.Translate(@sbyte),
+			byte @byte => PrimitiveTranslator.Translate(@byte),
+			short @short => PrimitiveTranslator.Translate(@short),
+			ushort @ushort => PrimitiveTranslator.Translate(@ushort),
+			int @int => PrimitiveTranslator.Translate(@int),
+			uint @uint => PrimitiveTranslator.Translate(@uint),
+			long @long => PrimitiveTranslator.Translate(@long),
+			ulong @ulong => PrimitiveTranslator.Translate(@ulong),
+			float @float => PrimitiveTranslator.Translate(@float),
+			double @double => PrimitiveTranslator.Translate(@double),
+			decimal @decimal => PrimitiveTranslator.Translate(@decimal),
+			nint nint => PrimitiveTranslator.Translate(nint),
+			nuint nuint => PrimitiveTranslator.Translate(nuint),
+			BigInteger bigInteger => PrimitiveTranslator.Translate(bigInteger),
+			DateTime dateTime => DateTimeTranslator.Translate(dateTime),
+			DateTimeOffset dateTimeOffset => DateTimeTranslator.Translate(dateTimeOffset),
+			Duration duration => DateTimeTranslator.Translate(duration),
+			Half half => PrimitiveTranslator.Translate(half),
 			SchemalessObject schemalessObject => $"{schemalessObject}",
-			IEnumerable enumerable            => EnumerableTranslator.Translate(enumerable),
-			IGeometry geometry                => Translate(geometry.ToGeoJson()),
-			_                                 => TranslateUnknownObject(@object)
+			IEnumerable enumerable => EnumerableTranslator.Translate(enumerable),
+			IGeometry geometry => Translate(geometry.ToGeoJson()),
+			_ => TranslateUnknownObject(@object)
 		};
+	}
 
 	private static string TranslateUnknownObject(object unknownObject)
 	{
@@ -52,10 +54,14 @@ public static class ObjectTranslator
 		var @object = new SchemalessObject();
 
 		foreach (FieldInfo field in fields)
+		{
 			@object.Add(field.Name, field.GetValue(unknownObject));
+		}
 
 		foreach (PropertyInfo property in properties)
+		{
 			@object.Add(property.Name, property.GetValue(unknownObject));
+		}
 
 		return @object.ToString();
 	}

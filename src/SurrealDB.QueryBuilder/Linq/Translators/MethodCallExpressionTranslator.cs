@@ -14,8 +14,10 @@ internal static class MethodCallExpressionTranslator
 			methodCallExpression.Method.GetCustomAttribute<SurrealFunctionAttribute>();
 
 		if (surrealFunction is not null)
+		{
 			return
 				$"{surrealFunction.Function}({string.Join(", ", methodCallExpression.Arguments.Select(ExpressionTranslator.Translate))})";
+		}
 
 		SurrealOperatorAttribute? surrealOperator =
 			methodCallExpression.Method.GetCustomAttribute<SurrealOperatorAttribute>();
@@ -28,11 +30,12 @@ internal static class MethodCallExpressionTranslator
 			return $"({left} {surrealOperator.Operator} {right})";
 		}
 
-		bool isFromEnumerable = methodCallExpression.Method.DeclaringType == typeof(Enumerable)
-		 || (methodCallExpression.Method.DeclaringType?.GetInterfaces().Any(i => i == typeof(IEnumerable)) ?? false);
+		bool isFromEnumerable = methodCallExpression.Method.DeclaringType == typeof(Enumerable) || (methodCallExpression.Method.DeclaringType?.GetInterfaces().Any(i => i == typeof(IEnumerable)) ?? false);
 
 		if (isFromEnumerable)
+		{
 			return TranslateEnumerableMethod(methodCallExpression);
+		}
 
 		object? result = Expression.Lambda(methodCallExpression).Compile().DynamicInvoke();
 

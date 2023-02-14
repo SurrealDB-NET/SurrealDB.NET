@@ -12,17 +12,16 @@ public sealed class UpsertRecord : IExample
 	{
 		var httpClient = new HttpClient();
 
-		var client = new SurrealRestClient(
-			httpClient, options =>
-			{
-				options
-				   .WithAddress("http://localhost:8000")
-				   .WithDatabase("test")
-				   .WithNamespace("test")
-				   .WithUsername("root")
-				   .WithPassword("root");
-			}
-		);
+		var client = new SurrealRestClient(httpClient,
+		                                   options =>
+		                                   {
+			                                   options
+				                                   .WithAddress("http://localhost:8000")
+				                                   .WithDatabase("test")
+				                                   .WithNamespace("test")
+				                                   .WithUsername("root")
+				                                   .WithPassword("root");
+		                                   });
 
 		const string content = @"{
             time: time::now()

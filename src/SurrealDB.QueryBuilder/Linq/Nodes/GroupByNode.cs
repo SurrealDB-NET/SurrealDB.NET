@@ -11,7 +11,7 @@ internal class GroupByNode<TRecord> : OrderByNode<TRecord>, IGroupByStatement<TR
 		: base(query) { }
 
 	public IOrderByStatement<TRecord> GroupBy(params Expression<Func<TRecord, object>>[] fields)
-		=> new OrderByNode<TRecord>(
-			Query.Append($" GROUP {string.Join(", ", fields.Select(LambdaExpressionTranslator.Translate))}")
-		);
+	{
+		return new OrderByNode<TRecord>(Query.Append($" GROUP {string.Join(", ", fields.Select(LambdaExpressionTranslator.Translate))}"));
+	}
 }

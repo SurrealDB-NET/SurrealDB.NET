@@ -14,10 +14,14 @@ internal class OrderByNode<TRecord> : LimitByNode<TRecord>, IOrderByStatement<TR
 		: base(query) { }
 
 	public ILimitByStatement<TRecord> OrderByRand()
-		=> new LimitByNode<TRecord>(Query.Append(" ORDER RAND()"));
+	{
+		return new LimitByNode<TRecord>(Query.Append(" ORDER RAND()"));
+	}
 
-	public IOrderByStatement<TRecord> OrderBy(
-		Expression<Func<TRecord, object>> field, SortOrder sortOrder = SortOrder.Asc,
+	public IOrderByStatement<TRecord> OrderBy
+	(
+		Expression<Func<TRecord, object>> field,
+		SortOrder sortOrder = SortOrder.Asc,
 		TextSortMethod textSortMethod = TextSortMethod.None
 	)
 	{
@@ -32,8 +36,12 @@ internal class OrderByNode<TRecord> : LimitByNode<TRecord>, IOrderByStatement<TR
 		}
 
 		Query.Append($" {LambdaExpressionTranslator.Translate(field)}");
+
 		if (textSortMethod is not TextSortMethod.None)
+		{
 			Query.Append($" {textSortMethod}");
+		}
+
 		Query.Append($" {sortOrder}");
 
 		return this;

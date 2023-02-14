@@ -12,21 +12,22 @@ public sealed class GetAllRecords : IExample
 	{
 		var httpClient = new HttpClient();
 
-		var client = new SurrealRestClient(
-			httpClient, options =>
-			{
-				options
-				   .WithAddress("http://localhost:8000")
-				   .WithDatabase("test")
-				   .WithNamespace("test")
-				   .WithUsername("root")
-				   .WithPassword("root");
-			}
-		);
+		var client = new SurrealRestClient(httpClient,
+		                                   options =>
+		                                   {
+			                                   options
+				                                   .WithAddress("http://localhost:8000")
+				                                   .WithDatabase("test")
+				                                   .WithNamespace("test")
+				                                   .WithUsername("root")
+				                                   .WithPassword("root");
+		                                   });
 
 		IEnumerable<object> records = await client.GetAllRecordsAsync<object>("test", cancellationToken);
 
 		foreach (object record in records)
+		{
 			Console.WriteLine(record);
+		}
 	}
 }

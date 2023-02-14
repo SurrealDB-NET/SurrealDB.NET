@@ -6,5 +6,7 @@ internal sealed class SurrealOperatorAttribute : Attribute
 	public string Operator { get; }
 
 	public SurrealOperatorAttribute(string surrealOperator)
-		=> Operator = surrealOperator;
+	{
+		Operator = surrealOperator;
+	}
 }

@@ -18,11 +18,15 @@ public class MultiLineString : IGeometry, IEquatable<MultiLineString>
 	/// </summary>
 	/// <param name="lines">The lines that define this <see cref="MultiLineString" />.</param>
 	public MultiLineString(params LineString[] lines)
-		=> Coordinates = lines;
+	{
+		Coordinates = lines;
+	}
 
 	/// <inheritdoc cref="MultiLineString(LineString[])" />
 	public MultiLineString(IEnumerable<LineString> lines)
-		=> Coordinates = lines.ToArray();
+	{
+		Coordinates = lines.ToArray();
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether this instance is equal to a specified <see cref="MultiLineString" />.
@@ -33,11 +37,19 @@ public class MultiLineString : IGeometry, IEquatable<MultiLineString>
 	///     <see langword="false" />.
 	/// </returns>
 	public bool Equals(MultiLineString? value)
-		=> value is not null && Coordinates.SequenceEqual(value.Coordinates);
+	{
+		return value is not null && Coordinates.SequenceEqual(value.Coordinates);
+	}
 
 	/// <inheritdoc />
 	public SchemalessObject ToGeoJson()
-		=> new() { { "type", nameof(MultiLineString) }, { "coordinates", CoordinatesOnly() } };
+	{
+		return new SchemalessObject
+		{
+			{ "type", nameof(MultiLineString) },
+			{ "coordinates", CoordinatesOnly() }
+		};
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether this instance is equal to a specified <see cref="object" />.
@@ -48,14 +60,18 @@ public class MultiLineString : IGeometry, IEquatable<MultiLineString>
 	///     lines sequence as this instance; otherwise, <see langword="false" />.
 	/// </returns>
 	public override bool Equals(object? value)
-		=> Equals(value as MultiLineString);
+	{
+		return Equals(value as MultiLineString);
+	}
 
 	/// <summary>
 	///     Returns the hash code for this <see cref="MultiLineString" />.
 	/// </summary>
 	/// <returns>A 32-bit signed integer hash code by combining the hash codes of <see cref="Coordinates" />.</returns>
 	public override int GetHashCode()
-		=> HashCode.Combine(Coordinates);
+	{
+		return HashCode.Combine(Coordinates);
+	}
 
 	/// <summary>
 	///     Returns the coordinates of this <see cref="MultiLineString" /> as a 3D <see cref="double" /> array. Utilized by
@@ -63,7 +79,9 @@ public class MultiLineString : IGeometry, IEquatable<MultiLineString>
 	/// </summary>
 	/// <returns>The coordinates of this <see cref="MultiLineString" /> as a 3D <see cref="double" /> array.</returns>
 	internal double[][][] CoordinatesOnly()
-		=> Coordinates.Select(line => line.CoordinatesOnly()).ToArray();
+	{
+		return Coordinates.Select(line => line.CoordinatesOnly()).ToArray();
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether two <see cref="MultiLineString" /> instances are equal.
@@ -75,7 +93,9 @@ public class MultiLineString : IGeometry, IEquatable<MultiLineString>
 	///     sequence; otherwise, <see langword="false" />.
 	/// </returns>
 	public static bool operator ==(MultiLineString? left, MultiLineString? right)
-		=> Equals(left, right);
+	{
+		return Equals(left, right);
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether two <see cref="MultiLineString" /> instances are not equal.
@@ -87,5 +107,7 @@ public class MultiLineString : IGeometry, IEquatable<MultiLineString>
 	///     sequence; otherwise, <see langword="false" />.
 	/// </returns>
 	public static bool operator !=(MultiLineString? left, MultiLineString? right)
-		=> !Equals(left, right);
+	{
+		return !Equals(left, right);
+	}
 }

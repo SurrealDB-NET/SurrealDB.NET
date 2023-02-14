@@ -10,5 +10,7 @@ internal class TimeoutNode : ParallelNode, ITimeoutStatement
 		: base(query) { }
 
 	public IParallelStatement Timeout(Duration timeoutDuration)
-		=> new ParallelNode(Query.Append($" TIMEOUT {timeoutDuration}"));
+	{
+		return new ParallelNode(Query.Append($" TIMEOUT {timeoutDuration}"));
+	}
 }

@@ -12,17 +12,16 @@ public sealed class CreateRecord : IExample
 	{
 		var httpClient = new HttpClient();
 
-		var client = new SurrealRestClient(
-			httpClient, options =>
-			{
-				options
-				   .WithAddress("http://localhost:8000")
-				   .WithDatabase("test")
-				   .WithNamespace("test")
-				   .WithUsername("root")
-				   .WithPassword("root");
-			}
-		);
+		var client = new SurrealRestClient(httpClient,
+		                                   options =>
+		                                   {
+			                                   options
+				                                   .WithAddress("http://localhost:8000")
+				                                   .WithDatabase("test")
+				                                   .WithNamespace("test")
+				                                   .WithUsername("root")
+				                                   .WithPassword("root");
+		                                   });
 
 		const string newRecord = @"{
             time: time::now()
@@ -30,6 +29,7 @@ public sealed class CreateRecord : IExample
 
 		IEnumerable<object> createdRecord1 =
 			await client.CreateRecordAsync<object>("test", newRecord, cancellationToken);
+
 		object createdRecord2 = await client.CreateRecordAsync<object>("test", "test_id", newRecord, cancellationToken);
 
 		Console.WriteLine(createdRecord1);

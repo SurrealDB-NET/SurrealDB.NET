@@ -30,39 +30,37 @@ public class SurrealRpcClient : ISurrealRpcClient, IDisposable
 		GC.SuppressFinalize(this);
 	}
 
-	public async Task<IEnumerable<TResult>> CreateRecordAsync<TResult>(
-		string tableOrRecordId, string data, CancellationToken cancellationToken = default
-	)
+	public async Task<IEnumerable<TResult>> CreateRecordAsync<TResult>(string tableOrRecordId, string data, CancellationToken cancellationToken = default)
 		where TResult : class
-		=> await SendMessageAsync<TResult>("create", new object[] { tableOrRecordId, data }, cancellationToken);
+	{
+		return await SendMessageAsync<TResult>("create", new object[] { tableOrRecordId, data }, cancellationToken);
+	}
 
-	public async Task<IEnumerable<TResult>> DeleteAsync<TResult>(
-		string tableOrRecordId, CancellationToken cancellationToken = default
-	)
+	public async Task<IEnumerable<TResult>> DeleteAsync<TResult>(string tableOrRecordId, CancellationToken cancellationToken = default)
 		where TResult : class
-		=> await SendMessageAsync<TResult>("delete", new object[] { tableOrRecordId }, cancellationToken);
+	{
+		return await SendMessageAsync<TResult>("delete", new object[] { tableOrRecordId }, cancellationToken);
+	}
 
-	public async Task<IEnumerable<TResult>> ExecuteQueryAsync<TResult>(
-		string query, CancellationToken cancellationToken = default
-	)
+	public async Task<IEnumerable<TResult>> ExecuteQueryAsync<TResult>(string query, CancellationToken cancellationToken = default)
 		where TResult : class
-		=> await SendMessageAsync<TResult>("query", new object[] { query }, cancellationToken);
+	{
+		return await SendMessageAsync<TResult>("query", new object[] { query }, cancellationToken);
+	}
 
-	public async Task<IEnumerable<TResult>> ExecuteQueryAsync<TResult>(
-		string query, IDictionary<string, object> parameters, CancellationToken cancellationToken = default
-	)
+	public async Task<IEnumerable<TResult>> ExecuteQueryAsync<TResult>(string query, IDictionary<string, object> parameters, CancellationToken cancellationToken = default)
 		where TResult : class
-		=> await SendMessageAsync<TResult>("query", new object[] { query, parameters }, cancellationToken);
+	{
+		return await SendMessageAsync<TResult>("query", new object[] { query, parameters }, cancellationToken);
+	}
 
-	public async Task<IEnumerable<TResult>> GetAllRecordsAsync<TResult>(
-		string tableOrRecordId, CancellationToken cancellationToken = default
-	)
+	public async Task<IEnumerable<TResult>> GetAllRecordsAsync<TResult>(string tableOrRecordId, CancellationToken cancellationToken = default)
 		where TResult : class
-		=> await SendMessageAsync<TResult>("select", new object[] { tableOrRecordId }, cancellationToken);
+	{
+		return await SendMessageAsync<TResult>("select", new object[] { tableOrRecordId }, cancellationToken);
+	}
 
-	public async Task<TResult?> GetRecordByIdAsync<TResult>(
-		string tableOrRecordId, CancellationToken cancellationToken = default
-	)
+	public async Task<TResult?> GetRecordByIdAsync<TResult>(string tableOrRecordId, CancellationToken cancellationToken = default)
 		where TResult : class
 	{
 		IEnumerable<TResult> results = await GetAllRecordsAsync<TResult>(tableOrRecordId, cancellationToken);
@@ -70,62 +68,62 @@ public class SurrealRpcClient : ISurrealRpcClient, IDisposable
 		return results.FirstOrDefault();
 	}
 
-	public async Task<IEnumerable<TResult>> ModifyAsync<TResult>(
-		string tableOrRecordId, string data, CancellationToken cancellationToken = default
-	)
+	public async Task<IEnumerable<TResult>> ModifyAsync<TResult>(string tableOrRecordId, string data, CancellationToken cancellationToken = default)
 		where TResult : class
-		=> await SendMessageAsync<TResult>("modify", new object[] { tableOrRecordId, data }, cancellationToken);
+	{
+		return await SendMessageAsync<TResult>("modify", new object[] { tableOrRecordId, data }, cancellationToken);
+	}
 
-	public async Task<IEnumerable<TResult>> UpdateRecordsAsync<TResult>(
-		string tableOrRecordId, string data, CancellationToken cancellationToken = default
-	)
+	public async Task<IEnumerable<TResult>> UpdateRecordsAsync<TResult>(string tableOrRecordId, string data, CancellationToken cancellationToken = default)
 		where TResult : class
-		=> await SendMessageAsync<TResult>("update", new object[] { tableOrRecordId, data }, cancellationToken);
+	{
+		return await SendMessageAsync<TResult>("update", new object[] { tableOrRecordId, data }, cancellationToken);
+	}
 
 	protected virtual void Dispose(bool disposing)
 	{
 		if (!disposing)
+		{
 			return;
+		}
 
 		_lazyWebSocketClient?.Value.Result.Dispose();
 		_lazyWebSocketClient?.Value.Dispose();
 		_lazyWebSocketClient = null;
 	}
 
-	private Lazy<Task<IWebSocketClient>> CreateLazyWebSocketClient(
-		ClientWebSocket socket, SurrealRpcClientOptions options
-	)
+	private Lazy<Task<IWebSocketClient>> CreateLazyWebSocketClient(ClientWebSocket socket, SurrealRpcClientOptions options)
 	{
 		socket.Options.SetRequestHeader("DB", options.Database);
 		socket.Options.SetRequestHeader("NS", options.Namespace);
 
-		return new Lazy<Task<IWebSocketClient>>(
-			async () =>
-			{
-				var webSocketClient = new WebSocketClient(socket, client => client.WithUri(options.Address));
+		return new Lazy<Task<IWebSocketClient>>(async () =>
+		{
+			var webSocketClient = new WebSocketClient(socket, client => client.WithUri(options.Address));
 
-				webSocketClient.OnTextMessageReceived += HandleWebSocketMessage;
+			webSocketClient.OnTextMessageReceived += HandleWebSocketMessage;
 
-				await webSocketClient.OpenAsync();
+			await webSocketClient.OpenAsync();
 
-				return webSocketClient;
-			}
-		);
+			return webSocketClient;
+		});
 	}
 
-	private void HandleWebSocketMessage(
-		IWebSocketClient client, MessageReceivedEvent<string> @event, CancellationToken cancellationToken = default
-	)
+	private void HandleWebSocketMessage(IWebSocketClient client, MessageReceivedEvent<string> @event, CancellationToken cancellationToken = default)
 	{
 		SurrealRpcResponse? response = _options.JsonProvider.Deserialize<SurrealRpcResponse>(@event.Message);
 
 		if (response is null)
+		{
 			throw new SurrealException("Invalid response received from SurrealDB, missing 'id' property.");
+		}
 
 		_responseHandlers.TryGetValue(response.Id, out Action<string>? responseHandler);
 
 		if (responseHandler is null)
+		{
 			throw new SurrealBugException($"No response handler found for request ID {response.Id}.");
+		}
 
 		responseHandler.Invoke(@event.Message);
 	}
@@ -136,46 +134,54 @@ public class SurrealRpcClient : ISurrealRpcClient, IDisposable
 		SurrealRpcErrorResponse? errorResponse = _options.JsonProvider.Deserialize<SurrealRpcErrorResponse>(response);
 
 		if (errorResponse is not null)
+		{
 			throw new SurrealQueryException($"{errorResponse.Error.Message} ({errorResponse.Error.Code})");
+		}
 
 		SurrealRpcResponse<ExecuteQueryResponse<TResult>[]>? queryResponse =
 			_options.JsonProvider.Deserialize<SurrealRpcResponse<ExecuteQueryResponse<TResult>[]>>(response);
 
 		if (queryResponse is null)
+		{
 			throw new SurrealDeserializationException<string, SurrealRpcResponse<ExecuteQueryResponse<TResult>[]>>();
+		}
 
 		ExecuteQueryResponse<TResult>? queryError =
 			queryResponse.Result.FirstOrDefault(result => result.Status == $"{ExecuteQueryStatusCode.ERR}");
 
 		if (queryError is not null)
+		{
 			throw new SurrealQueryException(queryError.Detail);
+		}
 
 		return queryResponse.Result.Select(result => result.Result);
 	}
 
-	private async Task<IEnumerable<TResponse>> SendMessageAsync<TResponse>(
-		string method, IEnumerable<object> @params, CancellationToken cancellationToken = default
-	)
+	private async Task<IEnumerable<TResponse>> SendMessageAsync<TResponse>(string method, IEnumerable<object> @params, CancellationToken cancellationToken = default)
 		where TResponse : class
 	{
 		if (_lazyWebSocketClient is null)
+		{
 			throw new ObjectDisposedException(nameof(IWebSocketClient));
+		}
 
 		IWebSocketClient webSocketClient = await _lazyWebSocketClient.Value;
 
 		var requestId = Guid.NewGuid().ToString();
 
-		string serializedPayload =
-			_options.JsonProvider.Serialize(new { Id = requestId, Method = method, Params = @params });
+		string serializedPayload = _options.JsonProvider.Serialize(new
+		{
+			Id = requestId,
+			Method = method,
+			Params = @params
+		});
 
 		await webSocketClient.SendAsync(serializedPayload, cancellationToken);
 
 		return await WaitForResponseAsync<TResponse>(requestId, cancellationToken);
 	}
 
-	private async Task<IEnumerable<TResponse>> WaitForResponseAsync<TResponse>(
-		string requestId, CancellationToken cancellationToken = default
-	)
+	private async Task<IEnumerable<TResponse>> WaitForResponseAsync<TResponse>(string requestId, CancellationToken cancellationToken = default)
 		where TResponse : class
 	{
 		var waitForResponse = new TaskCompletionSource<IEnumerable<TResponse>>();

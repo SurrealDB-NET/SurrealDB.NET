@@ -13,9 +13,8 @@ public interface ISurrealRpcClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<IEnumerable<TResult>> CreateRecordAsync<TResult>(
-		string tableOrRecordId, string data, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<IEnumerable<TResult>> CreateRecordAsync<TResult>(string tableOrRecordId, string data, CancellationToken cancellationToken = default)
+		where TResult : class;
 
 	/// <summary>
 	///     Delete a record or table.
@@ -26,9 +25,8 @@ public interface ISurrealRpcClient
 	///     cancellation
 	/// </param>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<IEnumerable<TResult>> DeleteAsync<TResult>(
-		string tableOrRecordId, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<IEnumerable<TResult>> DeleteAsync<TResult>(string tableOrRecordId, CancellationToken cancellationToken = default)
+		where TResult : class;
 
 	/// <summary>
 	///     Execute a SQL query.
@@ -40,9 +38,8 @@ public interface ISurrealRpcClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<IEnumerable<TResult>> ExecuteQueryAsync<TResult>(
-		string query, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<IEnumerable<TResult>> ExecuteQueryAsync<TResult>(string query, CancellationToken cancellationToken = default)
+		where TResult : class;
 
 	/// <summary>
 	///     Execute a SQL query.
@@ -55,9 +52,8 @@ public interface ISurrealRpcClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<IEnumerable<TResult>> ExecuteQueryAsync<TResult>(
-		string query, IDictionary<string, object> parameters, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<IEnumerable<TResult>> ExecuteQueryAsync<TResult>(string query, IDictionary<string, object> parameters, CancellationToken cancellationToken = default)
+		where TResult : class;
 
 	/// <summary>
 	///     Selects all records from a table in the database.
@@ -69,9 +65,8 @@ public interface ISurrealRpcClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<IEnumerable<TResult>> GetAllRecordsAsync<TResult>(
-		string tableOrRecordId, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<IEnumerable<TResult>> GetAllRecordsAsync<TResult>(string tableOrRecordId, CancellationToken cancellationToken = default)
+		where TResult : class;
 
 	/// <summary>
 	///     Select a specific record from the database.
@@ -83,9 +78,8 @@ public interface ISurrealRpcClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<TResult?> GetRecordByIdAsync<TResult>(
-		string tableOrRecordId, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<TResult?> GetRecordByIdAsync<TResult>(string tableOrRecordId, CancellationToken cancellationToken = default)
+		where TResult : class;
 
 	/// <summary>
 	///     Modify a record or table.
@@ -98,9 +92,8 @@ public interface ISurrealRpcClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<IEnumerable<TResult>> ModifyAsync<TResult>(
-		string tableOrRecordId, string data, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<IEnumerable<TResult>> ModifyAsync<TResult>(string tableOrRecordId, string data, CancellationToken cancellationToken = default)
+		where TResult : class;
 
 	/// <summary>
 	///     Update a record or records in a table.
@@ -113,7 +106,6 @@ public interface ISurrealRpcClient
 	/// </param>
 	/// <typeparam name="TResult">The target type to deserialize to</typeparam>
 	/// <returns>The task object representing the asynchronous operation.</returns>
-	public Task<IEnumerable<TResult>> UpdateRecordsAsync<TResult>(
-		string tableOrRecordId, string data, CancellationToken cancellationToken = default
-	) where TResult : class;
+	public Task<IEnumerable<TResult>> UpdateRecordsAsync<TResult>(string tableOrRecordId, string data, CancellationToken cancellationToken = default)
+		where TResult : class;
 }

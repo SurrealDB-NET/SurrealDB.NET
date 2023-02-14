@@ -11,5 +11,7 @@ internal class SelectWhereNode<TRecord> : SplitAtNode<TRecord>, ISelectWhereStat
 		: base(query) { }
 
 	public ISplitAtStatement<TRecord> Where(Expression<Func<TRecord, bool>> predicate)
-		=> new SplitAtNode<TRecord>(Query.Append($" WHERE {LambdaExpressionTranslator.Translate(predicate)}"));
+	{
+		return new SplitAtNode<TRecord>(Query.Append($" WHERE {LambdaExpressionTranslator.Translate(predicate)}"));
+	}
 }

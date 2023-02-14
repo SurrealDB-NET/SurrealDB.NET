@@ -9,5 +9,7 @@ internal class ParallelNode : Executor, IParallelStatement
 		: base(query) { }
 
 	public Executor Parallel()
-		=> new(Query.Append(" PARALLEL"));
+	{
+		return new Executor(Query.Append(" PARALLEL"));
+	}
 }

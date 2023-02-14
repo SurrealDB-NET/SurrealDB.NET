@@ -11,7 +11,7 @@ internal class FetchNode<TRecord> : TimeoutNode, IFetchStatement<TRecord>
 		: base(query) { }
 
 	public ITimeoutStatement Fetch(Expression<Func<TRecord, object>>[] fields)
-		=> new TimeoutNode(
-			Query.Append($" FETCH {string.Join(", ", fields.Select(LambdaExpressionTranslator.Translate))}")
-		);
+	{
+		return new TimeoutNode(Query.Append($" FETCH {string.Join(", ", fields.Select(LambdaExpressionTranslator.Translate))}"));
+	}
 }

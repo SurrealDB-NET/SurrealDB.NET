@@ -17,11 +17,15 @@ public class MultiPolygon : IGeometry, IEquatable<MultiPolygon>
 	/// </summary>
 	/// <param name="polygons">The polygons that define this <see cref="MultiPolygon" />.</param>
 	public MultiPolygon(params Polygon[] polygons)
-		=> Coordinates = polygons;
+	{
+		Coordinates = polygons;
+	}
 
 	/// <inheritdoc cref="MultiPolygon(Polygon[])" />
 	public MultiPolygon(IEnumerable<Polygon> polygons)
-		=> Coordinates = polygons.ToArray();
+	{
+		Coordinates = polygons.ToArray();
+	}
 
 	/// <summary>
 	///     Returns a value that indicates whether this instance is equal to a specified <see cref="MultiPolygon" />.
@@ -32,11 +36,19 @@ public class MultiPolygon : IGeometry, IEquatable<MultiPolygon>
 	///     otherwise, <see langword="false" />.
 	/// </returns>
 	public bool Equals(MultiPolygon? value)
-		=> value is not null && Coordinates.SequenceEqual(value.Coordinates);
+	{
+		return value is not null && Coordinates.SequenceEqual(value.Coordinates);
+	}
 
 	/// <inheritdoc />
 	public SchemalessObject ToGeoJson()
-		=> new() { { "type", nameof(MultiPolygon) }, { "coordinates", CoordinatesOnly() } };
+	{
+		return new SchemalessObject
+		{
+			{ "type", nameof(MultiPolygon) },
+			{ "coordinates", CoordinatesOnly() }
+		};
+	}
 
 	/// <summary>
 	///     Returns a value that indicates whether this instance is equal to a specified <see cref="object" />.
@@ -47,14 +59,18 @@ public class MultiPolygon : IGeometry, IEquatable<MultiPolygon>
 	///     polygons sequence as this instance; otherwise, <see langword="false" />.
 	/// </returns>
 	public override bool Equals(object? value)
-		=> Equals(value as MultiPolygon);
+	{
+		return Equals(value as MultiPolygon);
+	}
 
 	/// <summary>
 	///     Returns the hash code for this <see cref="MultiPolygon" />.
 	/// </summary>
 	/// <returns>A 32-bit signed integer hash code by combining the hash codes of <see cref="Coordinates" />.</returns>
 	public override int GetHashCode()
-		=> HashCode.Combine(Coordinates);
+	{
+		return HashCode.Combine(Coordinates);
+	}
 
 	/// <summary>
 	///     Returns the coordinates of this <see cref="MultiPolygon" /> as a 4D <see cref="double" /> array. Utilized by
@@ -62,7 +78,9 @@ public class MultiPolygon : IGeometry, IEquatable<MultiPolygon>
 	/// </summary>
 	/// <returns>The coordinates of this <see cref="MultiPolygon" /> as a 4D <see cref="double" /> array.</returns>
 	internal double[][][][] CoordinatesOnly()
-		=> Coordinates.Select(polygon => polygon.CoordinatesOnly()).ToArray();
+	{
+		return Coordinates.Select(polygon => polygon.CoordinatesOnly()).ToArray();
+	}
 
 	/// <summary>
 	///     Determines whether two specified <see cref="MultiPolygon" /> instances are equal.
@@ -74,7 +92,9 @@ public class MultiPolygon : IGeometry, IEquatable<MultiPolygon>
 	///     sequence; otherwise, <see langword="false" />.
 	/// </returns>
 	public static bool operator ==(MultiPolygon? left, MultiPolygon? right)
-		=> Equals(left, right);
+	{
+		return Equals(left, right);
+	}
 
 	/// <summary>
 	///     Determines whether two specified <see cref="MultiPolygon" /> instances are not equal.
@@ -86,5 +106,7 @@ public class MultiPolygon : IGeometry, IEquatable<MultiPolygon>
 	///     polygons sequence; otherwise, <see langword="false" />.
 	/// </returns>
 	public static bool operator !=(MultiPolygon? left, MultiPolygon? right)
-		=> !Equals(left, right);
+	{
+		return !Equals(left, right);
+	}
 }

@@ -7,9 +7,7 @@ namespace SurrealDB.Client.WebSocket;
 ///     <see cref="IWebSocketClient.OnTextMessageReceived" /> event of a <see cref="IWebSocketClient" />.
 /// </summary>
 /// <typeparam name="TMessage">The type of the messaged received</typeparam>
-public delegate void MessagedReceivedHandler<TMessage>(
-	IWebSocketClient client, MessageReceivedEvent<TMessage> @event, CancellationToken cancellationToken = default
-);
+public delegate void MessagedReceivedHandler<TMessage>(IWebSocketClient client, MessageReceivedEvent<TMessage> @event, CancellationToken cancellationToken = default);
 
 public interface IWebSocketClient : IDisposable
 {

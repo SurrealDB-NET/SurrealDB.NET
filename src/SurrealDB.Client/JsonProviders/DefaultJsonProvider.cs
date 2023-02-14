@@ -4,14 +4,23 @@ namespace SurrealDB.Client.JsonProviders;
 
 public class DefaultJsonProvider : IJsonProvider
 {
-	private readonly JsonSerializerOptions _options = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+	private readonly JsonSerializerOptions _options = new()
+	{
+		PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+	};
 
 	public TValue? Deserialize<TValue>(string json)
-		=> JsonSerializer.Deserialize<TValue>(json, _options);
+	{
+		return JsonSerializer.Deserialize<TValue>(json, _options);
+	}
 
 	public async Task<TValue?> DeserializeAsync<TValue>(Stream stream, CancellationToken cancellationToken = default)
-		=> await JsonSerializer.DeserializeAsync<TValue>(stream, _options, cancellationToken);
+	{
+		return await JsonSerializer.DeserializeAsync<TValue>(stream, _options, cancellationToken);
+	}
 
 	public string Serialize(object @object)
-		=> JsonSerializer.Serialize(@object, _options);
+	{
+		return JsonSerializer.Serialize(@object, _options);
+	}
 }

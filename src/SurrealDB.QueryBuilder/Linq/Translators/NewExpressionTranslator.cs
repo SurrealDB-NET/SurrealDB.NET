@@ -7,15 +7,15 @@ namespace SurrealDB.QueryBuilder.Linq.Translators;
 
 internal static class NewExpressionTranslator
 {
-	internal static string Translate(NewExpression newExpression)
-
-		// ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
-		=> newExpression.NodeType switch
+	internal static string Translate(NewExpression newExpression) // ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
+	{
+		return newExpression.NodeType switch
 		{
 			ExpressionType.New => TranslateProjection(newExpression),
 			ExpressionType.MemberInit => TranslateSubObject(newExpression),
 			_ => throw new NotSupportedException($"Expression type {newExpression.NodeType} is not supported.")
 		};
+	}
 
 	internal static string TranslateProjection(NewExpression newExpression)
 	{
@@ -39,9 +39,7 @@ internal static class NewExpressionTranslator
 					break;
 
 				case MethodCallExpression methodCallExpression:
-					projections.Append(
-						$"{MethodCallExpressionTranslator.Translate(methodCallExpression)} AS {member!.Name}, "
-					);
+					projections.Append($"{MethodCallExpressionTranslator.Translate(methodCallExpression)} AS {member!.Name}, ");
 
 					break;
 
@@ -82,7 +80,9 @@ internal static class NewExpressionTranslator
 	internal static string TranslateSubObject(NewExpression newExpression)
 	{
 		if (newExpression.Type.IsGenericType && newExpression.Type.GetGenericTypeDefinition() == typeof(None<>))
+		{
 			return "none";
+		}
 
 		var @object = new StringBuilder("{");
 

@@ -12,17 +12,16 @@ public sealed class DeleteAllRecords : IExample
 	{
 		var httpClient = new HttpClient();
 
-		var client = new SurrealRestClient(
-			httpClient, options =>
-			{
-				options
-				   .WithAddress("http://localhost:8000")
-				   .WithDatabase("test")
-				   .WithNamespace("test")
-				   .WithUsername("root")
-				   .WithPassword("root");
-			}
-		);
+		var client = new SurrealRestClient(httpClient,
+		                                   options =>
+		                                   {
+			                                   options
+				                                   .WithAddress("http://localhost:8000")
+				                                   .WithDatabase("test")
+				                                   .WithNamespace("test")
+				                                   .WithUsername("root")
+				                                   .WithPassword("root");
+		                                   });
 
 		await client.DeleteAllRecordsAsync("test", cancellationToken);
 

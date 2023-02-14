@@ -18,11 +18,15 @@ public class MultiPoint : IGeometry, IEquatable<MultiPoint>
 	/// </summary>
 	/// <param name="points">The coordinates that define this <see cref="MultiPoint" />.</param>
 	public MultiPoint(params Point[] points)
-		=> Coordinates = points;
+	{
+		Coordinates = points;
+	}
 
 	/// <inheritdoc cref="MultiPoint(Point[])" />
 	public MultiPoint(IEnumerable<Point> points)
-		=> Coordinates = points.ToArray();
+	{
+		Coordinates = points.ToArray();
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether this instance is equal to a specified <see cref="MultiPoint" />.
@@ -33,11 +37,19 @@ public class MultiPoint : IGeometry, IEquatable<MultiPoint>
 	///     otherwise, <see langword="false" />.
 	/// </returns>
 	public bool Equals(MultiPoint? value)
-		=> value is not null && Coordinates.SequenceEqual(value.Coordinates);
+	{
+		return value is not null && Coordinates.SequenceEqual(value.Coordinates);
+	}
 
 	/// <inheritdoc />
 	public SchemalessObject ToGeoJson()
-		=> new() { { "type", nameof(MultiPoint) }, { "coordinates", CoordinatesOnly() } };
+	{
+		return new SchemalessObject
+		{
+			{ "type", nameof(MultiPoint) },
+			{ "coordinates", CoordinatesOnly() }
+		};
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether this instance is equal to a specified <see cref="object" />.
@@ -48,14 +60,18 @@ public class MultiPoint : IGeometry, IEquatable<MultiPoint>
 	///     coordinates sequence as this instance; otherwise, <see langword="false" />.
 	/// </returns>
 	public override bool Equals(object? value)
-		=> Equals(value as MultiPoint);
+	{
+		return Equals(value as MultiPoint);
+	}
 
 	/// <summary>
 	///     Returns the hash code for this <see cref="MultiPoint" />.
 	/// </summary>
 	/// <returns>A 32-bit signed integer hash code by combining the hash codes of the <see cref="Coordinates" />.</returns>
 	public override int GetHashCode()
-		=> HashCode.Combine(Coordinates);
+	{
+		return HashCode.Combine(Coordinates);
+	}
 
 	/// <summary>
 	///     Returns the coordinates of this <see cref="MultiPoint" /> as a 2D <see cref="double" /> array. Utilized in
@@ -63,7 +79,9 @@ public class MultiPoint : IGeometry, IEquatable<MultiPoint>
 	/// </summary>
 	/// <returns>The coordinates of this <see cref="MultiPoint" /> as a 2D <see cref="double" /> array.</returns>
 	internal double[][] CoordinatesOnly()
-		=> Coordinates.Select(point => point.CoordinatesOnly()).ToArray();
+	{
+		return Coordinates.Select(point => point.CoordinatesOnly()).ToArray();
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether two specified <see cref="MultiPoint" /> instances are equal.
@@ -75,7 +93,9 @@ public class MultiPoint : IGeometry, IEquatable<MultiPoint>
 	///     sequence; otherwise, <see langword="false" />.
 	/// </returns>
 	public static bool operator ==(MultiPoint? left, MultiPoint? right)
-		=> Equals(left, right);
+	{
+		return Equals(left, right);
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether two specified <see cref="MultiPoint" /> instances are not equal.
@@ -87,5 +107,7 @@ public class MultiPoint : IGeometry, IEquatable<MultiPoint>
 	///     coordinates sequence; otherwise, <see langword="false" />.
 	/// </returns>
 	public static bool operator !=(MultiPoint? left, MultiPoint? right)
-		=> !Equals(left, right);
+	{
+		return !Equals(left, right);
+	}
 }

@@ -9,5 +9,7 @@ internal class LimitByNode<TRecord> : StartAtNode<TRecord>, ILimitByStatement<TR
 		: base(query) { }
 
 	public IStartAtStatement<TRecord> LimitBy(uint limit)
-		=> new StartAtNode<TRecord>(Query.Append($" LIMIT {limit}"));
+	{
+		return new StartAtNode<TRecord>(Query.Append($" LIMIT {limit}"));
+	}
 }

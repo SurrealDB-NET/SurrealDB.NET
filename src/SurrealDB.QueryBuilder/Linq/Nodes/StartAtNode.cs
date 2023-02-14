@@ -9,5 +9,7 @@ internal class StartAtNode<TRecord> : FetchNode<TRecord>, IStartAtStatement<TRec
 		: base(query) { }
 
 	public IFetchStatement<TRecord> StartAt(uint offset)
-		=> new FetchNode<TRecord>(Query.Append($" START {offset}"));
+	{
+		return new FetchNode<TRecord>(Query.Append($" START {offset}"));
+	}
 }

@@ -11,7 +11,7 @@ internal class SplitAtNode<TRecord> : GroupByNode<TRecord>, ISplitAtStatement<TR
 		: base(query) { }
 
 	public IGroupByStatement<TRecord> SplitAt(params Expression<Func<TRecord, object>>[] fields)
-		=> new GroupByNode<TRecord>(
-			Query.Append($" SPLIT {string.Join(", ", fields.Select(LambdaExpressionTranslator.Translate))}")
-		);
+	{
+		return new GroupByNode<TRecord>(Query.Append($" SPLIT {string.Join(", ", fields.Select(LambdaExpressionTranslator.Translate))}"));
+	}
 }

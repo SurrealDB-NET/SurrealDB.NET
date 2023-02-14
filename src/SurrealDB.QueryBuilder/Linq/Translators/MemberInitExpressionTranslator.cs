@@ -13,9 +13,7 @@ internal static class MemberInitExpressionTranslator
 		{
 			var memberAssignment = (MemberAssignment)binding;
 
-			setter.Append(
-				$"{memberAssignment.Member.Name} = {ExpressionTranslator.Translate(memberAssignment.Expression)}, "
-			);
+			setter.Append($"{memberAssignment.Member.Name} = {ExpressionTranslator.Translate(memberAssignment.Expression)}, ");
 		}
 
 		setter.Remove(setter.Length - 2, 2);

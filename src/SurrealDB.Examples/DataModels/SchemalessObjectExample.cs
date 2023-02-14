@@ -17,34 +17,56 @@ public sealed class SchemalessObjectExample : IExample
 			{ "isAlive", true },
 			{ "spouse", null },
 			{
-				"address",
-				new SchemalessObject
+				"address", new SchemalessObject
 				{
-					{ "street", "123 Main St" }, { "city", "Anywhere" }, { "state", "CA" }, { "zip", "12345" }
+					{ "street", "123 Main St" },
+					{ "city", "Anywhere" },
+					{ "state", "CA" },
+					{ "zip", "12345" }
 				}
 			},
 			{ "phoneNumbers", new[] { "123-456-7890", "234-567-8901" } },
 			{
-				"children",
-				new[]
+				"children", new[]
 				{
-					new SchemalessObject { { "name", "Jane Doe" }, { "age", 13 } },
-					new SchemalessObject { { "name", "John Doe" }, { "age", 10 } }
+					new SchemalessObject
+					{
+						{ "name", "Jane Doe" },
+						{ "age", 13 }
+					},
+					new SchemalessObject
+					{
+						{ "name", "John Doe" },
+						{ "age", 10 }
+					}
 				}
 			},
-			{ "pets", new[] { new SchemalessObject { { "name", "Fluffy" }, { "type", "Dog" } } } },
 			{
-				"extraInfo",
-				new SchemalessObject
+				"pets", new[]
+				{
+					new SchemalessObject
+					{
+						{ "name", "Fluffy" },
+						{ "type", "Dog" }
+					}
+				}
+			},
+			{
+				"extraInfo", new SchemalessObject
 				{
 					{ "favoriteColor", "blue" },
 					{ "favoriteNumbers", new[] { 1, 2, 3, 4, 5 } },
 					{
-						"favoriteFoods",
-						new[]
+						"favoriteFoods", new[]
 						{
-							new SchemalessObject { { "name", "pizza" } },
-							new SchemalessObject { { "name", "ice cream" } }
+							new SchemalessObject
+							{
+								{ "name", "pizza" }
+							},
+							new SchemalessObject
+							{
+								{ "name", "ice cream" }
+							}
 						}
 					}
 				}

@@ -12,8 +12,12 @@ internal class ReturnNode<TRecord> : TimeoutNode, IReturnStatement<TRecord>
 		: base(query) { }
 
 	public ITimeoutStatement Return(ReturnClause returnClause)
-		=> new TimeoutNode(Query.Append($" RETURN {returnClause}"));
+	{
+		return new TimeoutNode(Query.Append($" RETURN {returnClause}"));
+	}
 
 	public ITimeoutStatement Return(Expression<Func<TRecord, object>> projection)
-		=> new TimeoutNode(Query.Append($" RETURN {LambdaExpressionTranslator.Translate(projection)}"));
+	{
+		return new TimeoutNode(Query.Append($" RETURN {LambdaExpressionTranslator.Translate(projection)}"));
+	}
 }

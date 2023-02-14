@@ -30,7 +30,10 @@ public class WebSocketClient : IWebSocketClient
 
 	public event MessagedReceivedHandler<string>? OnTextMessageReceived;
 
-	public async Task CloseAsync() => await CloseAsync(_cancellationTokenSource.Token);
+	public async Task CloseAsync()
+	{
+		await CloseAsync(_cancellationTokenSource.Token);
+	}
 
 	public async Task CloseAsync(CancellationToken cancellationToken)
 	{
@@ -45,31 +48,38 @@ public class WebSocketClient : IWebSocketClient
 	public async Task OpenAsync()
 	{
 		if (IsSocketOpened)
+		{
 			return;
+		}
 
 		await _socket.ConnectAsync(_options.Uri, _cancellationTokenSource.Token);
 
-		_ = Task.Run(
-			async () =>
+		var listener = new Func<Task>(async () =>
+		{
+			try
 			{
-				try
-				{
-					await ListenForMessagesAsync(_socket, _options.ReceiveBufferSize, _cancellationTokenSource.Token);
-				}
-				catch (OperationCanceledException)
-				{
-					// Ignore as this should only occur when CloseAsync is called (which cancels the CancellationTokenSource)
-				}
-			}, _cancellationTokenSource.Token
-		);
+				await ListenForMessagesAsync(_socket, _options.ReceiveBufferSize, _cancellationTokenSource.Token);
+			}
+			catch (OperationCanceledException)
+			{
+				// Ignore as this should only occur when CloseAsync is called (which cancels the CancellationTokenSource)
+			}
+		});
+
+		_ = Task.Run(listener, _cancellationTokenSource.Token);
 	}
 
-	public async Task SendAsync(string message) => await SendAsync(message, _cancellationTokenSource.Token);
+	public async Task SendAsync(string message)
+	{
+		await SendAsync(message, _cancellationTokenSource.Token);
+	}
 
 	public async Task SendAsync(string message, CancellationToken cancellationToken)
 	{
 		if (cancellationToken.IsCancellationRequested)
+		{
 			return;
+		}
 
 		byte[] bytes = _options.Encoding.GetBytes(message);
 		var buffer = new ArraySegment<byte>(bytes);
@@ -80,7 +90,9 @@ public class WebSocketClient : IWebSocketClient
 	protected virtual void Dispose(bool disposing)
 	{
 		if (!disposing)
+		{
 			return;
+		}
 
 		_cancellationTokenSource.Dispose();
 
@@ -97,9 +109,7 @@ public class WebSocketClient : IWebSocketClient
 		return builder.Options;
 	}
 
-	private async Task ListenForMessagesAsync(
-		System.Net.WebSockets.WebSocket socket, int bufferSize, CancellationToken cancellationToken = default
-	)
+	private async Task ListenForMessagesAsync(System.Net.WebSockets.WebSocket socket, int bufferSize, CancellationToken cancellationToken = default)
 	{
 		var buffer = new ArraySegment<byte>(new byte[bufferSize]);
 
@@ -118,11 +128,15 @@ public class WebSocketClient : IWebSocketClient
 				await messageStream.WriteAsync(chunk, cancellationToken);
 
 				if (received.EndOfMessage)
+				{
 					break;
+				}
 			}
 
 			if (cancellationToken.IsCancellationRequested)
+			{
 				return;
+			}
 
 			messageStream.Seek(0, SeekOrigin.Begin);
 
@@ -136,12 +150,12 @@ public class WebSocketClient : IWebSocketClient
 				case WebSocketMessageType.Text:
 					HandleTextMessage(messageStream, cancellationToken);
 
-					break;
+					return;
 
 				case WebSocketMessageType.Binary:
 					HandleBinaryMessage(messageStream, cancellationToken);
 
-					break;
+					return;
 
 				default:
 					throw new InvalidOperationException($"Received unknown message type: {received.MessageType}");

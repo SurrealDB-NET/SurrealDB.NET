@@ -9,33 +9,47 @@ public static class ParseFunctions
 	{
 		[SurrealFunction("parse::email::domain")]
 		public static string? Domain(string value)
-			=> throw new IllegalSurrealFunctionCallException();
+		{
+			throw new IllegalSurrealFunctionCallException();
+		}
 
 		[SurrealFunction("parse::email::local")]
 		public static string? User(string value)
-			=> throw new IllegalSurrealFunctionCallException();
+		{
+			throw new IllegalSurrealFunctionCallException();
+		}
 	}
 
 	public static class Url
 	{
 		[SurrealFunction("parse::url::domain")]
 		public static string? Domain(string value)
-			=> throw new IllegalSurrealFunctionCallException();
+		{
+			throw new IllegalSurrealFunctionCallException();
+		}
 
 		[SurrealFunction("parse::url::fragment")]
 		public static string? Fragment(string value)
-			=> throw new IllegalSurrealFunctionCallException();
+		{
+			throw new IllegalSurrealFunctionCallException();
+		}
 
 		[SurrealFunction("parse::url::host")]
 		public static string? Host(string value)
-			=> throw new IllegalSurrealFunctionCallException();
+		{
+			throw new IllegalSurrealFunctionCallException();
+		}
 
 		[SurrealFunction("parse::url::path")]
 		public static string? Path(string value)
-			=> throw new IllegalSurrealFunctionCallException();
+		{
+			throw new IllegalSurrealFunctionCallException();
+		}
 
 		[SurrealFunction("parse::url::port")]
 		public static string? Port(string value)
-			=> throw new IllegalSurrealFunctionCallException();
+		{
+			throw new IllegalSurrealFunctionCallException();
+		}
 	}
 }

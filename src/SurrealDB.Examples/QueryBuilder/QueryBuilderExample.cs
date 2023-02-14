@@ -12,26 +12,21 @@ public sealed class QueryBuilder : IExample
 	public async Task RunAsync(CancellationToken cancellationToken = default)
 	{
 		await Task.CompletedTask;
-		Console.WriteLine(
-			SurrealQL
-			   .Select("id", "name")
-			   .From(
-					"pokemon",
-					"Pokemon"
-				)
-			   .Where("primaryType.name == \"Fire\"")
-			   .GroupBy("secondaryType.name")
-			   .OrderBy(
-					"name",
-					textSortMethod: TextSortMethod.Collate,
-					sortOrder: SortOrder.Desc
-				)
-			   .LimitBy(10)
-			   .StartAt(5)
-			   .Fetch("moveset", "evolution")
-			   .Timeout("30s")
-			   .Parallel()
-			   .Build()
-		);
+
+		Console.WriteLine(SurrealQL
+		                  .Select("id", "name")
+		                  .From("pokemon",
+		                        "Pokemon")
+		                  .Where("primaryType.name == \"Fire\"")
+		                  .GroupBy("secondaryType.name")
+		                  .OrderBy("name",
+		                           textSortMethod: TextSortMethod.Collate,
+		                           sortOrder: SortOrder.Desc)
+		                  .LimitBy(10)
+		                  .StartAt(5)
+		                  .Fetch("moveset", "evolution")
+		                  .Timeout("30s")
+		                  .Parallel()
+		                  .Build());
 	}
 }

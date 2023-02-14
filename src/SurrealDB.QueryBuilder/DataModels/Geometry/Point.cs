@@ -25,7 +25,9 @@ public readonly struct Point : IGeometry, IEquatable<Point>
 	/// <param name="x">The X coordinate (longitude).</param>
 	/// <param name="y">The Y coordinate (latitude).</param>
 	public Point(double x, double y)
-		=> (X, Y) = (x, y);
+	{
+		(X, Y) = (x, y);
+	}
 
 	/// <summary>
 	///     Deconstructs this <see cref="Point" /> into its <see cref="X" /> and <see cref="Y" /> components.
@@ -33,7 +35,9 @@ public readonly struct Point : IGeometry, IEquatable<Point>
 	/// <param name="x">The X coordinate (longitude).</param>
 	/// <param name="y">The Y coordinate (latitude).</param>
 	public void Deconstruct(out double x, out double y)
-		=> (x, y) = (X, Y);
+	{
+		(x, y) = (X, Y);
+	}
 
 	/// <summary>
 	///     Implicitly converts a tuple containg a <see cref="X" /> and <see cref="Y" /> value to a <see cref="Point" />
@@ -41,18 +45,28 @@ public readonly struct Point : IGeometry, IEquatable<Point>
 	/// </summary>
 	/// <param name="coordinates">The tuple containing the longitude and latitude values respectively.</param>
 	public static implicit operator Point((double x, double y) coordinates)
-		=> new(coordinates.x, coordinates.y);
+	{
+		return new Point(coordinates.x, coordinates.y);
+	}
 
 	/// <summary>
 	///     Implicitly converts a <see cref="Point" /> structure to a tuple containing a longitude and latitude value.
 	/// </summary>
 	/// <param name="point">The <see cref="Point" /> structure to convert from.</param>
 	public static implicit operator (double x, double y)(Point point)
-		=> (point.X, point.Y);
+	{
+		return (point.X, point.Y);
+	}
 
 	/// <inheritdoc />
 	public SchemalessObject ToGeoJson()
-		=> new() { { "type", nameof(Point) }, { "coordinates", CoordinatesOnly() } };
+	{
+		return new SchemalessObject
+		{
+			{ "type", nameof(Point) },
+			{ "coordinates", CoordinatesOnly() }
+		};
+	}
 
 	/// <summary>
 	///     Returns a value that indicates whether this instance is equal to a specified <see cref="Point" />.
@@ -63,7 +77,9 @@ public readonly struct Point : IGeometry, IEquatable<Point>
 	///     this instance; otherwise, <see langword="false" />.
 	/// </returns>
 	public bool Equals(Point value)
-		=> X == value.X && Y == value.Y;
+	{
+		return X == value.X && Y == value.Y;
+	}
 
 	/// <summary>
 	///     Returns a value that indicates whether this instance is equal to a specified <see cref="object" />.
@@ -74,21 +90,27 @@ public readonly struct Point : IGeometry, IEquatable<Point>
 	///     <see cref="X" /> and <see cref="Y" /> as this instance; otherwise, <see langword="false" />.
 	/// </returns>
 	public override bool Equals(object? value)
-		=> value is Point point && Equals(point);
+	{
+		return value is Point point && Equals(point);
+	}
 
 	/// <summary>
 	///     Returns the hash code for this <see cref="Point" />.
 	/// </summary>
 	/// <returns>A 32-bit signed integer hash code by combining the <see cref="X" /> and <see cref="Y" /> hash codes.</returns>
 	public override int GetHashCode()
-		=> HashCode.Combine(X, Y);
+	{
+		return HashCode.Combine(X, Y);
+	}
 
 	/// <summary>
 	///     Returns an array containing the <see cref="X" /> and <see cref="Y" /> coordinates of this <see cref="Point" />.
 	/// </summary>
 	/// <returns>An array containing the <see cref="X" /> and <see cref="Y" /> coordinates of this <see cref="Point" />.</returns>
 	internal double[] CoordinatesOnly()
-		=> new[] { X, Y };
+	{
+		return new[] { X, Y };
+	}
 
 	/// <summary>
 	///     Returns a value indicating wether two specified <see cref="Point" /> instances are equal.
@@ -100,7 +122,9 @@ public readonly struct Point : IGeometry, IEquatable<Point>
 	///     <see cref="X" /> and <see cref="Y" />; otherwise, <see langword="false" />.
 	/// </returns>
 	public static bool operator ==(Point left, Point right)
-		=> Equals(left, right);
+	{
+		return Equals(left, right);
+	}
 
 	/// <summary>
 	///     Returns a value indicating wether two specified <see cref="Point" /> instances are not equal.
@@ -112,5 +136,7 @@ public readonly struct Point : IGeometry, IEquatable<Point>
 	///     <see cref="X" /> and <see cref="Y" />; otherwise, <see langword="false" />.
 	/// </return>
 	public static bool operator !=(Point left, Point right)
-		=> !Equals(left, right);
+	{
+		return !Equals(left, right);
+	}
 }

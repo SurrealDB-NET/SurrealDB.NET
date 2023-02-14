@@ -22,11 +22,15 @@ public class GeometryCollection : IGeometry, IEquatable<GeometryCollection>
 	/// </summary>
 	/// <param name="geometries">The geometries that define this <see cref="GeometryCollection" />.</param>
 	public GeometryCollection(params IGeometry[] geometries)
-		=> Geometries = geometries;
+	{
+		Geometries = geometries;
+	}
 
 	/// <inheritdoc cref="GeometryCollection(IGeometry[])" />
 	public GeometryCollection(IEnumerable<IGeometry> geometries)
-		=> Geometries = geometries.ToArray();
+	{
+		Geometries = geometries.ToArray();
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether this instance is equal to a specified <see cref="GeometryCollection" />.
@@ -37,11 +41,19 @@ public class GeometryCollection : IGeometry, IEquatable<GeometryCollection>
 	///     otherwise, <see langword="false" />.
 	/// </returns>
 	public bool Equals(GeometryCollection? value)
-		=> value is not null && Geometries.SequenceEqual(value.Geometries);
+	{
+		return value is not null && Geometries.SequenceEqual(value.Geometries);
+	}
 
 	/// <inheritdoc />
 	public SchemalessObject ToGeoJson()
-		=> new() { { "type", nameof(GeometryCollection) }, { "geometries", Geometries } };
+	{
+		return new SchemalessObject
+		{
+			{ "type", nameof(GeometryCollection) },
+			{ "geometries", Geometries }
+		};
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether this instance is equal to a specified <see cref="object" />.
@@ -52,14 +64,18 @@ public class GeometryCollection : IGeometry, IEquatable<GeometryCollection>
 	///     geometries sequence as this instance; otherwise, <see langword="false" />.
 	/// </returns>
 	public override bool Equals(object? value)
-		=> Equals(value as GeometryCollection);
+	{
+		return Equals(value as GeometryCollection);
+	}
 
 	/// <summary>
 	///     Returns the hash code for this <see cref="GeometryCollection" />.
 	/// </summary>
 	/// <returns>A 32-bit signed integer hash code by combining the hash codes of <see cref="Geometries" />.</returns>
 	public override int GetHashCode()
-		=> HashCode.Combine(Geometries);
+	{
+		return HashCode.Combine(Geometries);
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether two specified <see cref="GeometryCollection" /> instances are equal.
@@ -71,7 +87,9 @@ public class GeometryCollection : IGeometry, IEquatable<GeometryCollection>
 	///     sequence; otherwise, <see langword="false" />.
 	/// </returns>
 	public static bool operator ==(GeometryCollection? left, GeometryCollection? right)
-		=> Equals(left, right);
+	{
+		return Equals(left, right);
+	}
 
 	/// <summary>
 	///     Returns a value indicating whether two specified <see cref="GeometryCollection" /> instances are not equal.
@@ -83,5 +101,7 @@ public class GeometryCollection : IGeometry, IEquatable<GeometryCollection>
 	///     geometries sequence; otherwise, <see langword="false" />.
 	/// </returns>
 	public static bool operator !=(GeometryCollection? left, GeometryCollection? right)
-		=> !Equals(left, right);
+	{
+		return !Equals(left, right);
+	}
 }

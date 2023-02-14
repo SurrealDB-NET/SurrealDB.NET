@@ -4,10 +4,9 @@ namespace SurrealDB.QueryBuilder.Linq.Translators;
 
 internal static class BinaryExpressionTranslator
 {
-	internal static string Translate(BinaryExpression binaryExpression)
-
-		// ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
-		=> binaryExpression.NodeType switch
+	internal static string Translate(BinaryExpression binaryExpression) // ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
+	{
+		return binaryExpression.NodeType switch
 		{
 			ExpressionType.Equal =>
 				$"({ExpressionTranslator.Translate(binaryExpression.Left)} == {ExpressionTranslator.Translate(binaryExpression.Right)})",
@@ -33,9 +32,9 @@ internal static class BinaryExpressionTranslator
 				$"({ExpressionTranslator.Translate(binaryExpression.Left)} * {ExpressionTranslator.Translate(binaryExpression.Right)})",
 			ExpressionType.Divide =>
 				$"({ExpressionTranslator.Translate(binaryExpression.Left)} / {ExpressionTranslator.Translate(binaryExpression.Right)})",
-			ExpressionType.PreIncrementAssign  => $"{ExpressionTranslator.Translate(binaryExpression.Left)} += 1",
+			ExpressionType.PreIncrementAssign => $"{ExpressionTranslator.Translate(binaryExpression.Left)} += 1",
 			ExpressionType.PostIncrementAssign => $"{ExpressionTranslator.Translate(binaryExpression.Left)} += 1",
-			ExpressionType.PreDecrementAssign  => $"{ExpressionTranslator.Translate(binaryExpression.Left)} -= 1",
+			ExpressionType.PreDecrementAssign => $"{ExpressionTranslator.Translate(binaryExpression.Left)} -= 1",
 			ExpressionType.PostDecrementAssign => $"{ExpressionTranslator.Translate(binaryExpression.Left)} -= 1",
 			ExpressionType.ArrayIndex =>
 				$"{ExpressionTranslator.Translate(binaryExpression.Left)}[{ExpressionTranslator.Translate(binaryExpression.Right)}]",
@@ -51,4 +50,5 @@ internal static class BinaryExpressionTranslator
 				$"{ExpressionTranslator.Translate(binaryExpression.Left)} /= {ExpressionTranslator.Translate(binaryExpression.Right)}",
 			_ => throw new NotImplementedException()
 		};
+	}
 }

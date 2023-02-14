@@ -8,14 +8,23 @@ namespace SurrealDB.QueryBuilder.Translators;
 internal static class PrimitiveTranslator
 {
 	internal static string Translate(bool @bool)
-		=> @bool ? "true" : "false";
+	{
+		return @bool ? "true" : "false";
+	}
 
 	internal static string Translate(char @char)
-		=> $"\"{@char}\"";
+	{
+		return $"\"{@char}\"";
+	}
 
-	internal static string Translate<TNumber>(TNumber number) where TNumber : INumber<TNumber>
-		=> $"{number}";
+	internal static string Translate<TNumber>(TNumber number)
+		where TNumber : INumber<TNumber>
+	{
+		return $"{number}";
+	}
 
 	internal static string Translate(string @string)
-		=> $"\"{@string}\"";
+	{
+		return $"\"{@string}\"";
+	}
 }

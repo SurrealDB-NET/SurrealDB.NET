@@ -8,8 +8,12 @@ public class BuildFluent : IBuildFluent
 	protected readonly StringBuilder Query;
 
 	internal BuildFluent(StringBuilder currentQuery)
-		=> Query = currentQuery;
+	{
+		Query = currentQuery;
+	}
 
 	public string Build()
-		=> Query.Append(';').ToString();
+	{
+		return Query.Append(';').ToString();
+	}
 }
